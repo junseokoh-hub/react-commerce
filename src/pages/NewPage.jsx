@@ -3,7 +3,7 @@ import { useTitle } from "../hooks/useTitle";
 
 const NewPage = () => {
   useTitle("New");
-  return <div>New</div>;
+  return <div></div>;
 };
 
 export default NewPage;

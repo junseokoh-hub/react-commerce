@@ -13,6 +13,7 @@ const Header = styled.header`
   flex-direction: column;
   background-color: ${(props) => props.bgColor};
   transition: all 0.2s ease-in-out;
+  z-index: 10;
   nav {
     a {
       color: ${(props) => props.color};
