@@ -1,39 +1,42 @@
 import React from "react";
 import styled from "styled-components";
-import { useQuery } from "react-query";
 import { useTitle } from "../hooks/useTitle";
-import perfumeImg from "../images/perfume1.jpg";
 import StyledSlider from "../utils/StyledSlider";
+import perfume1 from "../images/perfume1.jpg";
+import perfume2 from "../images/perfume2.jpg";
+import perfume3 from "../images/perfume3.jpg";
 
 const MainImgContainer = styled.div`
   width: 100%;
-  height: 90vh;
+  height: 100vh;
   background: url(${(props) => props.bgphoto});
-  background-position: 100%;
-  background-size: 50%;
-  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 `;
+
+const DUMMY_DATA = [
+  {
+    id: 1,
+    image: perfume1,
+  },
+  {
+    id: 2,
+    image: perfume2,
+  },
+  {
+    id: 3,
+    image: perfume3,
+  },
+];
 
 const Home = () => {
   useTitle("Home");
-  const { isLoading, data } = useQuery(
-    ["products"],
-    async () => {
-      const response = await fetch(`https://fakestoreapi.com/products`);
-      const json = await response.json();
-      return json;
-    },
-    {
-      staleTime: 50000,
-    },
-  );
 
   return (
     <StyledSlider>
-      {isLoading && <div>Loading...</div>}
-      {!isLoading &&
-        data &&
-        data.map((data) => <MainImgContainer bgphoto={data.image} />)}
+      {DUMMY_DATA.map((data) => (
+        <MainImgContainer key={data.id} bgphoto={data.image} />
+      ))}
     </StyledSlider>
   );
 };

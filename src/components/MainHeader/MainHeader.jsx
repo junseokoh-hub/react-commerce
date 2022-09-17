@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useScroll } from "../../hooks/useScroll";
+import { BsSearch, BsCart } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
 
 const Header = styled.header`
   height: 30vh;
@@ -28,7 +30,10 @@ const LinkContainer = styled.nav`
   justify-content: end;
   align-items: center;
   &:nth-of-type(1) {
-    height: 20%;
+    height: 30%;
+    svg {
+      font-size: 30px;
+    }
   }
   &:nth-of-type(2) {
     flex-grow: 1;
@@ -37,7 +42,6 @@ const LinkContainer = styled.nav`
   }
   a {
     padding: 20px;
-    /* color: ${(props) => props.color}; */
   }
 `;
 
@@ -63,9 +67,15 @@ const MainHeader = () => {
       color={y > 50 ? "teal" : "#000"}
     >
       <LinkContainer>
-        <Link to="/search">Search</Link>
-        <Link to="/myCart">My Cart</Link>
-        <Link to="/myPage">My Page</Link>
+        <Link to="/search">
+          <BsSearch />
+        </Link>
+        <Link to="/myCart">
+          <BsCart />
+        </Link>
+        <Link to="/myPage">
+          <FiUser />
+        </Link>
       </LinkContainer>
       <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
         <Link to="/">Home</Link>

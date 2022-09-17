@@ -8,7 +8,11 @@ import { theme } from "./lib/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 50000, refetchOnWindowFocus: false },
+  },
+});
 
 root.render(
   <QueryClientProvider client={queryClient}>
