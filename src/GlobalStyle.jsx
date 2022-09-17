@@ -44,5 +44,15 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+html {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+a {
+	text-decoration-line: none;
+}
+
 `;
+
 export default GlobalStyle;
