@@ -10,6 +10,7 @@ import AboutPage from "./pages/AboutPage";
 import MyCartPage from "./pages/MyCartPage";
 import MyPage from "./pages/MyPage";
 import SearchPage from "./pages/SearchPage";
+import LoginPage from "./pages/LoginPage";
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/myCart" element={<MyCartPage />} />
         <Route path="/myPage" element={<MyPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Layout>
   );

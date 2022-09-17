@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { useScroll } from "../../hooks/useScroll";
 import { BsSearch, BsCart } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
 
 const Header = styled.header`
-  height: 30vh;
+  height: ${(props) => props.height};
   position: fixed;
   top: 0;
   left: 0;
@@ -30,14 +30,14 @@ const LinkContainer = styled.nav`
   justify-content: end;
   align-items: center;
   &:nth-of-type(1) {
-    height: 30%;
+    height: 40%;
     svg {
       font-size: 30px;
     }
   }
   &:nth-of-type(2) {
     flex-grow: 1;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
   }
   a {
@@ -48,6 +48,9 @@ const LinkContainer = styled.nav`
 const MainHeader = () => {
   const [navColorChange, setNavColorChange] = useState(false);
   const headerRef = useRef();
+
+  const homeMatch = useMatch("/");
+
   const { y } = useScroll();
 
   const mouseOnNav = () => {
@@ -61,6 +64,7 @@ const MainHeader = () => {
   return (
     <Header
       ref={headerRef}
+      height={homeMatch ? "30vh" : "20vh"}
       bgColor={
         navColorChange ? (props) => props.theme.whiteColor : "transparent"
       }
