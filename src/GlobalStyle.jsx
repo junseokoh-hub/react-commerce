@@ -49,6 +49,10 @@ html {
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+body {
+	height: 300vh;
+}
+
 a {
 	text-decoration-line: none;
 }

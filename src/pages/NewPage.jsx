@@ -1,7 +1,9 @@
 import React from "react";
+import { useTitle } from "../hooks/useTitle";
 
 const NewPage = () => {
-  return <div></div>;
+  useTitle("New");
+  return <div>New</div>;
 };
 
 export default NewPage;

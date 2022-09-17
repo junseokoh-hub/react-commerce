@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useScroll } from "../../hooks/useScroll";
 
 const Header = styled.header`
   height: 30vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.bgColor};
-  transition: 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  nav {
+    a {
+      color: ${(props) => props.color};
+      transition: all 0.3s ease-in-out;
+    }
+  }
 `;
 
 const LinkContainer = styled.nav`
@@ -29,12 +36,14 @@ const LinkContainer = styled.nav`
   }
   a {
     padding: 20px;
-    color: ${(props) => props.theme.blackColor};
+    /* color: ${(props) => props.color}; */
   }
 `;
 
 const MainHeader = () => {
   const [navColorChange, setNavColorChange] = useState(false);
+  const headerRef = useRef();
+  const { y } = useScroll();
 
   const mouseOnNav = () => {
     setNavColorChange(true);
@@ -46,9 +55,11 @@ const MainHeader = () => {
 
   return (
     <Header
+      ref={headerRef}
       bgColor={
         navColorChange ? (props) => props.theme.whiteColor : "transparent"
       }
+      color={y > 50 ? "teal" : "#000"}
     >
       <LinkContainer>
         <Link to="/search">Search</Link>
