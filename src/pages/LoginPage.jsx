@@ -69,7 +69,7 @@ const LoginPage = () => {
     localStorage.setItem("email", data.emailInput);
     if (localStorage.getItem("email") !== null) {
       setIsAuth(localStorage.getItem("email") !== null);
-      navigate("/");
+      navigate("/", { replace: true });
       reset();
     } else {
       throw new Error("Something went wrong for Authentication!");
@@ -81,7 +81,7 @@ const LoginPage = () => {
     max: { value: 10, message: "Not over 10 letters" },
     min: { value: 5, message: "At leat 5 letters" },
     pattern: {
-      value: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+$/,
+      value: /^[a-zA-Z0-9]+@[a-zA-Z0-9].com+$/,
       message: "You should enter Email includes `@`",
     },
   };
