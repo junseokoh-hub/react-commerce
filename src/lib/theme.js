@@ -7,4 +7,5 @@ export const theme = {
   brown: {
     normal: "#4b2d0b",
   },
+  red: "#c0392b",
 };

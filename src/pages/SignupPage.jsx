@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const SignupContainer = styled.section`
+  margin: 50px 0;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -44,13 +45,14 @@ const SignuptFieldset = styled.fieldset`
     background-color: ${(props) => props.theme.orange.lighter};
     color: ${(props) => props.theme.whiteColor};
   }
-  span {
-    color: red;
-  }
-
   a {
     color: ${(props) => props.theme.orange.lighter};
   }
+`;
+
+const ErrorMessage = styled.span`
+  text-align: center;
+  color: ${(props) => props.theme.red};
 `;
 
 const SignupPage = () => {
@@ -112,21 +114,21 @@ const SignupPage = () => {
             id="signupEmail"
             text="email"
           />
-          <span>{errors.signupEmail?.message}</span>
+          <ErrorMessage>{errors.signupEmail?.message}</ErrorMessage>
           <label htmlFor="signupPassword">비밀번호</label>
           <input
             {...register("signupPassword", passwordValidation)}
             id="signupPassword"
             type="password"
           />
-          <span>{errors.signupPassword?.message}</span>
+          <ErrorMessage>{errors.signupPassword?.message}</ErrorMessage>
           <label htmlFor="passwordConfirm">비밀번호 재확인</label>
           <input
             {...register("passwordConfirm")}
             id="passwordConfirm"
             type="password"
           />
-          <span>{errors.passwordConfirm?.message}</span>
+          <ErrorMessage>{errors.passwordConfirm?.message}</ErrorMessage>
           <button>완료</button>
         </SignuptFieldset>
       </form>

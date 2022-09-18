@@ -46,13 +46,14 @@ const LoginFieldset = styled.fieldset`
     background-color: ${(props) => props.theme.orange.lighter};
     color: ${(props) => props.theme.whiteColor};
   }
-  span {
-    color: red;
-  }
-
   a {
     color: ${(props) => props.theme.orange.lighter};
   }
+`;
+
+const ErrorMessage = styled.span`
+  text-align: center;
+  color: ${(props) => props.theme.red};
 `;
 
 const LoginPage = () => {
@@ -78,11 +79,11 @@ const LoginPage = () => {
 
   const emailValidation = {
     required: { value: true, message: "You should enter your ID" },
-    max: { value: 10, message: "Not over 10 letters" },
+    max: { value: 15, message: "Not over 15 letters" },
     min: { value: 5, message: "At leat 5 letters" },
     pattern: {
       value: /^[A-Za-z0-9._%+-]+@[a-z]+.com$/,
-      message: "You should enter Email includes `@`",
+      message: "You should enter Email",
     },
   };
 
@@ -101,20 +102,20 @@ const LoginPage = () => {
       <form onSubmit={submitAuthHandler}>
         <LoginFieldset>
           <legend>로그인</legend>
-          <label htmlFor="email">아이디</label>
+          <label htmlFor="email">이메일</label>
           <input
             {...register("emailInput", emailValidation)}
             id="email"
             type="text"
           />
-          <span>{errors.emailInput?.message}</span>
+          <ErrorMessage>{errors.emailInput?.message}</ErrorMessage>
           <label htmlFor="password">비밀번호</label>
           <input
             {...register("passwordInput", passwordValidation)}
             id="password"
             type="password"
           />
-          <span>{errors.passwordInput?.message}</span>
+          <ErrorMessage>{errors.passwordInput?.message}</ErrorMessage>
           <button type="submit">Log In</button>
           <Link to="/signup" style={{ textAlign: "center" }}>
             Create Account
