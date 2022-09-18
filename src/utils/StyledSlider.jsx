@@ -58,19 +58,25 @@ function SamplePrevArrow(props) {
 
 const StyledSlider = ({ children }) => {
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 10000,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          autoplay: false,
+        },
+      },
+    ],
   };
-  return (
-    <div>
-      <SliderContainer {...settings}>{children}</SliderContainer>
-    </div>
-  );
+  return <SliderContainer {...settings}>{children}</SliderContainer>;
 };
 
 export default StyledSlider;

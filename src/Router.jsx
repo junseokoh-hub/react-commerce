@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home";
 import NewPage from "./pages/NewPage";
@@ -11,8 +11,12 @@ import MyCartPage from "./pages/MyCartPage";
 import MyPage from "./pages/MyPage";
 import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
+import { useRecoilValue } from "recoil";
+import { authAtom } from "./store/authAtom";
 
 const Router = () => {
+  const isAuth = useRecoilValue(authAtom);
+
   return (
     <Layout>
       <Routes>
@@ -23,9 +27,14 @@ const Router = () => {
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/myCart" element={<MyCartPage />} />
-        <Route path="/myPage" element={<MyPage />} />
+        {isAuth && <Route path="/myCart" element={<MyCartPage />} />}
+        {!isAuth && <Route path="/myCart" element={<Navigate to="/login" />} />}
+        <Route
+          path="/myPage"
+          element={isAuth ? <MyPage /> : <Navigate to="/login" />}
+        />
         <Route path="/login" element={<LoginPage />} />
+        {isAuth && <Route path="/login" element={<Navigate to="/myPage" />} />}
       </Routes>
     </Layout>
   );

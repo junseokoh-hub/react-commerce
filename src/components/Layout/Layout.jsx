@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <MainHeader />
-      <Main padding={homeMatch ? "30vh" : "20vh"}>{children}</Main>
+      <Main padding={homeMatch ? "" : "20vh"}>{children}</Main>
       {/* <footer>Hello</footer> */}
     </>
   );

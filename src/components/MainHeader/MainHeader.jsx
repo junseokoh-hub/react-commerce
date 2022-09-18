@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { useScroll } from "../../hooks/useScroll";
 import { BsSearch, BsCart } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
+import { useRecoilState } from "recoil";
+import { authAtom } from "../../store/authAtom";
 
 const Header = styled.header`
   height: ${(props) => props.height};
@@ -47,6 +49,8 @@ const LinkContainer = styled.nav`
 
 const MainHeader = () => {
   const [navColorChange, setNavColorChange] = useState(false);
+  const [isAuth, setIsAuth] = useRecoilState(authAtom);
+  const navigate = useNavigate("/");
   const headerRef = useRef();
 
   const homeMatch = useMatch("/");
@@ -59,6 +63,14 @@ const MainHeader = () => {
 
   const mouseOutNav = () => {
     setNavColorChange(false);
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem("id");
+    setIsAuth(localStorage.getItem("id") !== null);
+    if (!isAuth) {
+      navigate("/");
+    }
   };
 
   return (
@@ -80,6 +92,11 @@ const MainHeader = () => {
         <Link to="/myPage">
           <FiUser />
         </Link>
+        {isAuth && (
+          <span style={{ cursor: "pointer" }} onClick={logoutHandler}>
+            Log Out
+          </span>
+        )}
       </LinkContainer>
       <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
         <Link to="/">Home</Link>

@@ -1,7 +1,10 @@
 import React from "react";
 import { useCallback } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { authAtom } from "../store/authAtom";
 
 const LoginPageContainer = styled.section`
   height: 80vh;
@@ -26,6 +29,8 @@ const LoginPageContainer = styled.section`
 `;
 
 const LoginPage = () => {
+  const setIsAuth = useSetRecoilState(authAtom);
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
     id: "",
     password: "",
@@ -43,6 +48,13 @@ const LoginPage = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    localStorage.setItem("id", inputValue.id);
+    setIsAuth(localStorage.getItem("id") !== null);
+    if (localStorage.getItem("id") !== null) {
+      navigate("/");
+    } else {
+      throw new Error("Something went wrong while logging in");
+    }
   };
 
   return (
