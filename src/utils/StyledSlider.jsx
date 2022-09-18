@@ -8,9 +8,6 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 const SliderContainer = styled(Slider)`
   width: 100%;
   margin: 0 auto;
-  .slick-dots {
-    bottom: 10px;
-  }
 `;
 
 const ArrowContainer = styled.div`
@@ -19,7 +16,7 @@ const ArrowContainer = styled.div`
     width: 60px;
     background: transparent;
     color: #000;
-    z-index: 10000;
+    z-index: 1000;
     position: absolute;
     &:hover {
       color: #000;
@@ -61,7 +58,7 @@ function SamplePrevArrow(props) {
 
 const StyledSlider = ({ children }) => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 1000,
     slidesToShow: 1,

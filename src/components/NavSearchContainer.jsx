@@ -18,7 +18,7 @@ const SearchBarContainer = styled.header`
   display: flex;
   align-items: center;
   background-color: ${(props) => props.theme.orange.lighter};
-  z-index: 10;
+  z-index: 10000;
   ul {
     width: 80%;
     margin: 0 auto;
@@ -67,7 +67,7 @@ const PopularKeyword = styled.h4`
 `;
 
 const PopularImgContainer = styled.li`
-  background-color: #4b2d0b;
+  background-color: ${(props) => props.theme.brown.normal};
   img {
     margin: 0 10px;
     width: ${(props) => props.width};
