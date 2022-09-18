@@ -36,6 +36,9 @@ const LinkContainer = styled.nav`
   &:nth-of-type(1) {
     height: 40%;
     svg {
+      &.glass {
+        padding-right: 20px;
+      }
       font-size: 30px;
     }
   }
@@ -91,7 +94,10 @@ const MainHeader = () => {
           color={y > 50 ? "teal" : "#000"}
         >
           <LinkContainer>
-            <BsSearch onClick={() => setIsSearchBar((prev) => !prev)} />
+            <BsSearch
+              className="glass"
+              onClick={() => setIsSearchBar((prev) => !prev)}
+            />
             <Link to="/myCart">
               <BsCart />
             </Link>

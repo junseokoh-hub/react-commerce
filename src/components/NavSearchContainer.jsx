@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useMatch } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { searchBarAtom } from "../store/searchBarAtom";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { useQuery } from "react-query";
+import { useForm } from "react-hook-form";
 
 const SearchBarContainer = styled.header`
   width: 100%;
@@ -14,18 +15,26 @@ const SearchBarContainer = styled.header`
   top: 0;
   left: 0;
   right: 0;
+  display: flex;
+  align-items: center;
   background-color: ${(props) => props.theme.orange.lighter};
   z-index: 10;
   ul {
     width: 80%;
     margin: 0 auto;
   }
+
   li {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 10px 0;
+    color: #fff;
     &:nth-of-type(2) {
       flex-direction: column;
+      h3 {
+        margin-bottom: 5px;
+      }
     }
   }
 `;
@@ -53,18 +62,25 @@ const PopularKeyword = styled.h4`
   align-items: center;
   border-radius: 20px;
   color: #fff;
-  border: 1px solid black;
+  border: 1px solid #fff;
+  cursor: pointer;
 `;
 
 const PopularImgContainer = styled.li`
+  background-color: #4b2d0b;
   img {
-    width: 100px;
-    height: 100px;
+    margin: 0 10px;
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+    border-radius: 50%;
   }
 `;
 
 const NavSearchContainer = () => {
   const [isSearchbar, setIsSearchBar] = useRecoilState(searchBarAtom);
+  const { register, handleSubmit, setValue } = useForm();
+  const navigate = useNavigate();
+
   const homeMatch = useMatch("/");
 
   const { isLoading, data } = useQuery("products", async () => {
@@ -75,13 +91,19 @@ const NavSearchContainer = () => {
 
   const popularData = data && data.slice(4, 8);
 
+  const searchSubmitHandler = handleSubmit((data) => {
+    setIsSearchBar(false);
+    navigate(`/search?keyword=${data.searchInput}&search=true`);
+    setValue("searchInput", "");
+  });
+
   return (
     <SearchBarContainer height={homeMatch ? "30vh" : "20vh"}>
       <ul>
         <SearchBarList>
-          <BsSearch />
-          <form>
-            <input />
+          <BsSearch onClick={searchSubmitHandler} />
+          <form onSubmit={searchSubmitHandler}>
+            <input {...register("searchInput")} />
           </form>
           <AiOutlineClose onClick={() => setIsSearchBar(false)} />
         </SearchBarList>
@@ -105,6 +127,8 @@ const NavSearchContainer = () => {
                 key={item.id + item.description}
                 src={item.image}
                 alt={item.description}
+                width={homeMatch ? "100px" : "80px"}
+                height={homeMatch ? "100px" : "80px"}
               />
             ))}
         </PopularImgContainer>
