@@ -13,6 +13,7 @@ import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/LoginPage";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "./store/authAtom";
+import SignupPage from "./pages/SignupPage";
 
 const Router = () => {
   const isAuth = useRecoilValue(authAtom);
@@ -35,6 +36,8 @@ const Router = () => {
         />
         <Route path="/login" element={<LoginPage />} />
         {isAuth && <Route path="/login" element={<Navigate to="/myPage" />} />}
+        {!isAuth && <Route path="/signup" element={<SignupPage />} />}
+        {isAuth && <Route path="/signup" element={<Navigate to="/myPage" />} />}
       </Routes>
     </Layout>
   );

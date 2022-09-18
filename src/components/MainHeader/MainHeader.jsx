@@ -50,6 +50,8 @@ const LinkContainer = styled.nav`
 const MainHeader = () => {
   const [navColorChange, setNavColorChange] = useState(false);
   const [isAuth, setIsAuth] = useRecoilState(authAtom);
+  const [isSearchbar, setIsSearchBar] = useState(false);
+
   const navigate = useNavigate("/");
   const headerRef = useRef();
 
@@ -73,6 +75,11 @@ const MainHeader = () => {
     }
   };
 
+  const submitSearchHandler = (e) => {
+    e.preventDefault();
+    navigate("/search");
+  };
+
   return (
     <Header
       ref={headerRef}
@@ -83,9 +90,12 @@ const MainHeader = () => {
       color={y > 50 ? "teal" : "#000"}
     >
       <LinkContainer>
-        <Link to="/search">
-          <BsSearch />
-        </Link>
+        <BsSearch onClick={() => setIsSearchBar((prev) => !prev)} />
+        {isSearchbar && (
+          <form onSubmit={submitSearchHandler}>
+            <input />
+          </form>
+        )}
         <Link to="/myCart">
           <BsCart />
         </Link>

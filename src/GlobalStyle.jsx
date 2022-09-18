@@ -57,6 +57,10 @@ a {
 	text-decoration-line: none;
 }
 
+button {
+	cursor: pointer;
+}
+
 `;
 
 export default GlobalStyle;

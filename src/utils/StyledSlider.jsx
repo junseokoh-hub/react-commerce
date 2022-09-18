@@ -8,6 +8,9 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 const SliderContainer = styled(Slider)`
   width: 100%;
   margin: 0 auto;
+  .slick-dots {
+    bottom: 10px;
+  }
 `;
 
 const ArrowContainer = styled.div`
