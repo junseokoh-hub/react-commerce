@@ -81,7 +81,7 @@ const LoginPage = () => {
     max: { value: 10, message: "Not over 10 letters" },
     min: { value: 5, message: "At leat 5 letters" },
     pattern: {
-      value: /^[a-zA-Z0-9]+@[a-zA-Z0-9].com+$/,
+      value: /^[A-Za-z0-9._%+-]+@[a-z]+.com$/,
       message: "You should enter Email includes `@`",
     },
   };

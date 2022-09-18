@@ -7,6 +7,7 @@ import { BsSearch } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { useForm } from "react-hook-form";
+import { fetchProducts } from "../lib/api";
 
 const SearchBarContainer = styled.header`
   width: 100%;
@@ -83,11 +84,7 @@ const NavSearchContainer = () => {
 
   const homeMatch = useMatch("/");
 
-  const { isLoading, data } = useQuery("products", async () => {
-    const response = await fetch("https://fakestoreapi.com/products");
-    const json = await response.json();
-    return json;
-  });
+  const { isLoading, data } = useQuery("products", fetchProducts);
 
   const popularData = data && data.slice(4, 8);
 

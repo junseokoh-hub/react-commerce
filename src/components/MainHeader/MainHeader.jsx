@@ -111,8 +111,7 @@ const MainHeader = () => {
           </LinkContainer>
           <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
             <Link to="/">Home</Link>
-            <Link to="/new">New</Link>
-            <Link to="/popular">Popular</Link>
+            <Link to="/products">Products</Link>
             <Link to="/review">Review</Link>
             <Link to="/community">Community</Link>
             <Link to="/about">About</Link>

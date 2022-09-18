@@ -6,6 +6,7 @@ import perfume1 from "../images/perfume1.jpg";
 import perfume2 from "../images/perfume2.jpg";
 import perfume3 from "../images/perfume3.jpg";
 import { useQuery } from "react-query";
+import { fetchProducts } from "../lib/api";
 
 const DUMMY_DATA = [
   {
@@ -43,17 +44,8 @@ const Home = () => {
   useTitle("Home");
   const { isLoading, data, isError, error } = useQuery(
     ["home", "products"],
-    async () => {
-      const response = await fetch("https://fakestoreapi.com/products");
-      if (!response.ok) {
-        throw new Error("Something went wrong while fetching");
-      }
-      const json = await response.json();
-      return json;
-    },
+    fetchProducts,
   );
-
-  if (isError) return <div>{error.message}</div>;
 
   const menClothesData =
     data && data.filter((item) => item.category === "men's clothing");
@@ -67,6 +59,7 @@ const Home = () => {
       </StyledSlider>
       <StyledSlider>
         {isLoading && <div>Loading...</div>}
+        {isError && <div>{error.message}</div>}
         {!isLoading &&
           menClothesData &&
           menClothesData.map((item) => (
