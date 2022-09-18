@@ -6,6 +6,8 @@ import { BsSearch, BsCart } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
 import { useRecoilState } from "recoil";
 import { authAtom } from "../../store/authAtom";
+import { searchBarAtom } from "../../store/searchBarAtom";
+import NavSearchContainer from "../NavSearchContainer";
 
 const Header = styled.header`
   height: ${(props) => props.height};
@@ -50,7 +52,7 @@ const LinkContainer = styled.nav`
 const MainHeader = () => {
   const [navColorChange, setNavColorChange] = useState(false);
   const [isAuth, setIsAuth] = useRecoilState(authAtom);
-  const [isSearchbar, setIsSearchBar] = useState(false);
+  const [isSearchbar, setIsSearchBar] = useRecoilState(searchBarAtom);
 
   const navigate = useNavigate("/");
   const headerRef = useRef();
@@ -75,48 +77,44 @@ const MainHeader = () => {
     }
   };
 
-  const submitSearchHandler = (e) => {
-    e.preventDefault();
-    navigate("/search");
-  };
-
   return (
-    <Header
-      ref={headerRef}
-      height={homeMatch ? "30vh" : "20vh"}
-      bgColor={
-        navColorChange ? (props) => props.theme.whiteColor : "transparent"
-      }
-      color={y > 50 ? "teal" : "#000"}
-    >
-      <LinkContainer>
-        <BsSearch onClick={() => setIsSearchBar((prev) => !prev)} />
-        {isSearchbar && (
-          <form onSubmit={submitSearchHandler}>
-            <input />
-          </form>
-        )}
-        <Link to="/myCart">
-          <BsCart />
-        </Link>
-        <Link to="/myPage">
-          <FiUser />
-        </Link>
-        {isAuth && (
-          <span style={{ cursor: "pointer" }} onClick={logoutHandler}>
-            Log Out
-          </span>
-        )}
-      </LinkContainer>
-      <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
-        <Link to="/">Home</Link>
-        <Link to="/new">New</Link>
-        <Link to="/popular">Popular</Link>
-        <Link to="/review">Review</Link>
-        <Link to="/community">Community</Link>
-        <Link to="/about">About</Link>
-      </LinkContainer>
-    </Header>
+    <>
+      {isSearchbar ? (
+        <NavSearchContainer />
+      ) : (
+        <Header
+          ref={headerRef}
+          height={homeMatch ? "30vh" : "20vh"}
+          bgColor={
+            navColorChange ? (props) => props.theme.whiteColor : "transparent"
+          }
+          color={y > 50 ? "teal" : "#000"}
+        >
+          <LinkContainer>
+            <BsSearch onClick={() => setIsSearchBar((prev) => !prev)} />
+            <Link to="/myCart">
+              <BsCart />
+            </Link>
+            <Link to="/myPage">
+              <FiUser />
+            </Link>
+            {isAuth && (
+              <span style={{ cursor: "pointer" }} onClick={logoutHandler}>
+                Log Out
+              </span>
+            )}
+          </LinkContainer>
+          <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
+            <Link to="/">Home</Link>
+            <Link to="/new">New</Link>
+            <Link to="/popular">Popular</Link>
+            <Link to="/review">Review</Link>
+            <Link to="/community">Community</Link>
+            <Link to="/about">About</Link>
+          </LinkContainer>
+        </Header>
+      )}
+    </>
   );
 };
 
