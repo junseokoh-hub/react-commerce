@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchProducts } from "../../lib/api";
@@ -19,9 +19,28 @@ const ProductsContainer = styled.section`
   grid-template-rows: repeat(2, 1fr);
 `;
 
+const PageSelectArticle = styled.article`
+  display: flex;
+  align-items: center;
+`;
+
+const IndivProductArticle = styled.article`
+  img {
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    display: flex;
+  }
+`;
+
 const Posts = () => {
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
+
+  const changeSelectOptions = useCallback((e) => {
+    setLimit(e.target.value);
+    setPage(1);
+  }, []);
 
   const offset = (page - 1) * limit;
 
@@ -37,43 +56,26 @@ const Posts = () => {
 
   if (isError) return <div>{error.toString()}</div>;
 
-  console.log("I'm rendered");
-
   return (
     <ProductsWrapper>
-      <label>
-        페이지 당 표시할 게시물 수:&nbsp;
-        <select
-          type="number"
-          value={limit}
-          onChange={({ target: { value } }) => setLimit(Number(value))}
-        >
+      <PageSelectArticle>
+        <label>페이지 당 표시할 게시물 수:&nbsp;</label>
+        <select type="number" value={limit} onChange={changeSelectOptions}>
           <option value="4">4</option>
           <option value="5">5</option>
           <option value="15">15</option>
           <option value="20">20</option>
           <option value="50">50</option>
         </select>
-      </label>
-
+      </PageSelectArticle>
       <ProductsContainer>
         {data.slice(offset, offset + limit).map(({ id, title, image }) => (
-          <article key={id}>
-            <img
-              style={{
-                width: "100px",
-                height: "100px",
-                display: "block",
-                margin: "0 auto",
-              }}
-              src={image}
-              alt={title}
-            />
+          <IndivProductArticle key={id}>
+            <img src={image} alt={title} />
             <h3 style={{ textAlign: "center" }}>{title}</h3>
-          </article>
+          </IndivProductArticle>
         ))}
       </ProductsContainer>
-
       <footer>
         <Pagination
           total={data.length}

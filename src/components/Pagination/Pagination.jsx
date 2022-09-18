@@ -25,7 +25,7 @@ const Button = styled.button`
   }
 
   &[disabled] {
-    background: ${(props) => props.theme.blackColor};
+    background: ${(props) => props.theme.brown.normal};
     color: ${(props) => props.theme.whiteColor};
     border: none;
     transform: revert;
@@ -33,6 +33,7 @@ const Button = styled.button`
 
   &[aria-current] {
     background: ${(props) => props.theme.orange.lighter};
+    color: ${(props) => props.theme.whiteColor};
     font-weight: bold;
     cursor: revert;
     transform: revert;

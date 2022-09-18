@@ -11,7 +11,6 @@ import { fetchProducts } from "../lib/api";
 
 const SearchBarContainer = styled.header`
   width: 100%;
-  height: ${(props) => props.height};
   position: fixed;
   top: 0;
   left: 0;
@@ -42,11 +41,14 @@ const SearchBarContainer = styled.header`
 
 const SearchBarList = styled.li`
   input {
+    margin-left: 5px;
+    padding-left: 10px;
     width: 500px;
     border: none;
     outline: none;
     background-color: transparent;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid ${(props) => props.theme.whiteColor};
+    color: ${(props) => props.theme.whiteColor};
   }
 `;
 
@@ -86,7 +88,7 @@ const NavSearchContainer = () => {
 
   const { isLoading, data } = useQuery("products", fetchProducts);
 
-  const popularData = data && data.slice(4, 8);
+  const popularData = data && data.slice(4, 12);
 
   const searchSubmitHandler = handleSubmit((data) => {
     setIsSearchBar(false);
@@ -119,13 +121,13 @@ const NavSearchContainer = () => {
         <PopularImgContainer>
           {!isLoading &&
             popularData &&
-            popularData.map((item) => (
+            popularData.map(({ id, description, image }) => (
               <img
-                key={item.id + item.description}
-                src={item.image}
-                alt={item.description}
-                width={homeMatch ? "100px" : "80px"}
-                height={homeMatch ? "100px" : "80px"}
+                key={id + description}
+                src={image}
+                alt={description}
+                width={homeMatch ? "100px" : "50px"}
+                height={homeMatch ? "100px" : "50px"}
               />
             ))}
         </PopularImgContainer>

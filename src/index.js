@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
+import ScrollToTop from "./lib/ScrollToTop";
 import { theme } from "./lib/theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -20,6 +21,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
+          <ScrollToTop />
           <App />
         </ThemeProvider>
       </BrowserRouter>
