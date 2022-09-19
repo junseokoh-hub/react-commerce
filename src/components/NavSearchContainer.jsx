@@ -99,9 +99,13 @@ const NavSearchContainer = () => {
   const popularData = data && data.slice(4, 12);
 
   const searchSubmitHandler = handleSubmit((data) => {
-    setIsSearchBar(false);
-    navigate(`/search?keyword=${data.searchInput}&search=true`);
-    setValue("searchInput", "");
+    if (data.searchInput === "") {
+      return;
+    } else {
+      setIsSearchBar(false);
+      navigate(`/search?keyword=${data.searchInput}&search=true`);
+      setValue("searchInput", "");
+    }
   });
 
   return (
