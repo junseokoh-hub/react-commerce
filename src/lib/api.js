@@ -17,3 +17,8 @@ export const fetchProducts = async () => {
   const json = await response.json();
   return json;
 };
+
+export const fetchSearchBooks = async (query) => {
+  const response = await Kakao.get(`/v3/search/book?query=${query}&size=50`);
+  return response;
+};

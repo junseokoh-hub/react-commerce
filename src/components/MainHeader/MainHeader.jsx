@@ -90,7 +90,7 @@ const MainHeader = () => {
           bgColor={
             navColorChange ? (props) => props.theme.whiteColor : "transparent"
           }
-          fontColor={y > 50 ? (props) => props.theme.orange.color : "#000"}
+          fontColor={y > 50 ? (props) => props.theme.orange.lighter : "#000"}
         >
           <LinkContainer>
             <BsSearch

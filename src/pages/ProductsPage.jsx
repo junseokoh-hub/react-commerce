@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import Posts from "../components/Posts/Posts";
 import { useTitle } from "../hooks/useTitle";
 import { fetchProducts } from "../lib/api";
+import LoadingSpinner from "../utils/LoadingSpinner";
 
 const ProductsPage = () => {
   useTitle("Products");
@@ -15,7 +16,7 @@ const ProductsPage = () => {
     },
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingSpinner />;
 
   if (isError) return <div>{error.toString()}</div>;
 

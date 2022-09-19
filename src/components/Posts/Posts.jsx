@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
+import { handleImgError } from "../../utils/handleErrorImg";
 import Pagination from "../Pagination/Pagination";
 
 const ProductsWrapper = styled.section`
@@ -77,7 +78,11 @@ const Posts = ({ posts }) => {
           .slice(offset, offset + limit)
           .map(({ id, title, image, thumbnail, isbn }) => (
             <IndivProductArticle key={id || isbn}>
-              <img src={image || thumbnail} alt={title} />
+              <img
+                src={image || thumbnail}
+                alt={title}
+                onError={handleImgError}
+              />
               <h3 style={{ textAlign: "center" }}>{title}</h3>
             </IndivProductArticle>
           ))}
