@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import Posts from "../components/Posts/Posts";
 import { useTitle } from "../hooks/useTitle";
-import { fetchSearchBooks, Kakao } from "../lib/api";
+import { fetchSearchBooks } from "../lib/api";
 import LoadingSpinner from "../utils/LoadingSpinner";
 
 const SearchPage = () => {

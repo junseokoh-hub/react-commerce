@@ -6,6 +6,7 @@ import Footage from "../Footage/Footage";
 
 const Main = styled.main`
   padding-top: ${(props) => props.padding};
+  min-width: 80vh;
 `;
 
 const Layout = ({ children }) => {

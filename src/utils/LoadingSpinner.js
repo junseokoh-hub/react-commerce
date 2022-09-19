@@ -12,6 +12,7 @@ const spinning = keyframes`
 `;
 
 const SpinnerContainer = styled.div`
+  height: 40vh;
   display: flex;
   justify-content: center;
 `;
