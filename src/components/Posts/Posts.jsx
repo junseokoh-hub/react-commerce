@@ -34,14 +34,18 @@ const IndivProductArticle = styled.article`
 const Posts = ({ posts }) => {
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
+  const [order, setOrder] = useState("asc");
 
   const changeSelectOptions = useCallback((e) => {
     setLimit(e.target.value);
     setPage(1);
   }, []);
 
-  const offset = (page - 1) * limit;
+  const changeOrderSelectOptions = useCallback((e) => {
+    setOrder(e.target.value);
+  }, []);
 
+  const offset = (page - 1) * limit;
   return (
     <ProductsWrapper>
       <PageSelectArticle>
@@ -54,9 +58,23 @@ const Posts = ({ posts }) => {
           <option value="100">100</option>
         </select>
       </PageSelectArticle>
+      <PageSelectArticle>
+        <label>차순:&nbsp;</label>
+        <select type="number" value={order} onChange={changeOrderSelectOptions}>
+          <option value="asc">오름차순</option>
+          <option value="desc">내림차순</option>
+        </select>
+      </PageSelectArticle>
       <ProductsContainer>
         {posts
-          ?.slice(offset, offset + limit)
+          ?.sort((a, b) => {
+            if (order === "asc") {
+              return a.title.charCodeAt(0) - b.title.charCodeAt(0);
+            } else {
+              return b.title.charCodeAt(0) - a.title.charCodeAt(0);
+            }
+          })
+          .slice(offset, offset + limit)
           .map(({ id, title, image, thumbnail, isbn }) => (
             <IndivProductArticle key={id || isbn}>
               <img src={image || thumbnail} alt={title} />

@@ -18,11 +18,11 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.bgColor};
-  color: ${(props) => props.color};
+  color: ${(props) => props.fontColor};
   transition: all 0.2s ease-in-out;
   z-index: 10;
   a {
-    color: ${(props) => props.color};
+    color: ${(props) => props.fontColor};
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -90,7 +90,7 @@ const MainHeader = () => {
           bgColor={
             navColorChange ? (props) => props.theme.whiteColor : "transparent"
           }
-          color={y > 50 ? (props) => props.theme.orange.lighter : "#000"}
+          fontColor={y > 50 ? (props) => props.theme.orange.color : "#000"}
         >
           <LinkContainer>
             <BsSearch
