@@ -10,10 +10,9 @@ const SearchPage = () => {
   useTitle("Search");
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-
-  const { data, isLoading, isError, error } = useQuery(
-    ["books", query.get("keyword")],
-    () => fetchSearchBooks(query.get("keyword")),
+  const keyword = query.get("keyword");
+  const { data, isLoading, isError, error } = useQuery(["books", keyword], () =>
+    fetchSearchBooks(keyword),
   );
 
   if (isLoading) return <LoadingSpinner />;

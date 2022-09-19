@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import { useScroll } from "../../hooks/useScroll";
@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { authAtom } from "../../store/authAtom";
 import { searchBarAtom } from "../../store/searchBarAtom";
 import NavSearchContainer from "../NavSearchContainer";
+import Modal from "../../lib/Modal";
 
 const Header = styled.header`
   height: ${(props) => props.height};
@@ -66,26 +67,32 @@ const MainHeader = () => {
 
   const { y } = useScroll();
 
-  const mouseOnNav = () => {
+  const mouseOnNav = useCallback(() => {
     setNavColorChange(true);
-  };
+  }, []);
 
-  const mouseOutNav = () => {
+  const mouseOutNav = useCallback(() => {
     setNavColorChange(false);
-  };
+  }, []);
 
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     localStorage.removeItem("id");
     setIsAuth(localStorage.getItem("id") !== null);
     if (!isAuth) {
       navigate("/");
     }
-  };
+  }, []);
+
+  const closeModalHandler = useCallback(() => {
+    setIsSearchBar(false);
+  }, []);
 
   return (
     <>
       {isSearchbar ? (
-        <NavSearchContainer />
+        <Modal closeModal={closeModalHandler}>
+          <NavSearchContainer />
+        </Modal>
       ) : (
         <Header
           ref={headerRef}

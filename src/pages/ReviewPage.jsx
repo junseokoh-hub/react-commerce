@@ -4,7 +4,11 @@ import { useTitle } from "../hooks/useTitle";
 const ReviewPage = () => {
   useTitle("Review");
 
-  return <div></div>;
+  return (
+    <article>
+      <ul></ul>
+    </article>
+  );
 };
 
 export default ReviewPage;

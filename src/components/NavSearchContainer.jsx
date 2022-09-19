@@ -11,24 +11,25 @@ import { fetchProducts } from "../lib/api";
 
 const SearchBarContainer = styled.header`
   width: 100%;
+  min-height: 40vh;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  background-color: ${(props) => props.theme.orange.lighter};
+  justify-content: center;
+  background: linear-gradient(
+    ${(props) => props.theme.orange.lighter},
+    ${(props) => props.theme.brown.normal}
+  );
   z-index: 10000;
-  ul {
-    width: 80%;
-    margin: 0 auto;
-  }
-
   li {
+    margin: 30px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
     color: #fff;
     &:nth-of-type(2) {
       flex-direction: column;
@@ -49,6 +50,13 @@ const SearchBarList = styled.li`
     background-color: transparent;
     border-bottom: 1px solid ${(props) => props.theme.whiteColor};
     color: ${(props) => props.theme.whiteColor};
+    &:-webkit-autofill {
+      /* -webkit-box-shadow: 0 0 0 1000px ${(props) =>
+        props.theme.orange.lighter}
+        inset !important; */
+      box-shadow: 0 0 0 1000px ${(props) => props.theme.orange.lighter} inset !important;
+      -webkit-text-fill-color: #fff !important;
+    }
   }
 `;
 
@@ -70,7 +78,7 @@ const PopularKeyword = styled.h4`
 `;
 
 const PopularImgContainer = styled.li`
-  background-color: ${(props) => props.theme.brown.normal};
+  width: 100%;
   img {
     margin: 0 10px;
     width: ${(props) => props.width};
@@ -97,7 +105,7 @@ const NavSearchContainer = () => {
   });
 
   return (
-    <SearchBarContainer height={homeMatch ? "30vh" : "20vh"}>
+    <SearchBarContainer>
       <ul>
         <SearchBarList>
           <BsSearch onClick={searchSubmitHandler} />

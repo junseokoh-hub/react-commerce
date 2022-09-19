@@ -14,7 +14,7 @@ const CommunityNav = styled.aside`
   h3 {
     margin-top: 15px;
     font-size: 35px;
-    font-weight: 600;
+    font-weight: bold;
     color: rgba(0, 0, 0, 0.8);
     text-align: center;
   }
@@ -29,6 +29,7 @@ const CommunityNavIndex = styled.ul`
   a {
     display: flex;
     color: ${(props) => props.theme.orange.lighter};
+    font-weight: 600;
     &.clicked {
       color: ${(props) => props.theme.brown.normal};
     }
