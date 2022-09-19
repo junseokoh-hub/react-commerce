@@ -23,8 +23,9 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<ProductsPage />} />
-        <Route path="/review" element={<ReviewPage />} />
-        <Route path="/community" element={<CommunityPage />} />
+        <Route path="/community/*" element={<CommunityPage />}>
+          <Route path="review" element={<ReviewPage />} />
+        </Route>
         <Route path="/about" element={<AboutPage />} />
         <Route path="/search" element={<SearchPage />} />
         {isAuth && <Route path="/myCart" element={<MyCartPage />} />}

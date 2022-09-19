@@ -40,6 +40,9 @@ const LinkContainer = styled.nav`
       }
       font-size: 30px;
     }
+    span {
+      cursor: pointer;
+    }
   }
   &:nth-of-type(2) {
     flex-grow: 1;
@@ -103,17 +106,12 @@ const MainHeader = () => {
             <Link to="/myPage">
               <FiUser />
             </Link>
-            {isAuth && (
-              <span style={{ cursor: "pointer" }} onClick={logoutHandler}>
-                Log Out
-              </span>
-            )}
+            {isAuth && <span onClick={logoutHandler}>Log Out</span>}
           </LinkContainer>
           <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
             <Link to="/">Home</Link>
             <Link to="/products">Products</Link>
-            <Link to="/review">Review</Link>
-            <Link to="/community">Community</Link>
+            <Link to="/community/review">Community</Link>
             <Link to="/about">About</Link>
           </LinkContainer>
         </Header>

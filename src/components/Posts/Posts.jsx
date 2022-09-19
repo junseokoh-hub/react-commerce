@@ -60,7 +60,11 @@ const Posts = ({ posts }) => {
     <ProductsWrapper>
       <PageSelectArticle>
         <label>페이지 당 표시할 게시물 수:&nbsp;</label>
-        <select type="number" value={newLimit} onChange={changeSelectOptions}>
+        <select
+          type="number"
+          value={newLimit || limit}
+          onChange={changeSelectOptions}
+        >
           <option value="4">4</option>
           <option value="10">10</option>
           <option value="20">20</option>
