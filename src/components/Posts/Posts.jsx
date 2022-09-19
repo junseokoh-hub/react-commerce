@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { useQuery } from "react-query";
-import { fetchProducts } from "../../lib/api";
 import Pagination from "../Pagination/Pagination";
 
 const ProductsWrapper = styled.section`
@@ -33,7 +31,7 @@ const IndivProductArticle = styled.article`
   }
 `;
 
-const Posts = () => {
+const Posts = ({ posts }) => {
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
 
@@ -44,41 +42,31 @@ const Posts = () => {
 
   const offset = (page - 1) * limit;
 
-  const { isLoading, data, isError, error } = useQuery(
-    ["productsPage", "products"],
-    fetchProducts,
-    {
-      keepPreviousData: true,
-    },
-  );
-
-  if (isLoading) return <div>Loading...</div>;
-
-  if (isError) return <div>{error.toString()}</div>;
-
   return (
     <ProductsWrapper>
       <PageSelectArticle>
         <label>페이지 당 표시할 게시물 수:&nbsp;</label>
         <select type="number" value={limit} onChange={changeSelectOptions}>
           <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="15">15</option>
+          <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>
+          <option value="100">100</option>
         </select>
       </PageSelectArticle>
       <ProductsContainer>
-        {data.slice(offset, offset + limit).map(({ id, title, image }) => (
-          <IndivProductArticle key={id}>
-            <img src={image} alt={title} />
-            <h3 style={{ textAlign: "center" }}>{title}</h3>
-          </IndivProductArticle>
-        ))}
+        {posts
+          ?.slice(offset, offset + limit)
+          .map(({ id, title, image, thumbnail, isbn }) => (
+            <IndivProductArticle key={id || isbn}>
+              <img src={image || thumbnail} alt={title} />
+              <h3 style={{ textAlign: "center" }}>{title}</h3>
+            </IndivProductArticle>
+          ))}
       </ProductsContainer>
       <footer>
         <Pagination
-          total={data.length}
+          total={posts?.length}
           limit={limit}
           page={page}
           setPage={setPage}
