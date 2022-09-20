@@ -8,7 +8,7 @@ const CommunitySection = styled.section`
 `;
 
 const CommunityNav = styled.aside`
-  width: 200px;
+  min-width: 200px;
   height: 300px;
   border-top: 5px solid ${(props) => props.theme.orange.lighter};
   h3 {

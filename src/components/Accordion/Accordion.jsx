@@ -3,13 +3,16 @@ import styled from "styled-components";
 
 const AccordionContainer = styled.section`
   margin: 0 auto;
-  width: 50%;
+  width: 60%;
   position: relative;
   border-radius: 4px;
-  border: 1px solid silver;
+  border: 1px solid #fad390;
+  background-color: ${(props) => props.theme.orange.lighter};
+  color: ${(props) => props.theme.whiteColor};
 `;
 
 const AccordionHeader = styled.div`
+  padding: 10px 0;
   margin: 0 10px;
   height: 32px;
   display: flex;
@@ -18,8 +21,24 @@ const AccordionHeader = styled.div`
   border-bottom: ${(props) => props.border};
 `;
 
+const AccordionTitle = styled.p`
+  font-weight: bold;
+`;
+
 const ToggleButton = styled.button`
-  font-size: 14px;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid ${(props) => props.theme.orange.normal};
+  background-color: transparent;
+  color: ${(props) => props.theme.whiteColor};
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    background-color: ${(props) => props.theme.orange.normal};
+  }
+  &[aria-current] {
+    background-color: ${(props) => props.theme.orange.normal};
+  }
 `;
 
 const ContentsWrapper = styled.article`
@@ -30,10 +49,10 @@ const ContentsWrapper = styled.article`
 `;
 
 const Contents = styled.div`
-  padding: 4px 8px;
+  padding: 20px 8px;
 `;
 
-const Accordion = () => {
+const Accordion = ({ data }) => {
   const [isClosed, setIsClosed] = useState(false);
 
   const wrapperRef = useRef(null);
@@ -54,19 +73,21 @@ const Accordion = () => {
   const wrapperRefHeight = wrapperRef.current?.style.height ?? "0px";
   const buttonText = wrapperRefHeight === "0px" ? "열기" : "닫기";
 
+  const { title, content } = data;
+
   return (
     <AccordionContainer>
       <AccordionHeader border={isClosed ? "1px solid rgba(0,0,0,0.25)" : null}>
-        <p>아코디언</p>
-        <ToggleButton onClick={toggleHandler}>{buttonText}</ToggleButton>
+        <AccordionTitle>{title}</AccordionTitle>
+        <ToggleButton
+          aria-current={isClosed ? "page" : null}
+          onClick={toggleHandler}
+        >
+          {buttonText}
+        </ToggleButton>
       </AccordionHeader>
       <ContentsWrapper ref={wrapperRef}>
-        <Contents ref={contentRef}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil laborum
-          quaerat quidem, mollitia, adipisci reprehenderit similique porro
-          voluptatibus, deleniti facilis culpa ex dignissimos exercitationem
-          temporibus iusto unde tenetur ad repellat.
-        </Contents>
+        <Contents ref={contentRef}>{content}</Contents>
       </ContentsWrapper>
     </AccordionContainer>
   );

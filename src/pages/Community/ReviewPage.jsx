@@ -1,13 +1,16 @@
 import React from "react";
+import OutletLayout from "../../components/Layout/OutletLayout";
 import { useTitle } from "../../hooks/useTitle";
 
 const ReviewPage = () => {
   useTitle("Review");
 
   return (
-    <article>
-      <ul>Hello</ul>
-    </article>
+    <OutletLayout>
+      <article>
+        <ul>Hello</ul>
+      </article>
+    </OutletLayout>
   );
 };
 
