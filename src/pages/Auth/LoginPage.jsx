@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { authAtom } from "../store/authAtom";
+import { authAtom } from "../../store/authAtom";
 
 const LoginPageContainer = styled.section`
   height: 80vh;

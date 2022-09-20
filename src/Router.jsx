@@ -3,17 +3,18 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home";
 import ProductsPage from "./pages/ProductsPage";
-import ReviewPage from "./pages/ReviewPage";
-import CommunityPage from "./pages/CommunityPage";
+import ReviewPage from "./pages/Community/ReviewPage";
+import CommunityPage from "./pages/Community/CommunityPage";
 import AboutPage from "./pages/AboutPage";
 import MyCartPage from "./pages/MyCartPage";
 import MyPage from "./pages/MyPage";
 import SearchPage from "./pages/SearchPage";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/Auth/LoginPage";
 import NotFound from "./pages/NotFound";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "./store/authAtom";
-import SignupPage from "./pages/SignupPage";
+import SignupPage from "./pages/Auth/SignupPage";
+import Faq from "./pages/Community/Faq";
 
 const Router = () => {
   const isAuth = useRecoilValue(authAtom);
@@ -25,6 +26,7 @@ const Router = () => {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/community/*" element={<CommunityPage />}>
           <Route path="review" element={<ReviewPage />} />
+          <Route path="faq" element={<Faq />} />
         </Route>
         <Route path="/about" element={<AboutPage />} />
         <Route path="/search" element={<SearchPage />} />

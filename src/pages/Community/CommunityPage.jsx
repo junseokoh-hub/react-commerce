@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink, Outlet } from "react-router-dom";
-import { useTitle } from "../hooks/useTitle";
+import { useTitle } from "../../hooks/useTitle";
 
 const CommunitySection = styled.section`
   display: flex;
@@ -65,6 +65,14 @@ const CommunityPage = () => {
               className={({ isActive }) => (isActive ? "clicked" : null)}
             >
               Event
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="faq"
+              className={({ isActive }) => (isActive ? "clicked" : null)}
+            >
+              FAQ
             </NavLink>
           </li>
         </CommunityNavIndex>

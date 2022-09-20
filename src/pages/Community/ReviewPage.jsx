@@ -1,12 +1,12 @@
 import React from "react";
-import { useTitle } from "../hooks/useTitle";
+import { useTitle } from "../../hooks/useTitle";
 
 const ReviewPage = () => {
   useTitle("Review");
 
   return (
     <article>
-      <ul></ul>
+      <ul>Hello</ul>
     </article>
   );
 };
