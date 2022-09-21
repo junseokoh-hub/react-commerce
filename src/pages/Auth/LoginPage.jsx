@@ -94,30 +94,33 @@ const LoginPage = () => {
 
   return (
     <LoginPageContainer>
-      <form onSubmit={submitAuthHandler}>
-        <LoginFieldset>
-          <legend>로그인</legend>
-          <label htmlFor="email">이메일</label>
-          <input
-            {...register("emailInput", emailValidation)}
-            id="email"
-            type="text"
-          />
-          <ErrorMessage>{errors.emailInput?.message}</ErrorMessage>
-          <label htmlFor="password">비밀번호</label>
-          <input
-            {...register("passwordInput", passwordValidation)}
-            id="password"
-            type="password"
-          />
-          <ErrorMessage>{errors.passwordInput?.message}</ErrorMessage>
-          <button type="submit">Log In</button>
-          <Link to="/signup" style={{ textAlign: "center" }}>
-            Create Account
-          </Link>
-        </LoginFieldset>
-      </form>
-      {isLoading && <LoadingSpinner />}
+      {!isLoading ? (
+        <form onSubmit={submitAuthHandler}>
+          <LoginFieldset>
+            <legend>로그인</legend>
+            <label htmlFor="email">이메일</label>
+            <input
+              {...register("emailInput", emailValidation)}
+              id="email"
+              type="text"
+            />
+            <ErrorMessage>{errors.emailInput?.message}</ErrorMessage>
+            <label htmlFor="password">비밀번호</label>
+            <input
+              {...register("passwordInput", passwordValidation)}
+              id="password"
+              type="password"
+            />
+            <ErrorMessage>{errors.passwordInput?.message}</ErrorMessage>
+            <button type="submit">Log In</button>
+            <Link to="/signup" style={{ textAlign: "center" }}>
+              Create Account
+            </Link>
+          </LoginFieldset>
+        </form>
+      ) : (
+        <LoadingSpinner />
+      )}
       {error && <strong>{error}</strong>}
     </LoginPageContainer>
   );
