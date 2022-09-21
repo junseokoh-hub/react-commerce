@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useSignup } from "../../hooks/useSignup";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 
 const SignupContainer = styled.section`
-  margin: 50px 0;
-  height: 100%;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,7 +56,6 @@ const ErrorMessage = styled.span`
 `;
 
 const SignupPage = () => {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -64,6 +63,7 @@ const SignupPage = () => {
     setError,
     formState: { errors },
   } = useForm();
+  const { isLoading, error, signup } = useSignup();
 
   const signupSubmitHandler = handleSubmit((data) => {
     if (window.confirm("회원가입을 하시겠습니까?")) {
@@ -72,8 +72,10 @@ const SignupPage = () => {
           message: "Passwords are not the same",
         });
       } else {
-        navigate("/", { replace: true });
-        reset();
+        if (!error && !isLoading) {
+          signup(data.signupEmail, data.signupPassword, data.displayName);
+          reset();
+        }
       }
     }
     setError(
@@ -90,6 +92,16 @@ const SignupPage = () => {
     pattern: {
       value: /^[A-Za-z0-9._%+-]+@[a-z]+.com$/,
       message: "You should enter Email includes `@`",
+    },
+  };
+
+  const displayNameValidation = {
+    required: { value: true, message: "You should enter your DisplayName" },
+    maxLength: { value: 15, message: "Not over 15 letters" },
+    minLength: { value: 8, message: "At least 8 letters" },
+    pattern: {
+      value: /^[a-zA-Z\\d`~!@#$%^&*()-_=+]+$/,
+      message: "Please enter your DisplayName",
     },
   };
 
@@ -115,6 +127,13 @@ const SignupPage = () => {
             text="email"
           />
           <ErrorMessage>{errors.signupEmail?.message}</ErrorMessage>
+          <label htmlFor="displayName"></label>
+          <input
+            {...register("displayName", displayNameValidation)}
+            id="displayName"
+            type="text"
+          />
+          <ErrorMessage></ErrorMessage>
           <label htmlFor="signupPassword">비밀번호</label>
           <input
             {...register("signupPassword", passwordValidation)}
@@ -132,6 +151,7 @@ const SignupPage = () => {
           <button>완료</button>
         </SignuptFieldset>
       </form>
+      {isLoading && <LoadingSpinner />}
     </SignupContainer>
   );
 };

@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { authAtom } from "../../store/authAtom";
+import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 
 const LoginPageContainer = styled.section`
   height: 80vh;
@@ -57,8 +57,7 @@ const ErrorMessage = styled.span`
 `;
 
 const LoginPage = () => {
-  const setIsAuth = useSetRecoilState(authAtom);
-  const navigate = useNavigate();
+  const { isLoading, error, login } = useLogin();
   const {
     register,
     handleSubmit,
@@ -67,13 +66,9 @@ const LoginPage = () => {
   } = useForm();
 
   const submitAuthHandler = handleSubmit((data) => {
-    localStorage.setItem("email", data.emailInput);
-    if (localStorage.getItem("email") !== null) {
-      setIsAuth(localStorage.getItem("email") !== null);
-      navigate("/", { replace: true });
+    login(data.emailInput, data.passwordInput);
+    if (!error) {
       reset();
-    } else {
-      throw new Error("Something went wrong for Authentication!");
     }
   });
 
@@ -122,6 +117,8 @@ const LoginPage = () => {
           </Link>
         </LoginFieldset>
       </form>
+      {isLoading && <LoadingSpinner />}
+      {error && <strong>{error}</strong>}
     </LoginPageContainer>
   );
 };

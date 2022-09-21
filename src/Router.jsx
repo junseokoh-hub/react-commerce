@@ -12,12 +12,12 @@ import SearchPage from "./pages/SearchPage";
 import LoginPage from "./pages/Auth/LoginPage";
 import NotFound from "./pages/NotFound";
 import { useRecoilValue } from "recoil";
-import { authAtom } from "./store/authAtom";
+import { authUserAtom } from "./store/authAtom";
 import SignupPage from "./pages/Auth/SignupPage";
 import Faq from "./pages/Community/Faq";
 
 const Router = () => {
-  const isAuth = useRecoilValue(authAtom);
+  const authUser = useRecoilValue(authUserAtom);
 
   return (
     <Layout>
@@ -30,16 +30,22 @@ const Router = () => {
         </Route>
         <Route path="/about" element={<AboutPage />} />
         <Route path="/search" element={<SearchPage />} />
-        {isAuth && <Route path="/myCart" element={<MyCartPage />} />}
-        {!isAuth && <Route path="/myCart" element={<Navigate to="/login" />} />}
+        {authUser.user && <Route path="/myCart" element={<MyCartPage />} />}
+        {!authUser.user && (
+          <Route path="/myCart" element={<Navigate to="/login" />} />
+        )}
         <Route
           path="/myPage"
-          element={isAuth ? <MyPage /> : <Navigate to="/login" />}
+          element={authUser.user ? <MyPage /> : <Navigate to="/login" />}
         />
-        <Route path="/login" element={<LoginPage />} />
-        {isAuth && <Route path="/login" element={<Navigate to="/myPage" />} />}
-        {!isAuth && <Route path="/signup" element={<SignupPage />} />}
-        {isAuth && <Route path="/signup" element={<Navigate to="/myPage" />} />}
+        {!authUser.user && <Route path="/login" element={<LoginPage />} />}
+        {authUser.user && (
+          <Route path="/login" element={<Navigate to="/myPage" />} />
+        )}
+        {!authUser.user && <Route path="/signup" element={<SignupPage />} />}
+        {authUser.user && (
+          <Route path="/signup" element={<Navigate to="/myPage" />} />
+        )}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

@@ -4,11 +4,12 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import { useScroll } from "../../hooks/useScroll";
 import { BsSearch, BsCart } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
-import { useRecoilState } from "recoil";
-import { authAtom } from "../../store/authAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { authUserAtom } from "../../store/authAtom";
 import { searchBarAtom } from "../../store/searchBarAtom";
 import NavSearchContainer from "../NavSearchContainer";
 import Modal from "../../lib/Modal";
+import { useLogout } from "../../hooks/useLogout";
 
 const Header = styled.header`
   height: ${(props) => props.height};
@@ -57,10 +58,12 @@ const LinkContainer = styled.nav`
 
 const MainHeader = () => {
   const [navColorChange, setNavColorChange] = useState(false);
-  const [isAuth, setIsAuth] = useRecoilState(authAtom);
+  const authUser = useRecoilValue(authUserAtom);
   const [isSearchbar, setIsSearchBar] = useRecoilState(searchBarAtom);
 
-  const navigate = useNavigate("/");
+  const { logout } = useLogout();
+
+  const navigate = useNavigate();
   const headerRef = useRef();
 
   const homeMatch = useMatch("/");
@@ -76,11 +79,8 @@ const MainHeader = () => {
   }, []);
 
   const logoutHandler = useCallback(() => {
-    localStorage.removeItem("id");
-    setIsAuth(localStorage.getItem("id") !== null);
-    if (!isAuth) {
-      navigate("/");
-    }
+    logout();
+    navigate("/");
   }, []);
 
   const closeModalHandler = useCallback(() => {
@@ -113,7 +113,7 @@ const MainHeader = () => {
             <Link to="/myPage">
               <FiUser />
             </Link>
-            {isAuth && <span onClick={logoutHandler}>Log Out</span>}
+            {authUser.user && <span onClick={logoutHandler}>Log Out</span>}
           </LinkContainer>
           <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
             <Link to="/">Home</Link>

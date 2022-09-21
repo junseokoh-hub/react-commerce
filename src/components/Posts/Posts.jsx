@@ -35,6 +35,7 @@ const PageSelect = styled.li`
 `;
 
 const IndivProductArticle = styled.div`
+  padding: 10px 0;
   min-height: 300px;
   border-radius: 10px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
