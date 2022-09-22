@@ -83,12 +83,13 @@ const Posts = ({ posts }) => {
         </PageSelect>
       </PageSelectContainer>
       <ProductsContainer>
-        {filteredPosts.map(({ id, title, image, thumbnail, isbn }) => (
+        {filteredPosts.map(({ id, title, image, thumbnail, isbn, price }) => (
           <ProductsList
             key={id || isbn}
             title={title}
             image={image}
             thumbnail={thumbnail}
+            price={price}
           />
         ))}
       </ProductsContainer>

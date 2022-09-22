@@ -14,12 +14,13 @@ const SearchPage = () => {
   const { data, isLoading, isError, error } = useQuery(["books", keyword], () =>
     fetchSearchBooks(keyword),
   );
+  console.log(data?.data?.documents);
 
   if (isLoading) return <LoadingSpinner />;
 
   if (isError) return <div>{error.toString()}</div>;
 
-  return <Posts posts={data.data.documents} />;
+  return <Posts posts={data?.data?.documents} />;
 };
 
 export default SearchPage;

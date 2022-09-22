@@ -38,8 +38,9 @@ const LinkContainer = styled.nav`
     height: 40%;
     svg {
       &.glass {
-        padding-right: 20px;
+        margin-right: 20px;
       }
+      cursor: pointer;
       font-size: 30px;
     }
     span {

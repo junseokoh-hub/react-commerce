@@ -7,7 +7,7 @@ import { useCollection } from "../../hooks/useCollection";
 import { useRecoilValue } from "recoil";
 import { authUserAtom } from "../../store/authAtom";
 import { increment } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 
 const IndivProductArticle = styled.div`
   padding: 10px;
@@ -51,9 +51,10 @@ const BtnContainer = styled.div`
   }
 `;
 
-const ProductsList = ({ title, image, thumbnail }) => {
+const ProductsList = ({ title, image, thumbnail, price }) => {
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
+  const searchMatch = useMatch("/search/*");
   const authUser = useRecoilValue(authUserAtom);
   const { documents: myCarts, error } = useCollection(
     "myCarts",
@@ -70,16 +71,20 @@ const ProductsList = ({ title, image, thumbnail }) => {
       const existingItem = myCarts.find((myCart) => myCart.id === title);
       console.log(existingItem);
       if (!existingItem) {
-        setDocument(title, {
-          title,
-          image: image || thumbnail,
-          quantity,
-          uid: authUser.user.uid,
-        });
-      } else {
-        updateDocument(title, { quantity: increment(quantity) });
+        if (window.confirm(`이 상품을 장바구니에 넣으시겠습니까?`)) {
+          setDocument(title, {
+            title,
+            image: image || thumbnail,
+            quantity,
+            price: searchMatch ? price * 0.0007 : price,
+            uid: authUser.user.uid,
+          });
+        } else {
+          updateDocument(title, { quantity: increment(quantity) });
+        }
       }
     }
+    setQuantity(1);
   }, [authUser.user, setDocument, updateDocument]);
 
   return (
