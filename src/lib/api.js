@@ -24,3 +24,8 @@ export const fetchSearchBooks = async (query) => {
   );
   return response;
 };
+
+export const fetchImages = async () => {
+  const response = await Kakao.get(`/v2/search/image?query=skinfood&size=20`);
+  return response;
+};

@@ -49,6 +49,9 @@ table {
 html {
 	font-family: 'Poppins', sans-serif;
 }
+* {
+	box-sizing: border-box;
+}
 
 body {
 	height: 100vh;

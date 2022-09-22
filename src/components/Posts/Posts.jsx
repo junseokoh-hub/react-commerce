@@ -37,18 +37,28 @@ const PageSelect = styled.li`
 const Posts = ({ posts }) => {
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
-  // const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState("asc");
 
   const changeSelectOptions = useCallback((e) => {
     setLimit(e.target.value);
     setPage(1);
   }, []);
 
-  // const changeOrderSelectOptions = useCallback((e) => {
-  //   setOrder(e.target.value);
-  // }, []);
+  const changeOrderSelectOptions = useCallback((e) => {
+    setOrder(e.target.value);
+  }, []);
 
   const offset = (page - 1) * limit;
+
+  const filteredPosts = posts
+    ?.sort((a, b) => {
+      if (order === "asc") {
+        return a.title.charCodeAt(0) - b.title.charCodeAt(0);
+      } else if (order === "desc") {
+        return b.title.charCodeAt(0) - a.title.charCodeAt(0);
+      }
+    })
+    ?.slice(offset, offset + limit);
 
   console.log("rendering");
   return (
@@ -64,32 +74,23 @@ const Posts = ({ posts }) => {
             <option value="100">100</option>
           </select>
         </PageSelect>
-        {/* <PageSelect>
+        <PageSelect>
           <label>차순:&nbsp;</label>
           <select type="text" value={order} onChange={changeOrderSelectOptions}>
             <option value="asc">오름차순</option>
             <option value="desc">내림차순</option>
           </select>
-        </PageSelect> */}
+        </PageSelect>
       </PageSelectContainer>
       <ProductsContainer>
-        {posts
-          // ?.sort((a, b) => {
-          //   if (order === "asc") {
-          //     return a.title.charCodeAt(0) - b.title.charCodeAt(0);
-          //   } else {
-          //     return b.title.charCodeAt(0) - a.title.charCodeAt(0);
-          //   }
-          // })
-          ?.slice(offset, offset + limit)
-          .map(({ id, title, image, thumbnail, isbn }) => (
-            <ProductsList
-              key={id || isbn}
-              title={title}
-              image={image}
-              thumbnail={thumbnail}
-            />
-          ))}
+        {filteredPosts.map(({ id, title, image, thumbnail, isbn }) => (
+          <ProductsList
+            key={id || isbn}
+            title={title}
+            image={image}
+            thumbnail={thumbnail}
+          />
+        ))}
       </ProductsContainer>
       <footer>
         <Pagination

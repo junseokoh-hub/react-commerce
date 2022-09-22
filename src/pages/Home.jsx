@@ -7,6 +7,7 @@ import perfume2 from "../images/perfume2.jpg";
 import perfume3 from "../images/perfume3.jpg";
 import { useQuery } from "react-query";
 import { fetchProducts } from "../lib/api";
+import ImageSection from "../components/ImageSection/ImageSection";
 
 const DUMMY_DATA = [
   {
@@ -34,10 +35,18 @@ const MainImgContainer = styled.div`
 const LiningImgContainer = styled.div`
   margin-top: 20px;
   height: 60vh;
+  position: relative;
   background: url(${(props) => props.bgphoto});
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  strong {
+    position: absolute;
+    right: 300px;
+    bottom: 100px;
+    font-size: 50px;
+    font-weight: bolder;
+  }
 `;
 
 const Home = () => {
@@ -66,9 +75,12 @@ const Home = () => {
             <LiningImgContainer
               bgphoto={item.image}
               key={item.id + item.description}
-            />
+            >
+              <strong>${item.price}</strong>
+            </LiningImgContainer>
           ))}
       </StyledSlider>
+      <ImageSection />
     </>
   );
 };
