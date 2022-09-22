@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import { handleImgError } from "../../utils/handleErrorImg";
 import Pagination from "../Pagination/Pagination";
+import ProductsList from "../Products/ProductsList";
 
 const ProductsWrapper = styled.section`
   margin: 0 auto;
@@ -34,34 +34,23 @@ const PageSelect = styled.li`
   }
 `;
 
-const IndivProductArticle = styled.div`
-  padding: 10px 0;
-  min-height: 300px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
-  img {
-    margin: 0 auto;
-    width: 200px;
-    height: 200px;
-    display: flex;
-  }
-`;
-
 const Posts = ({ posts }) => {
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
-  const [order, setOrder] = useState("asc");
+  // const [order, setOrder] = useState("asc");
 
   const changeSelectOptions = useCallback((e) => {
     setLimit(e.target.value);
     setPage(1);
   }, []);
 
-  const changeOrderSelectOptions = useCallback((e) => {
-    setOrder(e.target.value);
-  }, []);
+  // const changeOrderSelectOptions = useCallback((e) => {
+  //   setOrder(e.target.value);
+  // }, []);
 
   const offset = (page - 1) * limit;
+
+  console.log("rendering");
   return (
     <ProductsWrapper>
       <PageSelectContainer>
@@ -75,33 +64,31 @@ const Posts = ({ posts }) => {
             <option value="100">100</option>
           </select>
         </PageSelect>
-        <PageSelect>
+        {/* <PageSelect>
           <label>차순:&nbsp;</label>
           <select type="text" value={order} onChange={changeOrderSelectOptions}>
             <option value="asc">오름차순</option>
             <option value="desc">내림차순</option>
           </select>
-        </PageSelect>
+        </PageSelect> */}
       </PageSelectContainer>
       <ProductsContainer>
         {posts
-          ?.sort((a, b) => {
-            if (order === "asc") {
-              return a.title.charCodeAt(0) - b.title.charCodeAt(0);
-            } else {
-              return b.title.charCodeAt(0) - a.title.charCodeAt(0);
-            }
-          })
+          // ?.sort((a, b) => {
+          //   if (order === "asc") {
+          //     return a.title.charCodeAt(0) - b.title.charCodeAt(0);
+          //   } else {
+          //     return b.title.charCodeAt(0) - a.title.charCodeAt(0);
+          //   }
+          // })
           ?.slice(offset, offset + limit)
           .map(({ id, title, image, thumbnail, isbn }) => (
-            <IndivProductArticle key={id || isbn}>
-              <img
-                src={image || thumbnail}
-                alt={title}
-                onError={handleImgError}
-              />
-              <h3 style={{ textAlign: "center" }}>{title}</h3>
-            </IndivProductArticle>
+            <ProductsList
+              key={id || isbn}
+              title={title}
+              image={image}
+              thumbnail={thumbnail}
+            />
           ))}
       </ProductsContainer>
       <footer>

@@ -3,13 +3,11 @@ import { appAuth } from "../lib/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useSetRecoilState } from "recoil";
 import { authUserAtom } from "../store/authAtom";
-import { useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const setAuthUser = useSetRecoilState(authUserAtom);
-  const navigate = useNavigate();
 
   const login = (email, password) => {
     setError(null);
@@ -24,7 +22,6 @@ export const useLogin = () => {
         if (!user) {
           throw new Error(`회원가입에 실패`);
         }
-        navigate("/", { replace: true });
       })
       .catch((err) => {
         setError(err.message);

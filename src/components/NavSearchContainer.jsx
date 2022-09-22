@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useMatch, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { searchBarAtom } from "../store/searchBarAtom";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
@@ -22,7 +22,7 @@ const SearchBarContainer = styled.header`
   justify-content: center;
   background: linear-gradient(
     ${(props) => props.theme.orange.lighter},
-    ${(props) => props.theme.brown.normal}
+    ${(props) => props.theme.orange.normal}
   );
   z-index: 10000;
   li {
@@ -88,7 +88,7 @@ const PopularImgContainer = styled.li`
 `;
 
 const NavSearchContainer = () => {
-  const [isSearchbar, setIsSearchBar] = useRecoilState(searchBarAtom);
+  const setIsSearchBar = useSetRecoilState(searchBarAtom);
   const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
 

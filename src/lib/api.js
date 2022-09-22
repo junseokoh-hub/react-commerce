@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+const API_KEY = process.env.REACT_APP_KAKAO_KEY;
 
 export const Kakao = axios.create({
   baseURL: "https://dapi.kakao.com",
@@ -19,6 +19,8 @@ export const fetchProducts = async () => {
 };
 
 export const fetchSearchBooks = async (query) => {
-  const response = await Kakao.get(`/v3/search/book?query=${query}&size=50`);
+  const response = await Kakao.get(
+    `/v3/search/book?query=${query}&searched=true`,
+  );
   return response;
 };

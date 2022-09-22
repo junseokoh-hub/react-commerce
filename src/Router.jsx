@@ -40,11 +40,11 @@ const Router = () => {
         />
         {!authUser.user && <Route path="/login" element={<LoginPage />} />}
         {authUser.user && (
-          <Route path="/login" element={<Navigate to="/myPage" />} />
+          <Route path="/login" element={<Navigate to="/" replace={true} />} />
         )}
         {!authUser.user && <Route path="/signup" element={<SignupPage />} />}
         {authUser.user && (
-          <Route path="/signup" element={<Navigate to="/myPage" />} />
+          <Route path="/signup" element={<Navigate to="/" replace={true} />} />
         )}
         <Route path="*" element={<NotFound />} />
       </Routes>

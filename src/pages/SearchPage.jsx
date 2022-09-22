@@ -7,10 +7,10 @@ import { fetchSearchBooks } from "../lib/api";
 import LoadingSpinner from "../utils/LoadingSpinner";
 
 const SearchPage = () => {
-  useTitle("Search");
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const keyword = query.get("keyword");
+  useTitle(`Search / ${keyword}`);
   const { data, isLoading, isError, error } = useQuery(["books", keyword], () =>
     fetchSearchBooks(keyword),
   );
