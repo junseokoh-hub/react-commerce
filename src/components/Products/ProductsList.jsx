@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { handleImgError } from "../../utils/handleErrorImg";
 import { BsCart4 } from "react-icons/bs";
+import { useFireStore } from "../../hooks/useFirestore";
+import { useCollection } from "../../hooks/useCollection";
+import { useRecoilValue } from "recoil";
+import { authUserAtom } from "../../store/authAtom";
+import { increment } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const IndivProductArticle = styled.div`
   padding: 10px;
@@ -23,6 +29,7 @@ const IndivProductArticle = styled.div`
     bottom: 20px;
     right: 15px;
     font-size: 30px;
+    cursor: pointer;
   }
 `;
 
@@ -45,27 +52,57 @@ const BtnContainer = styled.div`
 `;
 
 const ProductsList = ({ title, image, thumbnail }) => {
-  const [count, setCount] = useState(1);
+  const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
+  const authUser = useRecoilValue(authUserAtom);
+  const { documents: myCarts, error } = useCollection(
+    "myCarts",
+    authUser.user && ["uid", "==", authUser.user.uid],
+  );
+  const { setDocument, updateDocument } = useFireStore("myCarts");
+
+  const addToCart = useCallback(() => {
+    if (!authUser.user) {
+      if (window.confirm("로그인 하시겠습니까?")) {
+        navigate("/login");
+      }
+    } else {
+      const existingItem = myCarts.find((myCart) => myCart.id === title);
+      console.log(existingItem);
+      if (!existingItem) {
+        setDocument(title, {
+          title,
+          image: image || thumbnail,
+          quantity,
+          uid: authUser.user.uid,
+        });
+      } else {
+        updateDocument(title, { quantity: increment(quantity) });
+      }
+    }
+  }, [authUser.user, setDocument, updateDocument]);
+
   return (
     <IndivProductArticle>
       <img src={image || thumbnail} alt={title} onError={handleImgError} />
       <h3>{title}</h3>
       <BtnContainer>
         <button
-          disabled={count === 1}
-          onClick={() => setCount((prev) => prev - 1)}
+          disabled={quantity === 1}
+          onClick={() => setQuantity((prev) => prev - 1)}
         >
           -
         </button>
-        <span>{count}</span>
+        <span>{quantity}</span>
         <button
-          disabled={count === 50}
-          onClick={() => setCount((prev) => prev + 1)}
+          disabled={quantity === 50}
+          onClick={() => setQuantity((prev) => prev + 1)}
         >
           +
         </button>
       </BtnContainer>
-      <BsCart4 className="add_cart" />
+      <BsCart4 className="add_cart" onClick={addToCart} />
+      <strong>{error}</strong>
     </IndivProductArticle>
   );
 };
