@@ -68,7 +68,8 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
         navigate("/login");
       }
     } else {
-      const existingItem = myCarts.find((myCart) => myCart.id === title);
+      const existingItem =
+        myCarts && myCarts.find((myCart) => myCart.id === title);
       console.log(existingItem);
       if (!existingItem) {
         if (window.confirm(`이 상품을 장바구니에 넣으시겠습니까?`)) {
@@ -76,7 +77,7 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
             title,
             image: image || thumbnail,
             quantity,
-            price: searchMatch ? price * 0.0007 : price,
+            price: searchMatch ? price * 0.0007 * quantity : price * quantity,
             uid: authUser.user.uid,
           });
         } else {

@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useCallback, useReducer } from "react";
 import {
   addDoc,
   deleteDoc,
@@ -46,7 +46,7 @@ export const useFireStore = (transaction) => {
   const colRef = collection(appFireStore, transaction);
 
   // 컬렉션에 문서를 추가한다.
-  const addDocument = async (doc) => {
+  const addDocument = useCallback(async (doc) => {
     dispatch({ type: "isLoading" });
     try {
       const createdTime = timestamp.fromDate(new Date());
@@ -56,9 +56,9 @@ export const useFireStore = (transaction) => {
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
     }
-  };
+  }, []);
 
-  const setDocument = async (title, info) => {
+  const setDocument = useCallback(async (title, info) => {
     dispatch({ type: "isLoading" });
     try {
       const createdTime = timestamp.fromDate(new Date());
@@ -71,11 +71,11 @@ export const useFireStore = (transaction) => {
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
     }
-  };
+  }, []);
 
   // 컬렉션에서 문서를 업데이트 한다.
 
-  const updateDocument = async (id, options) => {
+  const updateDocument = useCallback(async (id, options) => {
     dispatch({ type: "isLoading" });
     try {
       const docRef = await updateDoc(doc(colRef, id), options);
@@ -83,10 +83,10 @@ export const useFireStore = (transaction) => {
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
     }
-  };
+  }, []);
 
   // 컬렉션에서 문서를 제거한다.
-  const deleteDocument = async (id) => {
+  const deleteDocument = useCallback(async (id) => {
     dispatch({ type: "isLoading" });
     try {
       const docRef = await deleteDoc(doc(colRef, id));
@@ -94,7 +94,7 @@ export const useFireStore = (transaction) => {
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
     }
-  };
+  }, []);
 
   return { addDocument, setDocument, updateDocument, deleteDocument, response };
 };

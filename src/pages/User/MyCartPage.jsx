@@ -1,39 +1,20 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { useCollection } from "../../hooks/useCollection";
 import { useTitle } from "../../hooks/useTitle";
 import { authUserAtom } from "../../store/authAtom";
-import { useFireStore } from "../../hooks/useFirestore";
+import MyCartList from "../../components/Cart/MyCartList";
 
 const MyCartListWrapper = styled.section`
   padding: 20px 10px;
-`;
-
-const MyCartList = styled.li`
-  margin-bottom: 5px;
-  padding: 5px;
-  border: 1px solid black;
-  display: flex;
-  align-items: center;
-
-  img {
-    width: 100px;
-    height: 200px;
-  }
-`;
-
-const ContentDetail = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
 `;
 
 const TotalContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   span {
-    margin-right: 130px;
+    margin-right: 20px;
     font-weight: bold;
   }
 `;
@@ -47,63 +28,24 @@ const MyCartPage = () => {
     authUser.user.uid,
   ]);
 
-  const { updateDocument } = useFireStore("myCarts");
-
-  const totalQuantity =
-    !error &&
-    carts &&
-    carts.map((cart) => cart.quantity).reduce((a, c) => a + c);
+  const totalQuantity = useMemo(() => {
+    return carts?.map((cart) => cart.quantity).reduce((a, c) => a + c);
+  }, [carts]);
 
   const totalPrice =
-    !error &&
-    carts &&
-    carts
-      .map((cart) => cart.price)
-      .reduce((a, c) => a + c)
-      .toFixed(2);
+    !error && carts && carts.map((cart) => cart.price).reduce((a, c) => a + c);
 
   return (
     <MyCartListWrapper>
       <ul>
         {!error &&
           carts &&
-          carts.map((cart) => (
-            <MyCartList key={Math.random()}>
-              <img src={cart.image} alt={cart.title} />
-              <ContentDetail>
-                <span>{cart.title}</span>
-                <span>
-                  <button
-                    disabled={cart.quantity === 1}
-                    onClick={() =>
-                      updateDocument(cart.title, {
-                        quantity: cart.quantity - 1,
-                      })
-                    }
-                  >
-                    -
-                  </button>
-                  <span>{cart.quantity}</span>
-                  <button
-                    disabled={cart.quantity === 50}
-                    onClick={() =>
-                      updateDocument(cart.title, {
-                        quantity: cart.quantity + 1,
-                      })
-                    }
-                  >
-                    +
-                  </button>
-                </span>
-                <span>${cart.price?.toFixed(0)}</span>
-              </ContentDetail>
-            </MyCartList>
-          ))}
+          carts.map((cart) => <MyCartList key={cart.id} cart={cart} />)}
       </ul>
       <hr />
       <TotalContainer>
         <span>총 갯수 : {totalQuantity}</span>
-        <span>합계 : ${totalPrice}</span>
+        <span>합계 : ${(totalPrice * totalQuantity).toFixed(2)}</span>
       </TotalContainer>
     </MyCartListWrapper>
   );
