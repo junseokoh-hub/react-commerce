@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink, Outlet } from "react-router-dom";
-import { useTitle } from "../../hooks/useTitle";
 
 const CommunitySection = styled.section`
   display: flex;
@@ -37,7 +36,6 @@ const CommunityNavIndex = styled.ul`
 `;
 
 const CommunityPage = () => {
-  useTitle("Community");
   return (
     <CommunitySection>
       <CommunityNav>
