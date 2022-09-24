@@ -46,55 +46,67 @@ export const useFireStore = (transaction) => {
   const colRef = collection(appFireStore, transaction);
 
   // 컬렉션에 문서를 추가한다.
-  const addDocument = useCallback(async (doc) => {
-    dispatch({ type: "isLoading" });
-    try {
-      const createdTime = timestamp.fromDate(new Date());
-      const docRef = await addDoc(colRef, { ...doc, createdTime });
-      console.log(docRef);
-      dispatch({ type: "addDoc", payload: docRef });
-    } catch (error) {
-      dispatch({ type: "error", payload: error.message });
-    }
-  }, []);
+  const addDocument = useCallback(
+    async (doc) => {
+      dispatch({ type: "isLoading" });
+      try {
+        const createdTime = timestamp.fromDate(new Date());
+        const docRef = await addDoc(colRef, { ...doc, createdTime });
+        console.log(docRef);
+        dispatch({ type: "addDoc", payload: docRef });
+      } catch (error) {
+        dispatch({ type: "error", payload: error.message });
+      }
+    },
+    [colRef],
+  );
 
-  const setDocument = useCallback(async (title, info) => {
-    dispatch({ type: "isLoading" });
-    try {
-      const createdTime = timestamp.fromDate(new Date());
-      const docRef = await setDoc(doc(colRef, title), {
-        ...info,
-        createdTime,
-      });
+  const setDocument = useCallback(
+    async (title, info) => {
+      dispatch({ type: "isLoading" });
+      try {
+        const createdTime = timestamp.fromDate(new Date());
+        const docRef = await setDoc(doc(colRef, title), {
+          ...info,
+          createdTime,
+        });
 
-      dispatch({ type: "addDoc", payload: docRef });
-    } catch (error) {
-      dispatch({ type: "error", payload: error.message });
-    }
-  }, []);
+        dispatch({ type: "addDoc", payload: docRef });
+      } catch (error) {
+        dispatch({ type: "error", payload: error.message });
+      }
+    },
+    [colRef],
+  );
 
   // 컬렉션에서 문서를 업데이트 한다.
 
-  const updateDocument = useCallback(async (id, options) => {
-    dispatch({ type: "isLoading" });
-    try {
-      const docRef = await updateDoc(doc(colRef, id), options);
-      dispatch({ type: "updateDoc", payload: docRef });
-    } catch (error) {
-      dispatch({ type: "error", payload: error.message });
-    }
-  }, []);
+  const updateDocument = useCallback(
+    async (id, options) => {
+      dispatch({ type: "isLoading" });
+      try {
+        const docRef = await updateDoc(doc(colRef, id), options);
+        dispatch({ type: "updateDoc", payload: docRef });
+      } catch (error) {
+        dispatch({ type: "error", payload: error.message });
+      }
+    },
+    [colRef],
+  );
 
   // 컬렉션에서 문서를 제거한다.
-  const deleteDocument = useCallback(async (id) => {
-    dispatch({ type: "isLoading" });
-    try {
-      const docRef = await deleteDoc(doc(colRef, id));
-      dispatch({ type: "deleteDoc", payload: docRef });
-    } catch (error) {
-      dispatch({ type: "error", payload: error.message });
-    }
-  }, []);
+  const deleteDocument = useCallback(
+    async (id) => {
+      dispatch({ type: "isLoading" });
+      try {
+        const docRef = await deleteDoc(doc(colRef, id));
+        dispatch({ type: "deleteDoc", payload: docRef });
+      } catch (error) {
+        dispatch({ type: "error", payload: error.message });
+      }
+    },
+    [colRef],
+  );
 
   return { addDocument, setDocument, updateDocument, deleteDocument, response };
 };

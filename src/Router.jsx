@@ -15,6 +15,7 @@ import { useRecoilValue } from "recoil";
 import { authUserAtom } from "./store/authAtom";
 import SignupPage from "./pages/Auth/SignupPage";
 import Faq from "./pages/Community/Faq";
+import ReviewNew from "./components/Review/ReviewNew";
 import ReviewEditor from "./components/Review/ReviewEditor";
 
 const Router = () => {
@@ -27,7 +28,8 @@ const Router = () => {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/community/*" element={<CommunityPage />}>
           <Route path="review/*" element={<ReviewPage />}>
-            <Route path="edit" element={<ReviewEditor />} />
+            <Route path="new" element={<ReviewNew />} />
+            <Route path="edit/:id" element={<ReviewEditor />} />
           </Route>
           <Route path="faq" element={<Faq />} />
         </Route>

@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import OutletLayout from "../../components/Layout/OutletLayout";
+import ReviewList from "../../components/Review/ReviewList";
+import { useCollection } from "../../hooks/useCollection";
 import { useTitle } from "../../hooks/useTitle";
+import { authUserAtom } from "../../store/authAtom";
+
+const ReviewIdentifier = styled.h3`
+  margin-bottom: 30px;
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+`;
 
 const ReviewSection = styled.section`
+  padding: 10px 0;
   min-height: 400px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  article {
+    min-height: inherit;
+    ul {
+      min-height: inherit;
+    }
+  }
 `;
 
 const ReviewBtnContainer = styled.div`
@@ -31,25 +50,47 @@ const ReviewBtn = styled.button`
 const ReviewPage = () => {
   useTitle("Review");
   const navigate = useNavigate();
-  const editMatch = useMatch("/community/review/edit");
+  const reviewMatch = useMatch("/community/review");
+
+  const authUser = useRecoilValue(authUserAtom);
+
+  const { documents: reviews } = useCollection("reviews");
+
+  const goEditPage = useCallback(() => {
+    if (!authUser.user) {
+      if (window.confirm(`로그인 하시겠습니까?`)) {
+        navigate("/login");
+      }
+    }
+    navigate("new");
+  }, [authUser.user]);
 
   return (
     <OutletLayout>
-      {!editMatch ? (
+      {reviewMatch && <ReviewIdentifier>Review</ReviewIdentifier>}
+      {reviewMatch && (
         <>
           <ReviewSection>
-            <article>No Reviews...</article>
+            <article>
+              {reviews?.length === 0 ? (
+                "No Reviews..."
+              ) : (
+                <ul>
+                  {reviews &&
+                    reviews.map((review) => (
+                      <ReviewList key={review.id} review={review} />
+                    ))}
+                </ul>
+              )}
+            </article>
           </ReviewSection>
           <hr />
           <ReviewBtnContainer>
-            <ReviewBtn onClick={() => navigate("edit")}>
-              리뷰 작성하기
-            </ReviewBtn>
+            <ReviewBtn onClick={goEditPage}>리뷰 작성하기</ReviewBtn>
           </ReviewBtnContainer>
         </>
-      ) : (
-        <Outlet />
       )}
+      <Outlet />
     </OutletLayout>
   );
 };
