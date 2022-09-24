@@ -85,7 +85,7 @@ const MyCartList = ({ cart }) => {
         ${(cart.price * cart.quantity).toFixed(2)}
         <RiDeleteBin5Line
           className="delete-bin"
-          onClick={() => deleteDocument(cart.title)}
+          onClick={() => deleteDocument(cart.title + cart.uid)}
         />
       </span>
     </MyCartItem>

@@ -140,7 +140,7 @@ const SignupPage = () => {
               id="displayName"
               type="text"
             />
-            <ErrorMessage></ErrorMessage>
+            <ErrorMessage>{errors.displayName?.message}</ErrorMessage>
             <label htmlFor="signupPassword">비밀번호</label>
             <input
               {...register("signupPassword", passwordValidation)}

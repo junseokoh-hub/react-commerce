@@ -8,6 +8,15 @@ import MyCartList from "../../components/Cart/MyCartList";
 
 const MyCartListWrapper = styled.section`
   padding: 20px 10px;
+  ul {
+    min-height: 400px;
+    div {
+      min-height: inherit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 `;
 
 const TotalContainer = styled.div`
@@ -28,12 +37,15 @@ const MyCartPage = () => {
     authUser.user.uid,
   ]);
 
-  const totalQuantity = useMemo(() => {
-    return carts?.map((cart) => cart.quantity).reduce((a, c) => a + c);
-  }, [carts]);
+  const totalQuantity =
+    carts?.length > 0
+      ? carts.map((cart) => cart.quantity).reduce((a, c) => a + c)
+      : 0;
 
   const totalPrice =
-    !error && carts && carts.map((cart) => cart.price).reduce((a, c) => a + c);
+    !error && carts?.length > 0
+      ? carts.map((cart) => cart.price).reduce((a, c) => a + c)
+      : 0;
 
   return (
     <MyCartListWrapper>
@@ -41,6 +53,7 @@ const MyCartPage = () => {
         {!error &&
           carts &&
           carts.map((cart) => <MyCartList key={cart.id} cart={cart} />)}
+        {carts?.length === 0 && <div>Nothing in yoru cart...</div>}
       </ul>
       <hr />
       <TotalContainer>

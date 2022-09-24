@@ -8,8 +8,12 @@ import LoadingSpinner from "../../utils/LoadingSpinner";
 const LoginPageContainer = styled.section`
   height: 80vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  h4 {
+    margin-top: 10px;
+  }
 `;
 
 const LoginFieldset = styled.fieldset`
@@ -121,7 +125,7 @@ const LoginPage = () => {
       ) : (
         <LoadingSpinner />
       )}
-      {error && <strong>{error}</strong>}
+      {error && <h4>{error}</h4>}
     </LoginPageContainer>
   );
 };

@@ -69,24 +69,26 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
       }
     } else {
       const existingItem =
-        myCarts && myCarts.find((myCart) => myCart.id === title);
-      console.log(existingItem);
+        myCarts &&
+        myCarts.find((myCart) => myCart.id === title + authUser.user.uid);
       if (!existingItem) {
         if (window.confirm(`이 상품을 장바구니에 넣으시겠습니까?`)) {
-          setDocument(title, {
+          setDocument(title + authUser.user.uid, {
             title,
             image: image || thumbnail,
             quantity,
             price: searchMatch ? price * 0.0007 * quantity : price * quantity,
             uid: authUser.user.uid,
           });
-        } else {
-          updateDocument(title, { quantity: increment(quantity) });
         }
+      } else {
+        updateDocument(title + authUser.user.uid, {
+          quantity: increment(quantity),
+        });
       }
     }
     setQuantity(1);
-  }, [authUser.user, setDocument, updateDocument]);
+  }, [authUser.user, setDocument, updateDocument, quantity, price]);
 
   return (
     <IndivProductArticle>
@@ -113,4 +115,4 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
   );
 };
 
-export default ProductsList;
+export default React.memo(ProductsList);
