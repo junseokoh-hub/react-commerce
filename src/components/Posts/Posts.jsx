@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import Pagination from "../Pagination/Pagination";
 import ProductsList from "../Products/ProductsList";
+import SelectOptions from "./SelectOptions";
 
 const ProductsWrapper = styled.section`
   margin: 0 auto;
@@ -34,19 +35,23 @@ const PageSelect = styled.li`
   }
 `;
 
+const limitOptions = [
+  { value: 4, content: "4" },
+  { value: 10, content: "10" },
+  { value: 20, content: "20" },
+  { value: 50, content: "50" },
+  { value: 100, content: "100" },
+];
+
+const orderOptions = [
+  { value: "asc", content: "오름차순" },
+  { value: "desc", content: "내림차순" },
+];
+
 const Posts = ({ posts }) => {
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
   const [order, setOrder] = useState("asc");
-
-  const changeSelectOptions = useCallback((e) => {
-    setLimit(e.target.value);
-    setPage(1);
-  }, []);
-
-  const changeOrderSelectOptions = useCallback((e) => {
-    setOrder(e.target.value);
-  }, []);
 
   const offset = (page - 1) * limit;
 
@@ -64,23 +69,16 @@ const Posts = ({ posts }) => {
   return (
     <ProductsWrapper>
       <PageSelectContainer>
-        <PageSelect>
-          <label>게시물 수:&nbsp;</label>
-          <select type="number" value={limit} onChange={changeSelectOptions}>
-            <option value="4">4</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </PageSelect>
-        <PageSelect>
-          <label>차순:&nbsp;</label>
-          <select type="text" value={order} onChange={changeOrderSelectOptions}>
-            <option value="asc">오름차순</option>
-            <option value="desc">내림차순</option>
-          </select>
-        </PageSelect>
+        <SelectOptions
+          value={limit}
+          setValue={setLimit}
+          options={limitOptions}
+        />
+        <SelectOptions
+          value={order}
+          setValue={setOrder}
+          options={orderOptions}
+        />
       </PageSelectContainer>
       <ProductsContainer>
         {filteredPosts.map(({ id, title, image, thumbnail, isbn, price }) => (
