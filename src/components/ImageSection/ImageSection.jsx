@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchImages } from "../../lib/api";
 import { BsInstagram } from "react-icons/bs";
-import { Link } from "react-router-dom";
 import LoadingSpinner from "../../utils/LoadingSpinner";
+import { useMemo } from "react";
 
 const ImageWrapper = styled.section`
   padding-top: 300px;
@@ -35,7 +35,9 @@ const ImageContainer = styled.ul`
   gap: 5px;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  opacity: ${(props) => props.fadeIn};
+  transition: all 0.7s ease-in-out;
+  opacity: ${(props) => props.opacity};
+  transform: ${(props) => props.transform};
   li {
     display: flex;
   }
@@ -48,6 +50,36 @@ const ImageSection = () => {
   );
 
   const imageData = data?.data?.documents;
+
+  const imgRef = useRef(null);
+  const [animated, setAnimated] = useState(false);
+
+  const callback = (entries) => {
+    const [entry] = entries;
+    setAnimated(entry.isIntersecting);
+  };
+
+  const options = useMemo(() => {
+    return {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.1,
+    };
+  }, []);
+
+  useEffect(() => {
+    const io = new IntersectionObserver(callback, options);
+    const currentTarget = imgRef.current;
+    if (currentTarget) {
+      io.observe(currentTarget);
+    }
+
+    return () => {
+      io.unobserve(currentTarget);
+    };
+  }, [imgRef, options]);
+
+  console.log("rendering");
 
   return (
     <ImageWrapper>
@@ -64,7 +96,11 @@ const ImageSection = () => {
       <hr />
       {isLoading && <LoadingSpinner />}
       {isError && <div>{error?.message}</div>}
-      <ImageContainer>
+      <ImageContainer
+        ref={imgRef}
+        opacity={animated ? 1 : 0}
+        transform={animated || "translateY(100px)"}
+      >
         {imageData?.map((item) => (
           <li key={item.image_url}>
             <img src={item.thumbnail_url} alt={item.collection} />
