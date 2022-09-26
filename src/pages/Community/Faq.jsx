@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import styled from "styled-components";
 import Accordion from "../../components/Accordion/Accordion";
 import OutletLayout from "../../components/Layout/OutletLayout";
@@ -35,6 +36,9 @@ const FaqTitle = styled.h3`
 const Faq = () => {
   return (
     <OutletLayout>
+      <Helmet>
+        <title>FAQ</title>
+      </Helmet>
       <FaqTitle>자주 묻는 질문</FaqTitle>
       {DUMMY_DATA.map((data) => (
         <Accordion key={data.title} data={data} />

@@ -2,13 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
 import MainHeader from "../MainHeader/MainHeader";
-import Footage from "./Footage";
 import { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
+import Footer from "./Footer";
 
 const Main = styled.main`
   padding-top: ${(props) => props.padding};
+  min-height: 60vh;
 `;
 
 const Layout = ({ children }) => {
@@ -46,7 +47,7 @@ const Layout = ({ children }) => {
       <MainHeader view={view} />
       <div ref={mainRef} />
       <Main padding={homeMatch ? "0" : "20vh"}>{children}</Main>
-      <Footage />
+      <Footer />
     </>
   );
 };

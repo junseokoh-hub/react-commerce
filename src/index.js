@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
@@ -20,10 +21,12 @@ root.render(
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <ScrollToTop />
-          <App />
-        </ThemeProvider>
+        <HelmetProvider>
+          <ThemeProvider theme={theme}>
+            <ScrollToTop />
+            <App />
+          </ThemeProvider>
+        </HelmetProvider>
       </BrowserRouter>
     </QueryClientProvider>
   </RecoilRoot>,

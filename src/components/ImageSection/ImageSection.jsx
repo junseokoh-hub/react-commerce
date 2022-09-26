@@ -52,9 +52,13 @@ const ImageSection = () => {
   return (
     <ImageWrapper>
       <h3>
-        <Link to="https://www.instagram.com">
+        <a
+          rel="noreferrer noopener"
+          target="_blank"
+          href="https://www.instagram.com"
+        >
           <BsInstagram className="insta_logo" />
-        </Link>
+        </a>
         <span>X</span>Instagram
       </h3>
       <hr />

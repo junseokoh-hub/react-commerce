@@ -1,21 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import FooterInfo from "../Footer/FooterInfo";
+import FooterLinks from "../Footer/FooterLinks";
 
 const FooterWrapper = styled.footer`
+  padding: 40px 100px;
   height: 300px;
   background-color: ${(props) => props.theme.brown.normal};
 `;
 
-const Footage = () => {
+const Footer = () => {
   return (
     <FooterWrapper>
-      <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
+      <FooterLinks />
+      <FooterInfo />
     </FooterWrapper>
   );
 };
 
-export default Footage;
+export default Footer;

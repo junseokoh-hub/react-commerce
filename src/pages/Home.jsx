@@ -59,6 +59,8 @@ const Home = () => {
   const menClothesData =
     data && data.filter((item) => item.category === "men's clothing");
 
+  console.log("rendering");
+
   return (
     <>
       <StyledSlider>

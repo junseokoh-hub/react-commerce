@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import { Outlet, useMatch, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -67,6 +68,9 @@ const ReviewPage = () => {
 
   return (
     <OutletLayout>
+      <Helmet>
+        <title>Review</title>
+      </Helmet>
       {reviewMatch && <ReviewIdentifier>Review</ReviewIdentifier>}
       {reviewMatch && (
         <>

@@ -54,15 +54,21 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
       data.reviewContentInput.trim().length < 4
     ) {
       return;
-    } else {
+    }
+    if (!isEdit) {
       addDocument({
         title: data.reviewTitleInput,
         content: data.reviewContentInput,
         author: authUser.user.displayName,
         uid: authUser.user.uid,
       });
-      navigate("/community/review", { replace: true });
+    } else {
+      updateDocument(id, {
+        title: data.reviewTitleInput,
+        content: data.reviewContentInput,
+      });
     }
+    navigate("/community/review", { replace: true });
   });
 
   const reviewTitleValidation = {
@@ -74,7 +80,7 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
   const reviewContentValidation = {
     required: { value: true, message: "You should enter title" },
     minLength: { value: 4, message: "Longer than 4" },
-    maxLength: { value: 4, message: "No more than 4" },
+    maxLength: { value: 100, message: "No more than 4" },
   };
 
   useEffect(() => {
@@ -88,13 +94,11 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
     <ReviewFormContainer>
       <article>
         <input
-          // value={!isEdit || (singleReview && singleReview[0].title)}
           {...register("reviewTitleInput", reviewTitleValidation)}
           type="text"
           placeholder="제목"
         />
         <textarea
-          // value={!isEdit || (singleReview && singleReview[0].content)}
           {...register("reviewContentInput", reviewContentValidation)}
           type="text"
           placeholder="리뷰 내용"
@@ -102,15 +106,7 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
         <button onClick={submitReviewHandler} type="submit">
           {!isEdit ? "작성하기" : "수정하기"}
         </button>
-        {isEdit && (
-          <button
-          // onClick={() => {
-          //   updateDocument(id);
-          // }}
-          >
-            삭제하기
-          </button>
-        )}
+        {isEdit && <button onClick={submitReviewHandler}>삭제하기</button>}
       </article>
     </ReviewFormContainer>
   );
