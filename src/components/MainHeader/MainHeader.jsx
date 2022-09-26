@@ -1,13 +1,12 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { Link, useMatch, useNavigate } from "react-router-dom";
-import { useScroll } from "../../hooks/useScroll";
 import { BsSearch, BsCart } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authUserAtom } from "../../store/authAtom";
 import { searchBarAtom } from "../../store/searchBarAtom";
-import NavSearchContainer from "../NavSearchContainer";
+import NavSearchContainer from "./NavSearchContainer";
 import Modal from "../../lib/Modal";
 import { useLogout } from "../../hooks/useLogout";
 
@@ -20,11 +19,11 @@ const Header = styled.header`
   display: flex;
   flex-direction: column;
   background-color: ${(props) => props.bgColor};
-  color: ${(props) => props.fontColor};
+  color: ${(props) => props.fontcolor};
   transition: all 0.2s ease-in-out;
-  z-index: 10;
+  z-index: 100000;
   a {
-    color: ${(props) => props.fontColor};
+    color: ${(props) => props.fontcolor};
     transition: all 0.2s ease-in-out;
   }
 `;
@@ -57,7 +56,7 @@ const LinkContainer = styled.nav`
   }
 `;
 
-const MainHeader = () => {
+const MainHeader = ({ view }) => {
   const [navColorChange, setNavColorChange] = useState(false);
   const authUser = useRecoilValue(authUserAtom);
   const [isSearchbar, setIsSearchBar] = useRecoilState(searchBarAtom);
@@ -65,11 +64,8 @@ const MainHeader = () => {
   const { logout } = useLogout();
 
   const navigate = useNavigate();
-  const headerRef = useRef();
 
   const homeMatch = useMatch("/");
-
-  const { y } = useScroll();
 
   const mouseOnNav = useCallback(() => {
     setNavColorChange(true);
@@ -96,12 +92,15 @@ const MainHeader = () => {
         </Modal>
       ) : (
         <Header
-          ref={headerRef}
           height={homeMatch ? "30vh" : "20vh"}
           bgColor={
             navColorChange ? (props) => props.theme.whiteColor : "transparent"
           }
-          fontColor={y > 50 ? (props) => props.theme.orange.lighter : "#000"}
+          fontcolor={
+            view
+              ? (props) => props.theme.blackColor
+              : (props) => props.theme.orange.lighter
+          }
         >
           <LinkContainer>
             <BsSearch

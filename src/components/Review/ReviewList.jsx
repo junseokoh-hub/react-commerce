@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { authUserAtom } from "../../store/authAtom";
 
 const AllReviewList = styled.li`
   min-width: 700px;
@@ -28,6 +30,7 @@ const AllReviewList = styled.li`
 
 const ReviewList = ({ review }) => {
   const navigate = useNavigate();
+  const authUser = useRecoilValue(authUserAtom);
 
   const newReviewAuthor = review?.author
     .slice(0, 3)
@@ -38,7 +41,11 @@ const ReviewList = ({ review }) => {
       <AllReviewList>
         <p>{review?.title}</p>
         <span>{newReviewAuthor}</span>
-        <button onClick={() => navigate(`edit/${review?.id}`)}>수정하기</button>
+        {review?.uid === authUser?.user?.uid && (
+          <button onClick={() => navigate(`edit/${review?.id}`)}>
+            수정하기
+          </button>
+        )}
       </AllReviewList>
       <hr />
     </>

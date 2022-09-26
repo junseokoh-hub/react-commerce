@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { fetchImages } from "../../lib/api";
 import { BsInstagram } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../../utils/LoadingSpinner";
 
 const ImageWrapper = styled.section`
   padding-top: 300px;
@@ -34,6 +35,7 @@ const ImageContainer = styled.ul`
   gap: 5px;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(4, 1fr);
+  opacity: ${(props) => props.fadeIn};
   li {
     display: flex;
   }
@@ -45,13 +47,7 @@ const ImageSection = () => {
     fetchImages,
   );
 
-  if (isError) return <div>{error.message}</div>;
-
-  if (isLoading) return <div>Loading...</div>;
-
-  console.log(data.data.documents);
-
-  const imageData = data.data.documents;
+  const imageData = data?.data?.documents;
 
   return (
     <ImageWrapper>
@@ -62,6 +58,8 @@ const ImageSection = () => {
         <span>X</span>Instagram
       </h3>
       <hr />
+      {isLoading && <LoadingSpinner />}
+      {isError && <div>{error?.message}</div>}
       <ImageContainer>
         {imageData?.map((item) => (
           <li key={item.image_url}>
@@ -73,4 +71,4 @@ const ImageSection = () => {
   );
 };
 
-export default ImageSection;
+export default React.memo(ImageSection);

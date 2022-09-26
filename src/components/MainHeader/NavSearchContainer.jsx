@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { searchBarAtom } from "../store/searchBarAtom";
+import { searchBarAtom } from "../../store/searchBarAtom";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { useForm } from "react-hook-form";
-import { fetchProducts } from "../lib/api";
+import { fetchProducts } from "../../lib/api";
 
 const SearchBarContainer = styled.header`
   width: 100%;

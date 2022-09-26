@@ -53,10 +53,6 @@ html {
 	box-sizing: border-box;
 }
 
-body {
-	height: 100vh;
-}
-
 a {
 	text-decoration-line: none;
 }

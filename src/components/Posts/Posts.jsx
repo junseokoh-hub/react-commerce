@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "./Pagination";
 import ProductsList from "../Products/ProductsList";
 import SelectOptions from "./SelectOptions";
 
@@ -16,7 +16,6 @@ const ProductsContainer = styled.section`
   margin: 40px 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
   gap: 20px;
 `;
 
@@ -25,14 +24,6 @@ const PageSelectContainer = styled.ul`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-`;
-
-const PageSelect = styled.li`
-  display: flex;
-  align-items: center;
-  & + & {
-    margin-left: 20px;
-  }
 `;
 
 const limitOptions = [
@@ -65,7 +56,6 @@ const Posts = ({ posts }) => {
     })
     ?.slice(offset, offset + limit);
 
-  console.log("rendering");
   return (
     <ProductsWrapper>
       <PageSelectContainer>
