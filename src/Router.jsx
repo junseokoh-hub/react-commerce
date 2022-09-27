@@ -17,6 +17,7 @@ import SignupPage from "./pages/Auth/SignupPage";
 import Faq from "./pages/Community/Faq";
 import ReviewNew from "./components/Review/ReviewNew";
 import ReviewEditor from "./components/Review/ReviewEditor";
+import PartnershipInquiry from "./pages/PartnershipInquiry";
 
 const Router = () => {
   const authUser = useRecoilValue(authUserAtom);
@@ -25,6 +26,15 @@ const Router = () => {
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
+        {authUser.user && (
+          <Route path="/partnership-inquiry" element={<PartnershipInquiry />} />
+        )}
+        {!authUser.user && (
+          <Route
+            path="/partnership-inquiry"
+            element={<Navigate to="/login" />}
+          />
+        )}
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/community/*" element={<CommunityPage />}>
           <Route path="review/*" element={<ReviewPage />}>

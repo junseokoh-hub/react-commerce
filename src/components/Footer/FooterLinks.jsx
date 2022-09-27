@@ -4,18 +4,20 @@ import { FaYoutube, FaFacebookF } from "react-icons/fa";
 import { SiNaver } from "react-icons/si";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { BsInstagram } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { authUserAtom } from "../../store/authAtom";
 
 const LinkWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 `;
 
 const Terms = styled.ul`
   display: flex;
   li {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bolder;
     color: ${(props) => props.theme.whiteColor};
     a {
@@ -62,6 +64,22 @@ const MediaLinkContainer = styled.ul`
 `;
 
 const FooterLinks = () => {
+  const authUser = useRecoilValue(authUserAtom);
+  const navigate = useNavigate();
+
+  const inquiryRedirect = () => {
+    if (!authUser.user) {
+      if (
+        window.confirm(
+          `로그인을 하셔야 이용할 수 있는 서비스입니다. 로그인 하시겠습니까?`,
+        )
+      ) {
+        navigate("/login");
+      }
+    }
+    navigate("/partnership-inquiry");
+  };
+
   return (
     <LinkWrapper>
       <Terms>
@@ -74,7 +92,7 @@ const FooterLinks = () => {
         <li>
           <Link to="/community/faq">고객센터</Link> <span>|</span>
         </li>
-        <li>제휴문의</li>
+        <li onClick={inquiryRedirect}>제휴문의</li>
       </Terms>
       <MediaLinkContainer>
         <li className="insta">

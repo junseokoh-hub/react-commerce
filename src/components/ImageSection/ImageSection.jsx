@@ -35,9 +35,10 @@ const ImageContainer = styled.ul`
   gap: 5px;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  transition: all 0.7s ease-in-out;
+  transition: all 0.9s ease-in-out;
   opacity: ${(props) => props.opacity};
   transform: ${(props) => props.transform};
+
   li {
     display: flex;
   }
@@ -63,7 +64,7 @@ const ImageSection = () => {
     return {
       root: null,
       rootMargin: "0px",
-      threshold: 0.1,
+      threshold: 0.2,
     };
   }, []);
 
@@ -72,6 +73,7 @@ const ImageSection = () => {
     const currentTarget = imgRef.current;
     if (currentTarget) {
       io.observe(currentTarget);
+      console.log("rendering");
     }
 
     return () => {
@@ -99,7 +101,7 @@ const ImageSection = () => {
       <ImageContainer
         ref={imgRef}
         opacity={animated ? 1 : 0}
-        transform={animated || "translateY(100px)"}
+        transform={!animated ? "translateY(100px)" : null}
       >
         {imageData?.map((item) => (
           <li key={item.image_url}>
