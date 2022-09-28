@@ -38,6 +38,12 @@ const SearchBarContainer = styled.header`
       }
     }
   }
+  @media screen and (max-width: 480px) {
+    min-height: 15vh;
+    h3 {
+      display: none;
+    }
+  }
 `;
 
 const SearchBarList = styled.li`
@@ -58,6 +64,16 @@ const SearchBarList = styled.li`
       -webkit-text-fill-color: #fff !important;
     }
   }
+  @media screen and (max-width: 1000px) {
+    input {
+      width: 600px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    input {
+      width: 300px;
+    }
+  }
 `;
 
 const PouplarKeywordContainer = styled.div`
@@ -75,15 +91,39 @@ const PopularKeyword = styled.h4`
   color: #fff;
   border: 1px solid #fff;
   cursor: pointer;
+  @media screen and (max-width: 1000px) {
+    width: 100px;
+    font-size: 12px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    font-size: 10px;
+  }
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const PopularImgContainer = styled.li`
+  display: flex;
   width: 100%;
   img {
     margin: 0 10px;
     width: ${(props) => props.width};
     height: ${(props) => props.height};
     border-radius: 50%;
+  }
+  @media screen and (max-width: 1000px) {
+    img {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    display: none !important;
+    img {
+      display: none !important;
+    }
   }
 `;
 
