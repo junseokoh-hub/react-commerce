@@ -10,6 +10,19 @@ const InfoContainer = styled.article`
   li {
     margin-bottom: 10px;
   }
+  @media screen and (max-width: 1000px) {
+    padding-left: 0px;
+  }
+  @media screen and (max-width: 768px) {
+    li {
+      font-size: 14px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    li {
+      font-size: 10px;
+    }
+  }
 `;
 
 const ArrowContainer = styled.div`
@@ -27,6 +40,14 @@ const ArrowContainer = styled.div`
   cursor: pointer;
   .arrow_up {
     font-size: 40px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+    font-size: 10px;
+    .arrow_up {
+      font-size: 20px;
+    }
   }
 `;
 

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useFireStore } from "../hooks/useFirestore";
+import { useRecoilValue } from "recoil";
+import { authUserAtom } from "../store/authAtom";
 
 const InquiryWrapper = styled.section`
   min-height: 50vh;
@@ -70,6 +72,7 @@ const BtnContainer = styled.div`
 `;
 
 const PartnershipInquiry = () => {
+  const authUser = useRecoilValue(authUserAtom);
   const navigate = useNavigate();
 
   const { addDocument } = useFireStore("partnership-inquiry");
@@ -78,11 +81,23 @@ const PartnershipInquiry = () => {
     register,
     handleSubmit,
     reset,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm();
 
   const submitInquiryHandler = handleSubmit((data) => {
-    console.log(data);
+    const { inquiryAuthor, inquiryPassword, inquiryTitle, inquiryContent } =
+      data;
+    if (inquiryAuthor && inquiryPassword && inquiryTitle && inquiryContent) {
+      addDocument({
+        author: inquiryAuthor,
+        password: inquiryPassword,
+        title: inquiryTitle,
+        content: inquiryContent,
+        uid: authUser.user.uid,
+      });
+      reset();
+      navigate("/", { replace: true });
+    }
   });
 
   console.log("rendering");
@@ -109,7 +124,13 @@ const PartnershipInquiry = () => {
         </ul>
         <BtnContainer>
           <button onClick={() => navigate(-1)}>이전</button>
-          <button>저장</button>
+          <button
+            disabled={isSubmitting}
+            type="submit"
+            onClick={submitInquiryHandler}
+          >
+            저장
+          </button>
         </BtnContainer>
       </InquiryContainer>
     </InquiryWrapper>

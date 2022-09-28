@@ -1,15 +1,19 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchImages } from "../../lib/api";
 import { BsInstagram } from "react-icons/bs";
 import LoadingSpinner from "../../utils/LoadingSpinner";
-import { useMemo } from "react";
 
 const ImageWrapper = styled.section`
-  padding-top: 300px;
+  padding-top: 200px;
   padding-bottom: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   h3 {
+    margin-bottom: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +33,6 @@ const ImageWrapper = styled.section`
 `;
 
 const ImageContainer = styled.ul`
-  margin: 0 auto;
   width: 50%;
   display: grid;
   gap: 5px;
@@ -41,6 +44,19 @@ const ImageContainer = styled.ul`
 
   li {
     display: flex;
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 70%;
+    img {
+      width: 100px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    img {
+      width: 90px;
+    }
   }
 `;
 
@@ -55,9 +71,12 @@ const ImageSection = () => {
   const imgRef = useRef(null);
   const [animated, setAnimated] = useState(false);
 
-  const callback = (entries) => {
+  const callback = (entries, observer) => {
     const [entry] = entries;
     setAnimated(entry.isIntersecting);
+    if (entry.isIntersecting) {
+      observer.unobserve(imgRef.current);
+    }
   };
 
   const options = useMemo(() => {
@@ -73,12 +92,11 @@ const ImageSection = () => {
     const currentTarget = imgRef.current;
     if (currentTarget) {
       io.observe(currentTarget);
-      console.log("rendering");
     }
 
-    return () => {
-      io.unobserve(currentTarget);
-    };
+    // return () => {
+    //   io.unobserve(currentTarget);
+    // };
   }, [imgRef, options]);
 
   console.log("rendering");
@@ -95,7 +113,6 @@ const ImageSection = () => {
         </a>
         <span>X</span>Instagram
       </h3>
-      <hr />
       {isLoading && <LoadingSpinner />}
       {isError && <div>{error?.message}</div>}
       <ImageContainer

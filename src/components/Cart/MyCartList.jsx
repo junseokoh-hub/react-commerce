@@ -62,7 +62,7 @@ const MyCartList = ({ cart }) => {
         <button
           disabled={cart.quantity === 1}
           onClick={() =>
-            updateDocument(cart.title, {
+            updateDocument(cart.title + cart.uid, {
               quantity: cart.quantity - 1,
             })
           }
@@ -73,7 +73,7 @@ const MyCartList = ({ cart }) => {
         <button
           disabled={cart.quantity === 50}
           onClick={() =>
-            updateDocument(cart.title, {
+            updateDocument(cart.title + cart.uid, {
               quantity: cart.quantity + 1,
             })
           }

@@ -72,6 +72,7 @@ const StyledSlider = ({ children }) => {
         breakpoint: 600,
         settings: {
           autoplay: false,
+          arrows: false,
         },
       },
     ],

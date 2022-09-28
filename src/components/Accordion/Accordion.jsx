@@ -50,6 +50,7 @@ const ContentsWrapper = styled.article`
 
 const Contents = styled.div`
   padding: 20px 8px;
+  line-height: 1.5;
 `;
 
 const Accordion = ({ data }) => {

@@ -12,6 +12,12 @@ const LinkWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  @media screen and (max-width: 1000px) {
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Terms = styled.ul`
@@ -20,6 +26,7 @@ const Terms = styled.ul`
     font-size: 16px;
     font-weight: bolder;
     color: ${(props) => props.theme.whiteColor};
+    cursor: pointer;
     a {
       color: ${(props) => props.theme.whiteColor};
     }
@@ -27,6 +34,17 @@ const Terms = styled.ul`
       margin: 0 10px;
       color: lightgrey;
       font-weight: normal;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    li {
+      font-size: 14px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    margin-bottom: 20px;
+    li {
+      font-size: 12px;
     }
   }
 `;
@@ -60,6 +78,15 @@ const MediaLinkContainer = styled.ul`
   }
   svg {
     font-size: 30px;
+  }
+  @media screen and (max-width: 768px) {
+    li {
+      width: 35px;
+      height: 35px;
+    }
+    svg {
+      font-size: 20px;
+    }
   }
 `;
 

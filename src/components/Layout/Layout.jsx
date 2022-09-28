@@ -1,10 +1,7 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useMatch } from "react-router-dom";
 import MainHeader from "../MainHeader/MainHeader";
-import { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
 import Footer from "./Footer";
 
 const Main = styled.main`

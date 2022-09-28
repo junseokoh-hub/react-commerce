@@ -54,6 +54,15 @@ const LinkContainer = styled.nav`
   a {
     padding: 20px;
   }
+
+  @media screen and (max-width: 768px) {
+    &:nth-of-type(2) {
+      font-size: 20px;
+    }
+    a {
+      padding: 10px;
+    }
+  }
 `;
 
 const MainHeader = ({ view }) => {
