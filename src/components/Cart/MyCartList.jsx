@@ -25,6 +25,27 @@ const MyCartItem = styled.li`
       cursor: pointer;
     }
   }
+  @media screen and (max-width: 768px) {
+    img {
+      width: 150px;
+      height: 100px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    img {
+      width: 100px;
+    }
+    span {
+      &:nth-of-type(2) {
+        margin-left: 5px;
+      }
+      .delete-bin {
+        margin-left: 5px;
+        font-size: 16px;
+      }
+    }
+  }
 `;
 
 const MyCartItemTitle = styled.h3`
@@ -33,6 +54,9 @@ const MyCartItemTitle = styled.h3`
   align-items: center;
   font-size: 20px;
   font-weight: bold;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const MyCartBtnContainer = styled.span`
@@ -47,6 +71,16 @@ const MyCartBtnContainer = styled.span`
     color: ${(props) => props.theme.whiteColor};
     border: none;
     outline: none;
+  }
+  @media screen and (max-width: 768px) {
+    span {
+      width: 20px;
+    }
+    button {
+      width: 20px;
+      height: 20px;
+      font-size: 15px;
+    }
   }
 `;
 
