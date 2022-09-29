@@ -9,6 +9,12 @@ const AccordionContainer = styled.section`
   border: 1px solid #fad390;
   background-color: ${(props) => props.theme.orange.lighter};
   color: ${(props) => props.theme.whiteColor};
+  @media screen and (max-width: 768px) {
+    width: 95%;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
 `;
 
 const AccordionHeader = styled.div`
@@ -23,6 +29,12 @@ const AccordionHeader = styled.div`
 
 const AccordionTitle = styled.p`
   font-weight: bold;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 8px;
+  }
 `;
 
 const ToggleButton = styled.button`
@@ -38,6 +50,13 @@ const ToggleButton = styled.button`
   }
   &[aria-current] {
     background-color: ${(props) => props.theme.orange.normal};
+  }
+  @media screen and (max-width: 768px) {
+    width: 50px;
+  }
+  @media screen and (max-width: 480px) {
+    width: 30px;
+    font-size: 5px;
   }
 `;
 

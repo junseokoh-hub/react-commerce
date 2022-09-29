@@ -46,6 +46,10 @@ const ReviewBtn = styled.button`
   &:hover {
     background-color: ${(props) => props.theme.brown.normal};
   }
+  @media screen and (max-width: 480px) {
+    width: 80px;
+    font-size: 10px;
+  }
 `;
 
 const ReviewPage = () => {

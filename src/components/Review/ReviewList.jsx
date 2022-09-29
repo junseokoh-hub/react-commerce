@@ -26,6 +26,28 @@ const AllReviewList = styled.li`
     border: 1px solid ${(props) => props.theme.orange.lighter};
     font-weight: bolder;
   }
+  @media screen and (max-width: 1000px) {
+    min-width: 500px;
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 100px;
+    p {
+      font-size: 14px;
+    }
+    span {
+      font-size: 10px;
+    }
+    button {
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    p {
+      font-size: 10px;
+    }
+  }
 `;
 
 const ReviewList = ({ review }) => {
@@ -39,7 +61,11 @@ const ReviewList = ({ review }) => {
   return (
     <>
       <AllReviewList>
-        <p>{review?.title}</p>
+        <p>
+          {review &&
+            review.title.length > 10 &&
+            `${review.title.slice(0, 10)}...`}
+        </p>
         <span>{newReviewAuthor}</span>
         {review?.uid === authUser?.user?.uid && (
           <button onClick={() => navigate(`edit/${review?.id}`)}>
