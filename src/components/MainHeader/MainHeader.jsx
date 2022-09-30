@@ -9,6 +9,7 @@ import { searchBarAtom } from "../../store/searchBarAtom";
 import NavSearchContainer from "./NavSearchContainer";
 import Modal from "../../lib/Modal";
 import { useLogout } from "../../hooks/useLogout";
+import { AiOutlineMenu } from "react-icons/ai";
 
 const Header = styled.header`
   height: ${(props) => props.height};
@@ -34,13 +35,16 @@ const LinkContainer = styled.nav`
   justify-content: end;
   align-items: center;
   &:nth-of-type(1) {
-    height: 40%;
+    height: 30%;
     svg {
+      cursor: pointer;
+      font-size: 30px;
       &.glass {
         margin-right: 20px;
       }
-      cursor: pointer;
-      font-size: 30px;
+      &.menu {
+        display: none;
+      }
     }
     span {
       cursor: pointer;
@@ -63,13 +67,43 @@ const LinkContainer = styled.nav`
       padding: 10px;
     }
   }
+  @media screen and (max-width: 480px) {
+    &:nth-of-type(1) {
+      padding: 0 20px;
+      height: 20%;
+      justify-content: space-between;
+      a,
+      span {
+        display: none;
+      }
+      svg {
+        &.glass {
+          margin: 0;
+        }
+        &.menu {
+          display: flex;
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      padding: 0;
+      display: ${(props) => props.display};
+      flex-direction: column;
+      a {
+        padding: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
 `;
 
 const MainHeader = ({ view }) => {
   const [navColorChange, setNavColorChange] = useState(false);
   const authUser = useRecoilValue(authUserAtom);
   const [isSearchbar, setIsSearchBar] = useRecoilState(searchBarAtom);
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logout } = useLogout();
 
   const navigate = useNavigate();
@@ -93,45 +127,54 @@ const MainHeader = ({ view }) => {
     setIsSearchBar(false);
   }, []);
 
+  const toggleMenuHandler = useCallback(() => {
+    setIsMenuOpen((prev) => !prev);
+  }, []);
+
   return (
     <>
-      {isSearchbar ? (
+      {isSearchbar && (
         <Modal closeModal={closeModalHandler}>
           <NavSearchContainer />
         </Modal>
-      ) : (
-        <Header
-          height={homeMatch ? "30vh" : "20vh"}
-          bgColor={
-            navColorChange ? (props) => props.theme.whiteColor : "transparent"
-          }
-          fontcolor={
-            view
-              ? (props) => props.theme.blackColor
-              : (props) => props.theme.orange.lighter
-          }
-        >
-          <LinkContainer>
-            <BsSearch
-              className="glass"
-              onClick={() => setIsSearchBar((prev) => !prev)}
-            />
-            <Link to="/myCart">
-              <BsCart />
-            </Link>
-            <Link to="/myPage">
-              <FiUser />
-            </Link>
-            {authUser.user && <span onClick={logoutHandler}>Log Out</span>}
-          </LinkContainer>
-          <LinkContainer onMouseEnter={mouseOnNav} onMouseLeave={mouseOutNav}>
-            <Link to="/">Home</Link>
-            <Link to="/products">Products</Link>
-            <Link to="/community/review">Community</Link>
-            <Link to="/about">About</Link>
-          </LinkContainer>
-        </Header>
       )}
+
+      <Header
+        height={homeMatch ? "30vh" : "30vh"}
+        bgColor={
+          navColorChange ? (props) => props.theme.whiteColor : "transparent"
+        }
+        fontcolor={
+          view
+            ? (props) => props.theme.blackColor
+            : (props) => props.theme.orange.lighter
+        }
+      >
+        <LinkContainer>
+          <AiOutlineMenu className="menu" onClick={toggleMenuHandler} />
+          <BsSearch
+            className="glass"
+            onClick={() => setIsSearchBar((prev) => !prev)}
+          />
+          <Link to="/myCart">
+            <BsCart />
+          </Link>
+          <Link to="/myPage">
+            <FiUser />
+          </Link>
+          {authUser.user && <span onClick={logoutHandler}>Log Out</span>}
+        </LinkContainer>
+        <LinkContainer
+          display={isMenuOpen ? "flex" : "none"}
+          onMouseEnter={mouseOnNav}
+          onMouseLeave={mouseOutNav}
+        >
+          <Link to="/">Home</Link>
+          <Link to="/products">Products</Link>
+          <Link to="/community/review">Community</Link>
+          <Link to="/about">About</Link>
+        </LinkContainer>
+      </Header>
     </>
   );
 };

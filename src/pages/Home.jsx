@@ -57,7 +57,15 @@ const LiningImgContainer = styled.div`
     strong {
       right: 10px;
       bottom: 50px;
-      font-size: 40px;
+      font-size: 30px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    strong {
+      right: 10px;
+      bottom: 50px;
+      font-size: 20px;
     }
   }
 `;
@@ -71,8 +79,6 @@ const Home = () => {
 
   const menClothesData =
     data && data.filter((item) => item.category === "men's clothing");
-
-  console.log("rendering");
 
   return (
     <>

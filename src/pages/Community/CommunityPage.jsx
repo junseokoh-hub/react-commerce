@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink, Outlet } from "react-router-dom";
+import CircleNav from "../../utils/CircleNav";
 
 const CommunitySection = styled.section`
   display: flex;
@@ -16,6 +17,9 @@ const CommunityNav = styled.aside`
     font-weight: bold;
     color: rgba(0, 0, 0, 0.8);
     text-align: center;
+  }
+  @media screen and (max-width: 480px) {
+    display: none;
   }
 `;
 
@@ -68,6 +72,7 @@ const CommunityPage = () => {
           </li>
         </CommunityNavIndex>
       </CommunityNav>
+      <CircleNav />
       <Outlet />
     </CommunitySection>
   );

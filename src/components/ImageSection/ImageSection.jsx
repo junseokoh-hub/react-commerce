@@ -53,10 +53,16 @@ const ImageContainer = styled.ul`
     }
   }
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 80%;
     img {
-      width: 90px;
+      width: 75px;
     }
+  }
+  @media screen and (max-width: 480px) {
+    width: 90%;
+    /* img {
+      width: 90px;
+    } */
   }
 `;
 
@@ -93,13 +99,7 @@ const ImageSection = () => {
     if (currentTarget) {
       io.observe(currentTarget);
     }
-
-    // return () => {
-    //   io.unobserve(currentTarget);
-    // };
   }, [imgRef, options]);
-
-  console.log("rendering");
 
   return (
     <ImageWrapper>

@@ -11,7 +11,6 @@ const Main = styled.main`
 
 const Layout = ({ children }) => {
   const [view, setView] = useState(false);
-
   const mainRef = useRef(null);
 
   const callback = (entries) => {
