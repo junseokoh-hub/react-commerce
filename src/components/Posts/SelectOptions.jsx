@@ -1,7 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-const Select = styled.select``;
+const Select = styled.select`
+  padding-left: 5px;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  & + & {
+    margin-left: 10px;
+  }
+  option {
+    background-color: aliceblue;
+  }
+`;
 
 const SelectOptions = ({ value, setValue, options }) => {
   return (

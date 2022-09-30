@@ -31,6 +31,15 @@ const IndivProductArticle = styled.div`
     font-size: 30px;
     cursor: pointer;
   }
+  @media screen and (max-width: 480px) {
+    img {
+      width: 150px;
+      height: 150px;
+    }
+    .add_cart {
+      bottom: 30px;
+    }
+  }
 `;
 
 const BtnContainer = styled.div`

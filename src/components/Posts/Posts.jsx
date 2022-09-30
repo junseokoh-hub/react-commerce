@@ -24,6 +24,9 @@ const PageSelectContainer = styled.ul`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  @media screen and (max-width: 480px) {
+    margin: 30px 0 0 0;
+  }
 `;
 
 const limitOptions = [

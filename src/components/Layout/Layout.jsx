@@ -4,6 +4,17 @@ import { useMatch } from "react-router-dom";
 import MainHeader from "../MainHeader/MainHeader";
 import Footer from "./Footer";
 
+const Html = styled.div`
+  .navLine {
+    display: block;
+  }
+  @media screen and (max-width: 480px) {
+    .navLine {
+      display: none;
+    }
+  }
+`;
+
 const Main = styled.main`
   padding-top: ${(props) => props.padding};
   min-height: 60vh;
@@ -39,12 +50,12 @@ const Layout = ({ children }) => {
   const homeMatch = useMatch("/");
 
   return (
-    <>
+    <Html>
       <MainHeader view={view} />
-      <div ref={mainRef} />
+      <div className="navLine" ref={mainRef} />
       <Main padding={homeMatch ? "0" : "20vh"}>{children}</Main>
       <Footer />
-    </>
+    </Html>
   );
 };
 

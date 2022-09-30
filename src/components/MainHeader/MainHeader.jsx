@@ -10,6 +10,7 @@ import NavSearchContainer from "./NavSearchContainer";
 import Modal from "../../lib/Modal";
 import { useLogout } from "../../hooks/useLogout";
 import { AiOutlineMenu } from "react-icons/ai";
+import { useEffect } from "react";
 
 const Header = styled.header`
   height: ${(props) => props.height};
@@ -22,10 +23,17 @@ const Header = styled.header`
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.fontcolor};
   transition: all 0.2s ease-in-out;
-  z-index: 100000;
+  z-index: 1000;
   a {
     color: ${(props) => props.fontcolor};
     transition: all 0.2s ease-in-out;
+  }
+  @media screen and (max-width: 480px) {
+    height: ${(props) => props.mobileHeight};
+    color: ${(props) => props.theme.blackColor};
+    a {
+      color: ${(props) => props.theme.blackColor};
+    }
   }
 `;
 
@@ -70,8 +78,9 @@ const LinkContainer = styled.nav`
   @media screen and (max-width: 480px) {
     &:nth-of-type(1) {
       padding: 0 20px;
-      height: 20%;
+      height: 6vh;
       justify-content: space-between;
+      background-color: ${(props) => props.mobileBgColor};
       a,
       span {
         display: none;
@@ -89,6 +98,7 @@ const LinkContainer = styled.nav`
       padding: 0;
       display: ${(props) => props.display};
       flex-direction: column;
+      background-color: ${(props) => props.mobileBgColor};
       a {
         padding: 0;
         height: 100%;
@@ -131,6 +141,15 @@ const MainHeader = ({ view }) => {
     setIsMenuOpen((prev) => !prev);
   }, []);
 
+  useEffect(() => {
+    const links = document.querySelectorAll("a");
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        setIsMenuOpen(false);
+      });
+    });
+  }, []);
+
   return (
     <>
       {isSearchbar && (
@@ -140,7 +159,8 @@ const MainHeader = ({ view }) => {
       )}
 
       <Header
-        height={homeMatch ? "30vh" : "30vh"}
+        height={homeMatch ? "30vh" : "20vh"}
+        mobileHeight={isMenuOpen ? "30vh" : "20vh"}
         bgColor={
           navColorChange ? (props) => props.theme.whiteColor : "transparent"
         }
@@ -150,11 +170,16 @@ const MainHeader = ({ view }) => {
             : (props) => props.theme.orange.lighter
         }
       >
-        <LinkContainer>
+        <LinkContainer
+          mobileBgColor={isMenuOpen ? (props) => props.theme.whiteColor : null}
+        >
           <AiOutlineMenu className="menu" onClick={toggleMenuHandler} />
           <BsSearch
             className="glass"
-            onClick={() => setIsSearchBar((prev) => !prev)}
+            onClick={() => {
+              setIsSearchBar((prev) => !prev);
+              setIsMenuOpen(false);
+            }}
           />
           <Link to="/myCart">
             <BsCart />
@@ -165,6 +190,7 @@ const MainHeader = ({ view }) => {
           {authUser.user && <span onClick={logoutHandler}>Log Out</span>}
         </LinkContainer>
         <LinkContainer
+          mobileBgColor={isMenuOpen ? (props) => props.theme.whiteColor : null}
           display={isMenuOpen ? "flex" : "none"}
           onMouseEnter={mouseOnNav}
           onMouseLeave={mouseOutNav}
