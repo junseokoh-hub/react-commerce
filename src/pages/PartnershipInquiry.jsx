@@ -29,6 +29,11 @@ const InquiryTable = styled.table`
   width: 700px;
   border: 1px solid black;
   border-collapse: collapse;
+  caption {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bolder;
+  }
   tr,
   th,
   td {
@@ -55,6 +60,12 @@ const InquiryTable = styled.table`
     &:focus {
       outline: none;
     }
+  }
+  @media screen and (max-width: 768px) {
+    width: 500px;
+  }
+  @media screen and (max-width: 480px) {
+    width: 400px;
   }
 `;
 
@@ -108,6 +119,7 @@ const PartnershipInquiry = () => {
     <InquiryWrapper>
       <InquiryContainer>
         <InquiryTable>
+          <caption>파트너 문의</caption>
           <tr>
             <th>작성자</th>
             <td>

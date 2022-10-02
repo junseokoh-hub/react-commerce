@@ -60,9 +60,6 @@ const ImageContainer = styled.ul`
   }
   @media screen and (max-width: 480px) {
     width: 90%;
-    /* img {
-      width: 90px;
-    } */
   }
 `;
 

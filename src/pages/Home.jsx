@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useTitle } from "../hooks/useTitle";
+import { useQuery } from "react-query";
+import { Helmet } from "react-helmet-async";
 import StyledSlider from "../utils/StyledSlider";
 import perfume1 from "../images/perfume1.jpg";
 import perfume2 from "../images/perfume2.jpg";
 import perfume3 from "../images/perfume3.jpg";
-import { useQuery } from "react-query";
 import { fetchProducts } from "../lib/api";
-
 import ImageSection from "../components/ImageSection/ImageSection";
 
 const DUMMY_DATA = [
@@ -71,7 +70,6 @@ const LiningImgContainer = styled.div`
 `;
 
 const Home = () => {
-  useTitle("Home");
   const { isLoading, data, isError, error } = useQuery(
     ["home", "products"],
     fetchProducts,
@@ -82,6 +80,9 @@ const Home = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       <StyledSlider>
         {DUMMY_DATA.map((data) => (
           <MainImgContainer key={data.id} bgphoto={data.image} />
