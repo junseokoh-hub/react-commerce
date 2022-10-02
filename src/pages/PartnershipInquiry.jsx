@@ -14,6 +14,7 @@ const InquiryWrapper = styled.section`
 
 const InquiryContainer = styled.article`
   margin: 10px 0;
+  padding: 10px 0;
   min-height: 100%;
   width: 80%;
   display: flex;
@@ -22,41 +23,43 @@ const InquiryContainer = styled.article`
   align-items: center;
   border-top: 2px solid rgba(0, 0, 0, 0.5);
   border-bottom: 2px solid rgba(0, 0, 0, 0.5);
-  ul {
-    width: 100%;
-    li {
-      display: flex;
-      border-bottom: 1px solid #7f8c8d;
-      span {
-        margin-right: 20px;
-        padding-left: 15px;
-        width: 150px;
-        display: flex;
-        align-items: center;
-        font-size: 18px;
-        font-weight: bolder;
-        background-color: lightgrey;
-      }
-    }
-  }
-  input,
-  textarea {
-    margin: 10px 0;
+`;
+
+const InquiryTable = styled.table`
+  width: 700px;
+  border: 1px solid black;
+  border-collapse: collapse;
+  tr,
+  th,
+  td {
+    border: 1px solid black;
   }
 
-  input {
-    width: 300px;
-    height: 30px;
+  th {
+    font-weight: bolder;
+    background-color: lightgrey;
+  }
+
+  th {
+    vertical-align: middle !important;
+  }
+
+  td:not(#text_table) {
+    padding: 10px 0 10px 5px;
   }
   textarea {
-    width: 500px;
+    width: 100%;
     height: 400px;
-    resize: vertical;
+    border: none;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
 const BtnContainer = styled.div`
-  margin: 10px 0;
+  margin-top: 5px;
   button {
     margin: 0 10px;
     width: 100px;
@@ -104,24 +107,32 @@ const PartnershipInquiry = () => {
   return (
     <InquiryWrapper>
       <InquiryContainer>
-        <ul>
-          <li>
-            <span>작성자</span>
-            <input {...register("inquiryAuthor")} />
-          </li>
-          <li>
-            <span>비밀번호</span>
-            <input {...register("inquiryPassword")} />
-          </li>
-          <li>
-            <span>제목</span>
-            <input {...register("inquiryTitle")} />
-          </li>
-          <li>
-            <span>본문</span>
-            <textarea {...register("inquiryContent")} />
-          </li>
-        </ul>
+        <InquiryTable>
+          <tr>
+            <th>작성자</th>
+            <td>
+              <input {...register("inquiryAuthor")} />
+            </td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td>
+              <input {...register("inquiryPassword")} />
+            </td>
+          </tr>
+          <tr>
+            <th>제목</th>
+            <td>
+              <input {...register("inquiryTitle")} />
+            </td>
+          </tr>
+          <tr>
+            <th>본문</th>
+            <td id="text_table">
+              <textarea {...register("inquiryContent")} />
+            </td>
+          </tr>
+        </InquiryTable>
         <BtnContainer>
           <button onClick={() => navigate(-1)}>이전</button>
           <button
