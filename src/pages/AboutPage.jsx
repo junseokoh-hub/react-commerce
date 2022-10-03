@@ -1,32 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
+import { useObserve } from "../hooks/useObserve";
 import fabricImage from "../images/fabric.jpg";
 import booksImage from "../images/books.jpg";
 import jewelryImage from "../images/jewelry.jpg";
-import { useEffect } from "react";
-import { useRef } from "react";
-import { useState } from "react";
-import { useMemo } from "react";
-import { useCallback } from "react";
-
-const DUMMY_DATA = [
-  {
-    id: 1,
-    image: fabricImage,
-    content: "fabric",
-  },
-  {
-    id: 2,
-    image: booksImage,
-    content: "books",
-  },
-  {
-    id: 3,
-    image: jewelryImage,
-    content: "jewelry",
-  },
-];
 
 const AboutContainer = styled.ul`
   li {
@@ -53,42 +31,32 @@ const AboutContainer = styled.ul`
   }
 `;
 
-const AboutPhilosophy = styled.p`
+const AboutPhilosophy = styled.div`
+  width: 40vw;
   position: absolute;
-  right: 10px;
-  bottom: 50%;
-  font-size: 100px;
+  right: 200px;
+  bottom: 40%;
   color: ${(props) => props.theme.whiteColor};
   transition: all 1s ease-in-out;
   opacity: ${(props) => props.opacity};
   transform: ${(props) => props.transform};
+  span {
+    font-size: 70px;
+    font-weight: bold;
+  }
+  p {
+    margin-top: 50px;
+    font-size: 50px;
+  }
 `;
 
 const AboutPage = () => {
-  const [isView, setIsView] = useState(false);
-  const secondImageRef = useRef(null);
-
   const options = useMemo(() => {
     return {
       rootMargin: "-200px",
     };
   }, []);
-
-  const callback = useCallback(([entry], observer) => {
-    if (entry.isIntersecting) {
-      observer.unobserve(secondImageRef.current);
-      setIsView(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!secondImageRef.current) return;
-    const io = new IntersectionObserver(callback, options);
-
-    if (secondImageRef.current) {
-      io.observe(secondImageRef.current);
-    }
-  }, []);
+  const { isView, targetRef: secondImageRef } = useObserve(options);
 
   return (
     <>
@@ -98,19 +66,23 @@ const AboutPage = () => {
       <AboutContainer>
         <li id="brand_story">브랜드 스토리</li>
         <li>
-          <img src={DUMMY_DATA[0].image} alt={DUMMY_DATA[0].content} />
+          <img src={fabricImage} alt={"fabric"} />
         </li>
         <li ref={secondImageRef}>
-          <img src={DUMMY_DATA[1].image} alt={DUMMY_DATA[1].content} />
+          <img src={booksImage} alt={"books"} />
           <AboutPhilosophy
             opacity={isView ? 1 : 0}
-            transform={isView ? "translateY(-100px)" : null}
+            transform={!isView ? "translateX(100px)" : null}
           >
-            철학
+            <span>철학</span>
+            <p>
+              언제나 항상 최상의 품질과 최신의 물품들을 들여 놓아 고객분들께
+              제공하겠습니다.
+            </p>
           </AboutPhilosophy>
         </li>
         <li>
-          <img src={DUMMY_DATA[2].image} alt={DUMMY_DATA[2].content} />
+          <img src={jewelryImage} alt={"jewelry"} />
         </li>
       </AboutContainer>
     </>

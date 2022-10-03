@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useTitle } from "../../hooks/useTitle";
 import { useFireStore } from "../../hooks/useFirestore";
 import { useRecoilValue } from "recoil";
 import { authUserAtom } from "../../store/authAtom";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const ReviewFormContainer = styled.section`
   height: 100%;
@@ -41,7 +41,6 @@ const ReviewFormContainer = styled.section`
 `;
 
 const ReviewForm = ({ isEdit, singleReview, id }) => {
-  useTitle(`Review - New`);
   const navigate = useNavigate();
   const authUser = useRecoilValue(authUserAtom);
   const { register, handleSubmit, setValue } = useForm();
@@ -91,24 +90,29 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
   }, [singleReview]);
 
   return (
-    <ReviewFormContainer>
-      <article>
-        <input
-          {...register("reviewTitleInput", reviewTitleValidation)}
-          type="text"
-          placeholder="제목"
-        />
-        <textarea
-          {...register("reviewContentInput", reviewContentValidation)}
-          type="text"
-          placeholder="리뷰 내용"
-        />
-        <button onClick={submitReviewHandler} type="submit">
-          {!isEdit ? "작성하기" : "수정하기"}
-        </button>
-        {isEdit && <button onClick={submitReviewHandler}>삭제하기</button>}
-      </article>
-    </ReviewFormContainer>
+    <>
+      <Helmet>
+        <title>Review - New</title>
+      </Helmet>
+      <ReviewFormContainer>
+        <article>
+          <input
+            {...register("reviewTitleInput", reviewTitleValidation)}
+            type="text"
+            placeholder="제목"
+          />
+          <textarea
+            {...register("reviewContentInput", reviewContentValidation)}
+            type="text"
+            placeholder="리뷰 내용"
+          />
+          <button onClick={submitReviewHandler} type="submit">
+            {!isEdit ? "작성하기" : "수정하기"}
+          </button>
+          {isEdit && <button onClick={submitReviewHandler}>삭제하기</button>}
+        </article>
+      </ReviewFormContainer>
+    </>
   );
 };
 
