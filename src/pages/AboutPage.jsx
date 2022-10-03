@@ -30,7 +30,9 @@ const DUMMY_DATA = [
 
 const AboutContainer = styled.ul`
   li {
-    min-height: 80vh;
+    &:not(#brand_story) {
+      min-height: 80vh;
+    }
     &:nth-of-type(1) {
       height: 20vh;
       display: flex;
@@ -43,15 +45,6 @@ const AboutContainer = styled.ul`
     }
     &:nth-of-type(3) {
       position: relative;
-      h3 {
-        position: absolute;
-        right: 10px;
-        bottom: 50%;
-        font-size: 100px;
-        color: ${(props) => props.theme.whiteColor};
-        transition: all 2s ease-in-out;
-        transform: ${(props) => props.transform};
-      }
     }
   }
   img {
@@ -60,13 +53,24 @@ const AboutContainer = styled.ul`
   }
 `;
 
+const AboutPhilosophy = styled.p`
+  position: absolute;
+  right: 10px;
+  bottom: 50%;
+  font-size: 100px;
+  color: ${(props) => props.theme.whiteColor};
+  transition: all 1s ease-in-out;
+  opacity: ${(props) => props.opacity};
+  transform: ${(props) => props.transform};
+`;
+
 const AboutPage = () => {
   const [isView, setIsView] = useState(false);
   const secondImageRef = useRef(null);
 
   const options = useMemo(() => {
     return {
-      threshold: 0.3,
+      rootMargin: "-200px",
     };
   }, []);
 
@@ -89,17 +93,21 @@ const AboutPage = () => {
   return (
     <>
       <Helmet>
-        <title>About</title>
+        <title>브랜드 스토리</title>
       </Helmet>
       <AboutContainer>
-        <li>브랜드 스토리</li>
+        <li id="brand_story">브랜드 스토리</li>
         <li>
           <img src={DUMMY_DATA[0].image} alt={DUMMY_DATA[0].content} />
         </li>
         <li ref={secondImageRef}>
-          {isView && (
-            <img src={DUMMY_DATA[1].image} alt={DUMMY_DATA[1].content} />
-          )}
+          <img src={DUMMY_DATA[1].image} alt={DUMMY_DATA[1].content} />
+          <AboutPhilosophy
+            opacity={isView ? 1 : 0}
+            transform={isView ? "translateY(-100px)" : null}
+          >
+            철학
+          </AboutPhilosophy>
         </li>
         <li>
           <img src={DUMMY_DATA[2].image} alt={DUMMY_DATA[2].content} />

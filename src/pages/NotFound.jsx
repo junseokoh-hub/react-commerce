@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import styled from "styled-components";
 
 const NotFoundImage = styled.div`
@@ -11,7 +12,14 @@ const NotFoundImage = styled.div`
 `;
 
 const NotFound = () => {
-  return <NotFoundImage>You are in a wrong page!</NotFoundImage>;
+  return (
+    <>
+      <Helmet>
+        <title>Not Found</title>
+      </Helmet>
+      <NotFoundImage>You are in a wrong page!</NotFoundImage>
+    </>
+  );
 };
 
 export default NotFound;

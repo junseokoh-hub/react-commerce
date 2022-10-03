@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useFireStore } from "../hooks/useFirestore";
 import { useRecoilValue } from "recoil";
 import { authUserAtom } from "../store/authAtom";
+import { Helmet } from "react-helmet-async";
 
 const InquiryWrapper = styled.section`
   min-height: 50vh;
@@ -114,49 +115,53 @@ const PartnershipInquiry = () => {
     }
   });
 
-  console.log("rendering");
   return (
-    <InquiryWrapper>
-      <InquiryContainer>
-        <InquiryTable>
-          <caption>파트너 문의</caption>
-          <tr>
-            <th>작성자</th>
-            <td>
-              <input {...register("inquiryAuthor")} />
-            </td>
-          </tr>
-          <tr>
-            <th>비밀번호</th>
-            <td>
-              <input {...register("inquiryPassword")} />
-            </td>
-          </tr>
-          <tr>
-            <th>제목</th>
-            <td>
-              <input {...register("inquiryTitle")} />
-            </td>
-          </tr>
-          <tr>
-            <th>본문</th>
-            <td id="text_table">
-              <textarea {...register("inquiryContent")} />
-            </td>
-          </tr>
-        </InquiryTable>
-        <BtnContainer>
-          <button onClick={() => navigate(-1)}>이전</button>
-          <button
-            disabled={isSubmitting}
-            type="submit"
-            onClick={submitInquiryHandler}
-          >
-            저장
-          </button>
-        </BtnContainer>
-      </InquiryContainer>
-    </InquiryWrapper>
+    <>
+      <Helmet>
+        <title>파트너 제휴 문의</title>
+      </Helmet>
+      <InquiryWrapper>
+        <InquiryContainer>
+          <InquiryTable>
+            <caption>파트너 문의</caption>
+            <tr>
+              <th>작성자</th>
+              <td>
+                <input {...register("inquiryAuthor")} />
+              </td>
+            </tr>
+            <tr>
+              <th>비밀번호</th>
+              <td>
+                <input {...register("inquiryPassword")} />
+              </td>
+            </tr>
+            <tr>
+              <th>제목</th>
+              <td>
+                <input {...register("inquiryTitle")} />
+              </td>
+            </tr>
+            <tr>
+              <th>본문</th>
+              <td id="text_table">
+                <textarea {...register("inquiryContent")} />
+              </td>
+            </tr>
+          </InquiryTable>
+          <BtnContainer>
+            <button onClick={() => navigate(-1)}>이전</button>
+            <button
+              disabled={isSubmitting}
+              type="submit"
+              onClick={submitInquiryHandler}
+            >
+              저장
+            </button>
+          </BtnContainer>
+        </InquiryContainer>
+      </InquiryWrapper>
+    </>
   );
 };
 

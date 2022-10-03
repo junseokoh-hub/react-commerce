@@ -81,7 +81,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Home</title>
+        <title>공식 홈페이지</title>
       </Helmet>
       <StyledSlider>
         {DUMMY_DATA.map((data) => (

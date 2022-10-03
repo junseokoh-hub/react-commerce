@@ -1,9 +1,12 @@
 import React from "react";
-import { useTitle } from "../../hooks/useTitle";
+import { Helmet } from "react-helmet-async";
 
 const MyPage = () => {
-  useTitle("My Page");
-  return <div></div>;
+  return (
+    <Helmet>
+      <title>내 정보</title>
+    </Helmet>
+  );
 };
 
 export default MyPage;

@@ -1,13 +1,11 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useQuery } from "react-query";
 import Posts from "../components/Posts/Posts";
-import { useTitle } from "../hooks/useTitle";
 import { fetchProducts } from "../lib/api";
 import LoadingSpinner from "../utils/LoadingSpinner";
 
 const ProductsPage = () => {
-  useTitle("Products");
-
   const { isLoading, data, isError, error } = useQuery(
     ["productsPage", "products"],
     fetchProducts,
@@ -20,7 +18,14 @@ const ProductsPage = () => {
 
   if (isError) return <div>{error.toString()}</div>;
 
-  return <Posts posts={data} />;
+  return (
+    <>
+      <Helmet>
+        <title>상품</title>
+      </Helmet>
+      <Posts posts={data} />
+    </>
+  );
 };
 
 export default ProductsPage;

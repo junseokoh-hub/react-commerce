@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useSignup } from "../../hooks/useSignup";
 import LoadingSpinner from "../../utils/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 const SignupContainer = styled.section`
   min-height: 80vh;
@@ -122,46 +123,51 @@ const SignupPage = () => {
   };
 
   return (
-    <SignupContainer>
-      {!isLoading ? (
-        <form onSubmit={signupSubmitHandler}>
-          <SignuptFieldset>
-            <legend>회원가입</legend>
-            <label htmlFor="signupEmail">이메일</label>
-            <input
-              {...register("signupEmail", emailValidation)}
-              id="signupEmail"
-              text="email"
-            />
-            <ErrorMessage>{errors.signupEmail?.message}</ErrorMessage>
-            <label htmlFor="displayName">닉네임</label>
-            <input
-              {...register("displayName", displayNameValidation)}
-              id="displayName"
-              type="text"
-            />
-            <ErrorMessage>{errors.displayName?.message}</ErrorMessage>
-            <label htmlFor="signupPassword">비밀번호</label>
-            <input
-              {...register("signupPassword", passwordValidation)}
-              id="signupPassword"
-              type="password"
-            />
-            <ErrorMessage>{errors.signupPassword?.message}</ErrorMessage>
-            <label htmlFor="passwordConfirm">비밀번호 재확인</label>
-            <input
-              {...register("passwordConfirm")}
-              id="passwordConfirm"
-              type="password"
-            />
-            <ErrorMessage>{errors.passwordConfirm?.message}</ErrorMessage>
-            <button>완료</button>
-          </SignuptFieldset>
-        </form>
-      ) : (
-        <LoadingSpinner />
-      )}
-    </SignupContainer>
+    <>
+      <Helmet>
+        <title>회원가입</title>
+      </Helmet>
+      <SignupContainer>
+        {!isLoading ? (
+          <form onSubmit={signupSubmitHandler}>
+            <SignuptFieldset>
+              <legend>회원가입</legend>
+              <label htmlFor="signupEmail">이메일</label>
+              <input
+                {...register("signupEmail", emailValidation)}
+                id="signupEmail"
+                text="email"
+              />
+              <ErrorMessage>{errors.signupEmail?.message}</ErrorMessage>
+              <label htmlFor="displayName">닉네임</label>
+              <input
+                {...register("displayName", displayNameValidation)}
+                id="displayName"
+                type="text"
+              />
+              <ErrorMessage>{errors.displayName?.message}</ErrorMessage>
+              <label htmlFor="signupPassword">비밀번호</label>
+              <input
+                {...register("signupPassword", passwordValidation)}
+                id="signupPassword"
+                type="password"
+              />
+              <ErrorMessage>{errors.signupPassword?.message}</ErrorMessage>
+              <label htmlFor="passwordConfirm">비밀번호 재확인</label>
+              <input
+                {...register("passwordConfirm")}
+                id="passwordConfirm"
+                type="password"
+              />
+              <ErrorMessage>{errors.passwordConfirm?.message}</ErrorMessage>
+              <button>완료</button>
+            </SignuptFieldset>
+          </form>
+        ) : (
+          <LoadingSpinner />
+        )}
+      </SignupContainer>
+    </>
   );
 };
 

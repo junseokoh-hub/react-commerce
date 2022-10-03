@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { useCollection } from "../../hooks/useCollection";
-import { useTitle } from "../../hooks/useTitle";
 import { authUserAtom } from "../../store/authAtom";
 import MyCartList from "../../components/Cart/MyCartList";
+import { Helmet } from "react-helmet-async";
 
 const MyCartListWrapper = styled.section`
   padding: 20px 10px;
@@ -30,7 +30,6 @@ const TotalContainer = styled.div`
 
 const MyCartPage = () => {
   const authUser = useRecoilValue(authUserAtom);
-  useTitle("My Cart");
   const { documents: carts, error } = useCollection("myCarts", [
     "uid",
     "==",
@@ -48,19 +47,24 @@ const MyCartPage = () => {
       : 0;
 
   return (
-    <MyCartListWrapper>
-      <ul>
-        {!error &&
-          carts &&
-          carts.map((cart) => <MyCartList key={cart.id} cart={cart} />)}
-        {carts?.length === 0 && <div>Nothing in yoru cart...</div>}
-      </ul>
-      <hr />
-      <TotalContainer>
-        <span>총 갯수 : {totalQuantity}</span>
-        <span>합계 : ${(totalPrice * totalQuantity).toFixed(2)}</span>
-      </TotalContainer>
-    </MyCartListWrapper>
+    <>
+      <Helmet>
+        <title>내 상품 목록</title>
+      </Helmet>
+      <MyCartListWrapper>
+        <ul>
+          {!error &&
+            carts &&
+            carts.map((cart) => <MyCartList key={cart.id} cart={cart} />)}
+          {carts?.length === 0 && <div>Nothing in yoru cart...</div>}
+        </ul>
+        <hr />
+        <TotalContainer>
+          <span>총 갯수 : {totalQuantity}</span>
+          <span>합계 : ${(totalPrice * totalQuantity).toFixed(2)}</span>
+        </TotalContainer>
+      </MyCartListWrapper>
+    </>
   );
 };
 

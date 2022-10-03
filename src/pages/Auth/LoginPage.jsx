@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 import LoadingSpinner from "../../utils/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 const LoginPageContainer = styled.section`
   height: 80vh;
@@ -97,36 +98,41 @@ const LoginPage = () => {
   };
 
   return (
-    <LoginPageContainer>
-      {!isLoading ? (
-        <form onSubmit={submitAuthHandler}>
-          <LoginFieldset>
-            <legend>로그인</legend>
-            <label htmlFor="email">이메일</label>
-            <input
-              {...register("emailInput", emailValidation)}
-              id="email"
-              type="text"
-            />
-            <ErrorMessage>{errors.emailInput?.message}</ErrorMessage>
-            <label htmlFor="password">비밀번호</label>
-            <input
-              {...register("passwordInput", passwordValidation)}
-              id="password"
-              type="password"
-            />
-            <ErrorMessage>{errors.passwordInput?.message}</ErrorMessage>
-            <button type="submit">Log In</button>
-            <Link to="/signup" style={{ textAlign: "center" }}>
-              Create Account
-            </Link>
-          </LoginFieldset>
-        </form>
-      ) : (
-        <LoadingSpinner />
-      )}
-      {error && <h4>{error}</h4>}
-    </LoginPageContainer>
+    <>
+      <Helmet>
+        <title>로그인</title>
+      </Helmet>
+      <LoginPageContainer>
+        {!isLoading ? (
+          <form onSubmit={submitAuthHandler}>
+            <LoginFieldset>
+              <legend>로그인</legend>
+              <label htmlFor="email">이메일</label>
+              <input
+                {...register("emailInput", emailValidation)}
+                id="email"
+                type="text"
+              />
+              <ErrorMessage>{errors.emailInput?.message}</ErrorMessage>
+              <label htmlFor="password">비밀번호</label>
+              <input
+                {...register("passwordInput", passwordValidation)}
+                id="password"
+                type="password"
+              />
+              <ErrorMessage>{errors.passwordInput?.message}</ErrorMessage>
+              <button type="submit">Log In</button>
+              <Link to="/signup" style={{ textAlign: "center" }}>
+                Create Account
+              </Link>
+            </LoginFieldset>
+          </form>
+        ) : (
+          <LoadingSpinner />
+        )}
+        {error && <h4>{error}</h4>}
+      </LoginPageContainer>
+    </>
   );
 };
 

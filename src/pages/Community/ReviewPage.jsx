@@ -6,7 +6,6 @@ import styled from "styled-components";
 import OutletLayout from "../../components/Layout/OutletLayout";
 import ReviewList from "../../components/Review/ReviewList";
 import { useCollection } from "../../hooks/useCollection";
-import { useTitle } from "../../hooks/useTitle";
 import { authUserAtom } from "../../store/authAtom";
 
 const ReviewIdentifier = styled.h3`
@@ -53,7 +52,6 @@ const ReviewBtn = styled.button`
 `;
 
 const ReviewPage = () => {
-  useTitle("Review");
   const navigate = useNavigate();
   const reviewMatch = useMatch("/community/review");
 
@@ -73,7 +71,7 @@ const ReviewPage = () => {
   return (
     <OutletLayout>
       <Helmet>
-        <title>Review</title>
+        <title>리뷰</title>
       </Helmet>
       {reviewMatch && <ReviewIdentifier>Review</ReviewIdentifier>}
       {reviewMatch && (
