@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { useObserve } from "../hooks/useObserve";
 import fabricImage from "../images/fabric.jpg";
 import booksImage from "../images/books.jpg";
 import jewelryImage from "../images/jewelry.jpg";
+import monitorImage from "../images/monitor.jpg";
 
 const AboutContainer = styled.ul`
   li {
@@ -22,6 +23,13 @@ const AboutContainer = styled.ul`
       font-weight: bolder;
     }
     &:nth-of-type(3) {
+      position: relative;
+    }
+    &:nth-of-type(4) {
+      position: relative;
+      background-color: #d7d6db;
+    }
+    &:nth-of-type(5) {
       position: relative;
     }
   }
@@ -46,17 +54,62 @@ const AboutPhilosophy = styled.div`
   }
   p {
     margin-top: 50px;
-    font-size: 50px;
+    font-size: 40px;
+    line-height: 1.3;
+  }
+`;
+
+const SuperiorProduct = styled.div`
+  width: 40vw;
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  text-align: center;
+  color: ${(props) => props.theme.blackColor};
+  transition: all 1s ease-in-out;
+  opacity: ${(props) => props.opacity};
+  transform: ${(props) => props.transform};
+  h3 {
+    font-size: 40px;
+    font-weight: 500;
+  }
+  p {
+    margin-top: 50px;
+    font-size: 25px;
+    line-height: 1.5;
+  }
+`;
+
+const LastComment = styled.div`
+  position: absolute;
+  top: 30%;
+  left: 33%;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
+  opacity: ${(props) => props.opacity};
+  transform: ${(props) => props.transform};
+  h3 {
+    font-weight: bold;
+    font-size: 40px;
+    &:nth-of-type(2) {
+      margin-top: 20px;
+    }
+  }
+  p {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.6;
   }
 `;
 
 const AboutPage = () => {
-  const options = useMemo(() => {
-    return {
-      rootMargin: "-200px",
-    };
-  }, []);
-  const { isView, targetRef: secondImageRef } = useObserve(options);
+  const { isView, targetRef: secondImageRef } = useObserve({ threshold: 0.3 });
+  const { isView: isNextView, targetRef: thirdImageRef } = useObserve({
+    rootMargin: "100px",
+  });
+  const { isView: isLastView, targetRef: fourthImageRef } = useObserve({
+    threshold: 0.5,
+  });
 
   return (
     <>
@@ -72,17 +125,53 @@ const AboutPage = () => {
           <img src={booksImage} alt={"books"} />
           <AboutPhilosophy
             opacity={isView ? 1 : 0}
-            transform={!isView ? "translateX(100px)" : null}
+            transform={!isView ? "translateX(200px)" : null}
           >
             <span>철학</span>
             <p>
-              언제나 항상 최상의 품질과 최신의 물품들을 들여 놓아 고객분들께
-              제공하겠습니다.
+              전세계 각지에서 수입해오는 최상급의 제료를 이용해 언제나 항상
+              최상의 품질과 최신의 물품들을 들여 놓아 고객분들께 제공하겠습니다.
             </p>
           </AboutPhilosophy>
         </li>
-        <li>
-          <img src={jewelryImage} alt={"jewelry"} />
+        <li ref={thirdImageRef}>
+          <img
+            style={{
+              transition: "all .5s ease-in-out",
+              opacity: isNextView ? 1 : 0,
+              transform: !isNextView ? "translateY(100px)" : null,
+            }}
+            src={jewelryImage}
+            alt={"jewelry"}
+          />
+          <SuperiorProduct
+            opacity={isNextView ? 1 : 0}
+            transform={!isNextView ? "translateY(100px)" : null}
+          >
+            <h3>최상의 물품</h3>
+            <p>
+              1,2년만 입을 수 있는 옷, 혹은 해어지는 책이 아닌 10년이 지나도
+              멀쩡하게 입을 수 있으며 깔끔한 책을 여러분께 드리기 위하는 마음이
+              담겨있습니다.
+            </p>
+          </SuperiorProduct>
+        </li>
+        <li ref={fourthImageRef}>
+          <img src={monitorImage} alt="monitor" />
+          <LastComment
+            transform={!isLastView ? "translateY(100px)" : null}
+            opacity={isLastView ? 1 : 0}
+          >
+            <h3>"</h3>
+            <p>
+              이러한 저희의 철학이 저희만의 퀄리티를 탄생시킵니다.
+              <br />
+              끊임없이 발전하고 움직이는 저희 회사.
+              <br />
+              여러분께 언제나 항상 최고만을 선사드리도록 노력하겠습니다.
+            </p>
+            <h3>"</h3>
+          </LastComment>
         </li>
       </AboutContainer>
     </>
