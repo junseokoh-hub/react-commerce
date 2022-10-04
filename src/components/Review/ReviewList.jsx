@@ -56,15 +56,15 @@ const ReviewList = ({ review }) => {
 
   const newReviewAuthor = review?.author
     .slice(0, 3)
-    .padEnd(review?.author.length, "*");
+    .padEnd(review?.author?.length, "*");
 
   return (
     <>
       <AllReviewList>
         <p>
-          {review &&
-            review.title.length > 10 &&
-            `${review.title.slice(0, 10)}...`}
+          {review && review?.title?.length > 10
+            ? `${review?.title?.slice(0, 10)}...`
+            : review?.title}
         </p>
         <span>{newReviewAuthor}</span>
         {review?.uid === authUser?.user?.uid && (

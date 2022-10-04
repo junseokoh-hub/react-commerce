@@ -4,6 +4,9 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const CommunitySection = styled.section`
   display: flex;
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
 `;
 
 const CommunityNav = styled.aside`
@@ -18,7 +21,11 @@ const CommunityNav = styled.aside`
     text-align: center;
   }
   @media screen and (max-width: 480px) {
-    display: none;
+    height: 30px;
+    border: none;
+    h3 {
+      display: none;
+    }
   }
 `;
 
@@ -34,6 +41,13 @@ const CommunityNavIndex = styled.ul`
     font-weight: 600;
     &.clicked {
       color: ${(props) => props.theme.brown.normal};
+    }
+  }
+  @media screen and (max-width: 480px) {
+    display: flex;
+    justify-content: space-evenly;
+    li {
+      margin-top: 0;
     }
   }
 `;

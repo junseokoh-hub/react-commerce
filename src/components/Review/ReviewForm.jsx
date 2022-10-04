@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { authUserAtom } from "../../store/authAtom";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useCallback } from "react";
 
 const ReviewFormContainer = styled.section`
   height: 100%;
@@ -45,7 +46,8 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
   const authUser = useRecoilValue(authUserAtom);
   const { register, handleSubmit, setValue } = useForm();
 
-  const { addDocument, updateDocument } = useFireStore("reviews");
+  const { addDocument, updateDocument, deleteDocument } =
+    useFireStore("reviews");
 
   const submitReviewHandler = handleSubmit((data) => {
     if (
@@ -82,10 +84,17 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
     maxLength: { value: 100, message: "No more than 4" },
   };
 
+  const deleteReviewHandler = useCallback(() => {
+    if (window.confirm("이 리뷰를 정말 삭제하시겠습니까?")) {
+      deleteDocument(id);
+      navigate("/community/review");
+    }
+  }, []);
+
   useEffect(() => {
     if (isEdit) {
-      setValue("reviewTitleInput", singleReview && singleReview[0].title);
-      setValue("reviewContentInput", singleReview && singleReview[0].content);
+      setValue("reviewTitleInput", singleReview && singleReview[0]?.title);
+      setValue("reviewContentInput", singleReview && singleReview[0]?.content);
     }
   }, [singleReview]);
 
@@ -109,7 +118,7 @@ const ReviewForm = ({ isEdit, singleReview, id }) => {
           <button onClick={submitReviewHandler} type="submit">
             {!isEdit ? "작성하기" : "수정하기"}
           </button>
-          {isEdit && <button onClick={submitReviewHandler}>삭제하기</button>}
+          {isEdit && <button onClick={deleteReviewHandler}>삭제하기</button>}
         </article>
       </ReviewFormContainer>
     </>

@@ -14,7 +14,6 @@ const CommunityPage = React.lazy(() =>
 const NotFound = React.lazy(() => import("./pages/NotFound"));
 const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const MyCartPage = React.lazy(() => import("./pages/User/MyCartPage"));
-const MyPage = React.lazy(() => import("./pages/User/MyPage"));
 const SearchPage = React.lazy(() => import("./pages/SearchPage"));
 const LoginPage = React.lazy(() => import("./pages/Auth/LoginPage"));
 const SignupPage = React.lazy(() => import("./pages/Auth/SignupPage"));
@@ -61,10 +60,6 @@ const Router = () => {
           {!authUser.user && (
             <Route path="/myCart" element={<Navigate to="/login" />} />
           )}
-          <Route
-            path="/myPage"
-            element={authUser.user ? <MyPage /> : <Navigate to="/login" />}
-          />
           {!authUser.user && <Route path="/login" element={<LoginPage />} />}
           {authUser.user && (
             <Route path="/login" element={<Navigate to="/" replace={true} />} />

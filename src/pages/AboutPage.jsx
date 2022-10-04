@@ -36,6 +36,7 @@ const AboutContainer = styled.ul`
   img {
     display: block;
     width: 100%;
+    height: 100vh;
   }
 `;
 
@@ -56,6 +57,21 @@ const AboutPhilosophy = styled.div`
     margin-top: 50px;
     font-size: 40px;
     line-height: 1.3;
+  }
+  @media screen and (max-width: 1000px) {
+    right: 50px;
+    span {
+      font-size: 40px;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    width: 50vw;
+    p {
+      line-height: 1.5;
+    }
   }
 `;
 
@@ -78,6 +94,17 @@ const SuperiorProduct = styled.div`
     font-size: 25px;
     line-height: 1.5;
   }
+  @media screen and (max-width: 768px) {
+    width: 50vw;
+    left: 28%;
+    p {
+      font-size: 20px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    width: 60vw;
+    left: 20%;
+  }
 `;
 
 const LastComment = styled.div`
@@ -85,7 +112,7 @@ const LastComment = styled.div`
   top: 30%;
   left: 33%;
   text-align: center;
-  transition: all 0.5s ease-in-out;
+  transition: all 1s ease-in-out;
   opacity: ${(props) => props.opacity};
   transform: ${(props) => props.transform};
   h3 {
@@ -99,6 +126,25 @@ const LastComment = styled.div`
     font-size: 18px;
     font-weight: 600;
     line-height: 1.6;
+  }
+  @media screen and (max-width: 1000px) {
+    left: 32%;
+    h3 {
+      font-size: 30px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    left: 27%;
+    top: 10px;
+  }
+
+  @media screen and (max-width: 480px) {
+    left: 15%;
   }
 `;
 
@@ -125,7 +171,7 @@ const AboutPage = () => {
           <img src={booksImage} alt={"books"} />
           <AboutPhilosophy
             opacity={isView ? 1 : 0}
-            transform={!isView ? "translateX(200px)" : null}
+            transform={!isView ? "translateX(50px)" : null}
           >
             <span>철학</span>
             <p>

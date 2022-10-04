@@ -1,16 +1,15 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useMatch, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { BsSearch, BsCart } from "react-icons/bs";
 import { FiUser } from "react-icons/fi";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { AiOutlineMenu } from "react-icons/ai";
 import { authUserAtom } from "../../store/authAtom";
 import { searchBarAtom } from "../../store/searchBarAtom";
-import NavSearchContainer from "./NavSearchContainer";
-import Modal from "../../lib/Modal";
 import { useLogout } from "../../hooks/useLogout";
-import { AiOutlineMenu } from "react-icons/ai";
-import { useEffect } from "react";
+import Modal from "../../lib/Modal";
+import NavSearchContainer from "./NavSearchContainer";
 
 const Header = styled.header`
   height: ${(props) => props.height};
@@ -184,9 +183,16 @@ const MainHeader = ({ view }) => {
           <Link to="/myCart">
             <BsCart />
           </Link>
-          <Link to="/myPage">
-            <FiUser />
-          </Link>
+          {!authUser.user && (
+            <Link to="/login">
+              <FiUser />
+            </Link>
+          )}
+          {authUser.user && (
+            <span style={{ margin: "0 10px", cursor: "default" }}>
+              {authUser.user.displayName}님 환영합니다!
+            </span>
+          )}
           {authUser.user && <span onClick={logoutHandler}>Log Out</span>}
         </LinkContainer>
         <LinkContainer
