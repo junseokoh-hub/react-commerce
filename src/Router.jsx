@@ -22,6 +22,9 @@ const NotificationPage = React.lazy(() =>
 );
 const NoticePage = React.lazy(() => import("./pages/Community/NoticePage"));
 const EventPage = React.lazy(() => import("./pages/Community/EventPage"));
+const EventDetailPage = React.lazy(() =>
+  import("./pages/Community/EventDetailPage"),
+);
 const Faq = React.lazy(() => import("./pages/Community/Faq"));
 const ReviewNew = React.lazy(() => import("./components/Review/ReviewNew"));
 const ReviewEditor = React.lazy(() =>
@@ -60,6 +63,7 @@ const Router = () => {
             <Route path="notification/*" element={<NotificationPage />}>
               <Route path="notice" element={<NoticePage />} />
               <Route path="event" element={<EventPage />} />
+              <Route path="event/:id" element={<EventDetailPage />} />
             </Route>
             <Route path="faq" element={<Faq />} />
           </Route>

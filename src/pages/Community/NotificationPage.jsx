@@ -7,13 +7,16 @@ const NotificationWrapper = styled.article`
 `;
 
 const NotificationNavContainer = styled.ul`
+  margin: 10px 0;
   width: 100%;
   height: 30px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  border-bottom: 3px solid ${(props) => props.theme.brown.normal};
   li {
     a {
+      font-size: 18px;
       font-weight: 700;
       color: ${(props) => props.theme.blackColor};
       &.clicked {
