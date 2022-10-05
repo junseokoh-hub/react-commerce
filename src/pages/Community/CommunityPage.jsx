@@ -68,7 +68,7 @@ const CommunityPage = () => {
           </li>
           <li>
             <NavLink
-              to="notice"
+              to="notification"
               className={({ isActive }) => (isActive ? "clicked" : null)}
             >
               Notice

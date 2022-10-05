@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { useObserve } from "../hooks/useObserve";
-import fabricImage from "../images/fabric.jpg";
-import booksImage from "../images/books.jpg";
-import jewelryImage from "../images/jewelry.jpg";
-import monitorImage from "../images/monitor.jpg";
+import fabricImage from "../images/about-image/fabric.jpg";
+import booksImage from "../images/about-image/books.jpg";
+import jewelryImage from "../images/about-image/jewelry.jpg";
+import monitorImage from "../images/about-image/monitor.jpg";
 
 const AboutContainer = styled.ul`
   li {

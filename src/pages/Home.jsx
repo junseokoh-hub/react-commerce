@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useQuery } from "react-query";
 import { Helmet } from "react-helmet-async";
 import StyledSlider from "../utils/StyledSlider";
-import perfume1 from "../images/perfume1.jpg";
-import perfume2 from "../images/perfume2.jpg";
-import perfume3 from "../images/perfume3.jpg";
+import perfume1 from "../images/perfume/perfume1.jpg";
+import perfume2 from "../images/perfume/perfume2.jpg";
+import perfume3 from "../images/perfume/perfume3.jpg";
 import { fetchProducts } from "../lib/api";
 import ImageSection from "../components/ImageSection/ImageSection";
 

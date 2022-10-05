@@ -17,6 +17,11 @@ const MyCartPage = React.lazy(() => import("./pages/User/MyCartPage"));
 const SearchPage = React.lazy(() => import("./pages/SearchPage"));
 const LoginPage = React.lazy(() => import("./pages/Auth/LoginPage"));
 const SignupPage = React.lazy(() => import("./pages/Auth/SignupPage"));
+const NotificationPage = React.lazy(() =>
+  import("./pages/Community/NotificationPage"),
+);
+const NoticePage = React.lazy(() => import("./pages/Community/NoticePage"));
+const EventPage = React.lazy(() => import("./pages/Community/EventPage"));
 const Faq = React.lazy(() => import("./pages/Community/Faq"));
 const ReviewNew = React.lazy(() => import("./components/Review/ReviewNew"));
 const ReviewEditor = React.lazy(() =>
@@ -51,6 +56,10 @@ const Router = () => {
             <Route path="review/*" element={<ReviewPage />}>
               <Route path="new" element={<ReviewNew />} />
               <Route path="edit/:id" element={<ReviewEditor />} />
+            </Route>
+            <Route path="notification/*" element={<NotificationPage />}>
+              <Route path="notice" element={<NoticePage />} />
+              <Route path="event" element={<EventPage />} />
             </Route>
             <Route path="faq" element={<Faq />} />
           </Route>
