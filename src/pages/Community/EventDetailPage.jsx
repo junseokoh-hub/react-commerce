@@ -16,6 +16,16 @@ const EventDetailWrapper = styled.div`
     font-size: 30px;
     cursor: pointer;
   }
+  @media screen and (max-width: 768px) {
+    .backwards {
+      font-size: 24px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .backwards {
+      left: 20px;
+    }
+  }
 `;
 
 const EventDetailContainer = styled.div`
@@ -60,6 +70,12 @@ const EventDetailDesc = styled.div`
   span {
     margin: 15px 0;
   }
+  @media screen and (max-width: 768px) {
+    width: 55vw;
+  }
+  @media screen and (max-width: 480px) {
+    width: 80vw;
+  }
 `;
 
 const EventDetailContent = styled.p`
@@ -68,6 +84,10 @@ const EventDetailContent = styled.p`
   font-size: 18px;
   font-weight: bolder;
   line-height: 1.5;
+  @media screen and (max-width: 768px) {
+    width: 70%;
+    line-height: 2;
+  }
 `;
 
 const EventBtnContainer = styled.div`
@@ -85,6 +105,13 @@ const EventBtnContainer = styled.div`
     &:active {
       background-color: ${(props) => props.theme.brown.normal};
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 55vw;
+  }
+  @media screen and (max-width: 480px) {
+    width: 80vw;
   }
 `;
 

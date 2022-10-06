@@ -28,7 +28,7 @@ const Header = styled.header`
     transition: all 0.2s ease-in-out;
   }
   @media screen and (max-width: 480px) {
-    height: ${(props) => props.mobileHeight};
+    height: 0;
     color: ${(props) => props.theme.blackColor};
     a {
       color: ${(props) => props.theme.blackColor};
@@ -76,7 +76,7 @@ const LinkContainer = styled.nav`
   }
   @media screen and (max-width: 480px) {
     &:nth-of-type(1) {
-      padding: 0 20px;
+      padding: 5px 20px;
       height: 6vh;
       justify-content: space-between;
       background-color: ${(props) => props.mobileBgColor};
@@ -99,6 +99,7 @@ const LinkContainer = styled.nav`
       flex-direction: column;
       background-color: ${(props) => props.mobileBgColor};
       a {
+        margin: 5px 0;
         padding: 0;
         height: 100%;
         display: flex;
@@ -159,7 +160,6 @@ const MainHeader = ({ view }) => {
 
       <Header
         height={homeMatch ? "30vh" : "20vh"}
-        mobileHeight={isMenuOpen ? "30vh" : "20vh"}
         bgColor={
           navColorChange ? (props) => props.theme.whiteColor : "transparent"
         }

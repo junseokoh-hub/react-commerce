@@ -10,6 +10,9 @@ const EventContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  @media screen and (max-width: 480px) {
+    width: 80vw;
+  }
 `;
 
 const EventPost = styled.div`
@@ -20,11 +23,17 @@ const EventPost = styled.div`
     border-radius: 10px;
   }
   span {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     font-size: 20px;
     font-weight: 600;
     color: ${(props) => props.theme.blackColor};
+  }
+  @media screen and (max-width: 480px) {
+    span {
+      font-size: 14px;
+    }
   }
 `;
 
