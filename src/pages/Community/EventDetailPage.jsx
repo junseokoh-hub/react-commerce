@@ -6,6 +6,9 @@ import { BsBoxArrowLeft } from "react-icons/bs";
 import { useRecoilValue } from "recoil";
 import { authUserAtom } from "../../store/authAtom";
 import { useCallback } from "react";
+import { useFireStore } from "../../hooks/useFirestore";
+import { useCollection } from "../../hooks/useCollection";
+import { useEffect } from "react";
 
 const EventDetailWrapper = styled.div`
   position: relative;
@@ -98,17 +101,6 @@ const EventBtnContainer = styled.div`
   width: 50vw;
   display: flex;
   justify-content: flex-end;
-  button {
-    width: 100px;
-    height: 40px;
-    font-weight: bold;
-    background-color: ${(props) => props.theme.orange.normal};
-    border: 1px solid ${(props) => props.theme.orange.lighter};
-    color: ${(props) => props.theme.whiteColor};
-    &:active {
-      background-color: ${(props) => props.theme.brown.normal};
-    }
-  }
 
   @media screen and (max-width: 768px) {
     width: 55vw;
@@ -118,13 +110,29 @@ const EventBtnContainer = styled.div`
   }
 `;
 
+const EnrollBtn = styled.button`
+  width: 100px;
+  height: 40px;
+  font-weight: bold;
+  background-color: ${(props) => props.btncolor};
+  border: 1px solid ${(props) => props.theme.orange.lighter};
+  color: ${(props) => props.theme.whiteColor};
+  &:active {
+    background-color: ${(props) => props.theme.brown.normal};
+  }
+`;
+
 const EventDetailPage = () => {
   const authUser = useRecoilValue(authUserAtom);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const EventDetail = EVENT_CONTENTS.find((item) => item.id === id);
 
   const { id: detailId, image: detailImage, description } = EventDetail;
+
+  const { setDocument } = useFireStore("participation");
+  const { documents: enrollments } = useCollection("participation");
 
   const enrollHandler = useCallback(() => {
     if (!authUser.user) {
@@ -136,8 +144,22 @@ const EventDetailPage = () => {
         navigate("/login");
       }
     }
-  }, []);
+    if (authUser.user) {
+      if (window.confirm("신청하시겠습니까?")) {
+        setDocument(authUser.user.uid + id, {
+          event: id,
+          uid: authUser.user.uid,
+        });
+        navigate("/community/notification/event");
+      }
+    }
+  }, [authUser.user, setDocument]);
 
+  const eventConfirm = enrollments
+    ?.filter((item) => item.uid === authUser.user.uid)
+    ?.find((item) => item.id === authUser.user.uid + id);
+
+  console.log(eventConfirm);
   return (
     <EventDetailWrapper>
       <BsBoxArrowLeft className="backwards" onClick={() => navigate(-1)} />
@@ -153,7 +175,17 @@ const EventDetailPage = () => {
         </EventDetailDesc>
       </EventDetailContainer>
       <EventBtnContainer>
-        <button onClick={enrollHandler}>신청하기</button>
+        <EnrollBtn
+          disabled={eventConfirm}
+          onClick={enrollHandler}
+          btncolor={
+            eventConfirm
+              ? (props) => props.theme.yellow.lighter
+              : (props) => props.theme.orange.normal
+          }
+        >
+          {eventConfirm ? "완료" : "신청하기"}
+        </EnrollBtn>
       </EventBtnContainer>
     </EventDetailWrapper>
   );

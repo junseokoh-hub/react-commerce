@@ -100,7 +100,7 @@ const LinkContainer = styled.nav`
       background-color: ${(props) => props.mobileBgColor};
       a {
         margin: 5px 0;
-        padding: 0;
+        padding: 5px 0;
         height: 100%;
         display: flex;
         align-items: center;

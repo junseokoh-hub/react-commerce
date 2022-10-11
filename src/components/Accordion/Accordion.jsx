@@ -55,8 +55,7 @@ const ToggleButton = styled.button`
     width: 50px;
   }
   @media screen and (max-width: 480px) {
-    width: 30px;
-    font-size: 5px;
+    font-size: 10px;
   }
 `;
 
