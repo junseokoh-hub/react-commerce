@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { EVENT_CONTENTS } from "../../lib/event-contents";
 import { BsBoxArrowLeft } from "react-icons/bs";
+import { useRecoilValue } from "recoil";
+import { authUserAtom } from "../../store/authAtom";
+import { useCallback } from "react";
 
 const EventDetailWrapper = styled.div`
   position: relative;
@@ -116,11 +119,24 @@ const EventBtnContainer = styled.div`
 `;
 
 const EventDetailPage = () => {
+  const authUser = useRecoilValue(authUserAtom);
   const { id } = useParams();
   const navigate = useNavigate();
   const EventDetail = EVENT_CONTENTS.find((item) => item.id === id);
 
   const { id: detailId, image: detailImage, description } = EventDetail;
+
+  const enrollHandler = useCallback(() => {
+    if (!authUser.user) {
+      if (
+        window.confirm(
+          "로그인 하셔야 신청하실 수 있습니다. 로그인 하시겠습니까?",
+        )
+      ) {
+        navigate("/login");
+      }
+    }
+  }, []);
 
   return (
     <EventDetailWrapper>
@@ -137,7 +153,7 @@ const EventDetailPage = () => {
         </EventDetailDesc>
       </EventDetailContainer>
       <EventBtnContainer>
-        <button>신청하기</button>
+        <button onClick={enrollHandler}>신청하기</button>
       </EventBtnContainer>
     </EventDetailWrapper>
   );
