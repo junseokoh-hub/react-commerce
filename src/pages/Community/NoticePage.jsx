@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import Accordion from "../../components/Accordion/Accordion";
 import Pagination from "../../components/Posts/Pagination";
 import { NOTICE_DATA } from "../../lib/notice-data";
 const NoticePage = () => {
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(5);
   const [page, setPage] = useState(1);
 
   const offset = (page - 1) * limit;
@@ -11,7 +12,7 @@ const NoticePage = () => {
     <>
       <ul>
         {NOTICE_DATA.slice(offset, offset + limit).map((data, index) => (
-          <li key={index}>{data.content}</li>
+          <Accordion key={index} data={data} />
         ))}
       </ul>
       <Pagination
