@@ -26,6 +26,9 @@ const EventDetailPage = React.lazy(() =>
   import("./pages/Community/EventDetailPage"),
 );
 const Faq = React.lazy(() => import("./pages/Community/Faq"));
+const OneononeInquiryPage = React.lazy(() =>
+  import("./pages/Community/OneononeInquiryPage"),
+);
 const ReviewNew = React.lazy(() => import("./components/Review/ReviewNew"));
 const ReviewEditor = React.lazy(() =>
   import("./components/Review/ReviewEditor"),
@@ -66,6 +69,18 @@ const Router = () => {
               <Route path="event/:id" element={<EventDetailPage />} />
             </Route>
             <Route path="faq" element={<Faq />} />
+            {authUser.user && (
+              <Route
+                path="one-on-one-inquiry"
+                element={<OneononeInquiryPage />}
+              />
+            )}
+            {!authUser.user && (
+              <Route
+                path="one-on-one-inquiry"
+                element={<Navigate to="/login" />}
+              />
+            )}
           </Route>
           <Route path="/about" element={<AboutPage />} />
           <Route path="/search" element={<SearchPage />} />

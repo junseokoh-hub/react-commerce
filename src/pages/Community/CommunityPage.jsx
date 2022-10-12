@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { authUserAtom } from "../../store/authAtom";
 
 const CommunitySection = styled.section`
   display: flex;
@@ -53,6 +55,8 @@ const CommunityNavIndex = styled.ul`
 `;
 
 const CommunityPage = () => {
+  const authUser = useRecoilValue(authUserAtom);
+  const navigate = useNavigate();
   return (
     <CommunitySection>
       <CommunityNav>
@@ -81,6 +85,14 @@ const CommunityPage = () => {
               className={({ isActive }) => (isActive ? "clicked" : null)}
             >
               FAQ
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={authUser.user ? "one-on-one-inquiry" : "/login"}
+              className={({ isActive }) => (isActive ? "clicked" : "")}
+            >
+              1 : 1일 문의
             </NavLink>
           </li>
         </CommunityNavIndex>
