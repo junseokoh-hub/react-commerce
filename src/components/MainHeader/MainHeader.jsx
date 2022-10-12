@@ -205,6 +205,14 @@ const MainHeader = ({ view }) => {
           <Link to="/products">Products</Link>
           <Link to="/community/review">Community</Link>
           <Link to="/about">About</Link>
+          <Link to="/myCart">My Cart</Link>
+          {!authUser.user ? (
+            <Link to="/login">Log In</Link>
+          ) : (
+            <Link onClick={logout} to="/">
+              Log out
+            </Link>
+          )}
         </LinkContainer>
       </Header>
     </>

@@ -9,25 +9,41 @@ import { useRecoilValue } from "recoil";
 import { authUserAtom } from "../../store/authAtom";
 
 const InquiryFieldset = styled.fieldset`
-  height: 100%;
+  height: 50vh;
+  border: 2px solid ${(props) => props.theme.yellow.lighter};
   legend {
     font-size: 20px;
     font-weight: bold;
+    color: ${(props) => props.theme.orange.normal};
   }
 `;
 
 const InquiryInputContainer = styled.article`
   margin: 0 auto;
-  width: 50%;
+  width: 60%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 480px) {
+    padding-top: 10px;
+  }
+`;
+
+const InquiryInput = styled.input`
+  height: 30px;
+  border: 2px solid ${(props) => props.theme.orange.lighter};
+  outline: none;
 `;
 
 const InquiryTextarea = styled.textarea`
   margin: 5px 0;
+  border: 2px solid ${(props) => props.theme.orange.lighter};
   flex: 1;
   resize: none;
+  outline: none;
 `;
 
 const InquiryBtn = styled.button`
@@ -36,6 +52,9 @@ const InquiryBtn = styled.button`
   background-color: ${(props) => props.theme.orange.normal};
   color: ${(props) => props.theme.whiteColor};
   font-weight: bold;
+  &:active {
+    background-color: ${(props) => props.theme.brown.normal};
+  }
 `;
 
 const OneononeInquiryPage = () => {
@@ -82,8 +101,12 @@ const OneononeInquiryPage = () => {
         <InquiryFieldset>
           <legend>문의사항</legend>
           <InquiryInputContainer>
-            <input {...register("inquiryTitle", inquiryTitleValidation)} />
+            <InquiryInput
+              placeholder="문의 사항의 제목을 입력해주세요."
+              {...register("inquiryTitle", inquiryTitleValidation)}
+            />
             <InquiryTextarea
+              placeholder="문의하실 사항에 대한 내용을 입력해주세요."
               {...register("inquiryContent", inquiryContentValidation)}
             />
             <InquiryBtn onClick={inquirySubmitHandler}>등록</InquiryBtn>

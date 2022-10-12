@@ -92,7 +92,7 @@ const CommunityPage = () => {
               to={authUser.user ? "one-on-one-inquiry" : "/login"}
               className={({ isActive }) => (isActive ? "clicked" : "")}
             >
-              1 : 1일 문의
+              1 : 1 문의
             </NavLink>
           </li>
         </CommunityNavIndex>
