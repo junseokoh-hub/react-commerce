@@ -15,6 +15,7 @@ const NotFound = React.lazy(() => import("./pages/NotFound"));
 const AboutPage = React.lazy(() => import("./pages/AboutPage"));
 const MyCartPage = React.lazy(() => import("./pages/User/MyCartPage"));
 const SearchPage = React.lazy(() => import("./pages/SearchPage"));
+const MyPage = React.lazy(() => import("./pages/User/MyPage"));
 const LoginPage = React.lazy(() => import("./pages/Auth/LoginPage"));
 const SignupPage = React.lazy(() => import("./pages/Auth/SignupPage"));
 const NotificationPage = React.lazy(() =>
@@ -87,6 +88,10 @@ const Router = () => {
           {authUser.user && <Route path="/myCart" element={<MyCartPage />} />}
           {!authUser.user && (
             <Route path="/myCart" element={<Navigate to="/login" />} />
+          )}
+          {authUser.user && <Route path="/myPage" element={<MyPage />} />}
+          {!authUser.user && (
+            <Route path="/myPage" element={<Navigate to="/login" />} />
           )}
           {!authUser.user && <Route path="/login" element={<LoginPage />} />}
           {authUser.user && (

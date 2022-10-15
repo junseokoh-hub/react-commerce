@@ -61,6 +61,12 @@ const LinkContainer = styled.nav`
     flex-grow: 1;
     font-size: 30px;
     font-weight: bold;
+    a {
+      &:nth-of-type(5),
+      &:nth-of-type(6) {
+        display: none;
+      }
+    }
   }
   a {
     padding: 20px;
@@ -104,6 +110,10 @@ const LinkContainer = styled.nav`
         height: 100%;
         display: flex;
         align-items: center;
+        &:nth-of-type(5),
+        &:nth-of-type(6) {
+          display: block;
+        }
       }
     }
   }
@@ -183,16 +193,11 @@ const MainHeader = ({ view }) => {
           <Link to="/myCart">
             <BsCart />
           </Link>
-          {!authUser.user && (
-            <Link to="/login">
-              <FiUser />
-            </Link>
-          )}
-          {authUser.user && (
-            <span style={{ margin: "0 10px", cursor: "default" }}>
-              {authUser.user.displayName}님 환영합니다!
-            </span>
-          )}
+
+          <Link to={!authUser.user ? "/login" : "/myPage"}>
+            <FiUser />
+          </Link>
+
           {authUser.user && <span onClick={logoutHandler}>Log Out</span>}
         </LinkContainer>
         <LinkContainer
@@ -205,7 +210,7 @@ const MainHeader = ({ view }) => {
           <Link to="/products">Products</Link>
           <Link to="/community/review">Community</Link>
           <Link to="/about">About</Link>
-          <Link to="/myCart">My Cart</Link>
+          {!authUser.user && <Link to="/myCart">My Cart</Link>}
           {!authUser.user ? (
             <Link to="/login">Log In</Link>
           ) : (
