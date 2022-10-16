@@ -39,7 +39,7 @@ const MyPageNavLinks = styled.li`
 `;
 
 const MyPage = () => {
-  const logout = useLogout();
+  const { error, logout } = useLogout();
 
   return (
     <>
@@ -67,7 +67,7 @@ const MyPage = () => {
             </MyPageNavLinks>
             <MyPageNavLinks>
               <BiLogOut className="logout_btn" />
-              <Link to="/" onClick={logout}>
+              <Link to="/" onClick={!error && logout}>
                 로그아웃
               </Link>
             </MyPageNavLinks>

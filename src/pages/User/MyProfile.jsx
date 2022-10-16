@@ -1,15 +1,16 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
 import OutletLayout from "../../components/Layout/OutletLayout";
 import MyPageImage from "../../components/MyPage/MyProfile/MyProfileImage";
-import { authUserAtom } from "../../store/authAtom";
+import MyProfileInfo from "../../components/MyPage/MyProfile/MyProfileInfo";
+import MyProfileLayout from "../../components/MyPage/MyProfile/MyProfileLayout";
 
 const MyProfile = () => {
-  const authUser = useRecoilValue(authUserAtom);
   return (
     <OutletLayout>
-      <MyPageImage />
-      <div>{authUser.user.displayName}님</div>
+      <MyProfileLayout>
+        <MyPageImage />
+        <MyProfileInfo />
+      </MyProfileLayout>
     </OutletLayout>
   );
 };

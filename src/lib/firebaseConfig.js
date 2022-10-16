@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore, Timestamp } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -15,5 +16,6 @@ const app = initializeApp(firebaseConfig);
 export const appAuth = getAuth();
 export const appFireStore = getFirestore(app);
 export const timestamp = Timestamp;
+export const storage = getStorage(app);
 
 export default app;
