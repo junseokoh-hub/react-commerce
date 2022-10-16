@@ -194,7 +194,7 @@ const MainHeader = ({ view }) => {
             <BsCart />
           </Link>
 
-          <Link to={!authUser.user ? "/login" : "/myPage"}>
+          <Link to={!authUser.user ? "/login" : "/myPage/myProfile"}>
             <FiUser />
           </Link>
 
