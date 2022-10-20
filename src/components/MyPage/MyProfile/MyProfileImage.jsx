@@ -57,7 +57,7 @@ const MyProfileImage = () => {
           });
       });
     });
-  }, []);
+  }, [imageUpload]);
 
   return (
     <ProfileImgContainer>
@@ -70,11 +70,8 @@ const MyProfileImage = () => {
         <input type="file" onChange={changeImageHandler} />
         <SaveBtn onClick={uploadImageHandler}>저장</SaveBtn>
       </div>
-
-      <h3 style={{ fontWeight: "bold", fontSize: "18px" }}>닉네임 :</h3>
-      <span>{authUser.user.displayName}님</span>
     </ProfileImgContainer>
   );
 };
 
-export default MyProfileImage;
+export default React.memo(MyProfileImage);

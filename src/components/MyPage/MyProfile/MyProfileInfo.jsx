@@ -1,11 +1,9 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { authUserAtom } from "../../../store/authAtom";
 import { FiEdit3 } from "react-icons/fi";
-import { updateProfile } from "firebase/auth";
-import { appAuth } from "../../../lib/firebaseConfig";
 
 const ProfileInfoFrame = styled.ul`
   margin-top: 20px;
@@ -34,8 +32,9 @@ const ProfileInfoContentEditor = styled.input`
 `;
 
 const MyProfileInfo = () => {
-  const [authUser, setAuthUser] = useRecoilState(authUserAtom);
-  const [isEdit, setIsEdit] = useState(false);
+  const authUser = useRecoilValue(authUserAtom);
+  const [isPhoneEdit, setIsPhoneEdit] = useState(false);
+  const [isAdEdit, setIsAdEdit] = useState(false);
   const {
     register,
     handleSubmit,
@@ -43,30 +42,36 @@ const MyProfileInfo = () => {
     formState: { errors },
   } = useForm();
 
-  const editHandler = useCallback(() => {
-    setIsEdit((prev) => !prev);
+  const editPhoneHandler = useCallback(() => {
+    setIsPhoneEdit((prev) => !prev);
   }, []);
 
-  const submitContentHandler = handleSubmit((data) => {
-    if (data.phoneNumber.includes("-")) return;
-    updateProfile(appAuth.currentUser, {
-      phoneNumber: data.phoneNumber,
-    })
-      .then(() => {
-        setAuthUser((prev) => ({ ...prev, phoneNumber: data.phoneNumber }));
-      })
-      .catch((error) => {
-        throw error;
-      });
-    setValue("phoneNumber", "");
-  });
+  const editAdHandler = useCallback(() => {
+    setIsAdEdit((prev) => !prev);
+  }, []);
 
   const phoneNumberValidation = {
+    required: { value: true, message: "write phone-number" },
     minLength: { value: 9, message: "Number must be at least 9digits" },
   };
 
+  const AddressValidation = {
+    required: { value: true, message: "write address" },
+    minLength: { value: 2, message: "Address must be at least 2 letters" },
+  };
+
+  const submitHandler = handleSubmit((data) => {
+    console.log(data);
+  });
+
   return (
     <ProfileInfoFrame>
+      <ProfileInfoList>
+        <ProfileInfoTitle style={{ fontWeight: "bold", fontSize: "18px" }}>
+          닉네임 :
+        </ProfileInfoTitle>
+        <ProfileInfoContent>{authUser.user.displayName}님</ProfileInfoContent>
+      </ProfileInfoList>
       <ProfileInfoList>
         <ProfileInfoTitle>이메일 :</ProfileInfoTitle>
         <ProfileInfoContent>{authUser.user.email}</ProfileInfoContent>
@@ -76,24 +81,41 @@ const MyProfileInfo = () => {
         <ProfileInfoContent>{authUser.user.displayName}</ProfileInfoContent>
       </ProfileInfoList>
       <ProfileInfoList>
-        <ProfileInfoTitle onClick={editHandler}>전화번호 :</ProfileInfoTitle>
-        {!isEdit && (
+        <ProfileInfoTitle onClick={editPhoneHandler}>
+          전화번호 :
+        </ProfileInfoTitle>
+        {!isPhoneEdit && (
           <ProfileInfoContent>{authUser.user.phoneNumber}</ProfileInfoContent>
         )}
-        {isEdit && (
+        {isPhoneEdit && (
           <>
             <ProfileInfoContentEditor
               {...register("phoneNumber", phoneNumberValidation)}
             />
-            <FiEdit3 className="edit_btn" onClick={submitContentHandler} />
+            <FiEdit3
+              onClick={submitHandler}
+              name="phoneNumber_edit"
+              className="edit_btn"
+            />
           </>
         )}
         <p>{errors.phoneNumber?.message}</p>
       </ProfileInfoList>
       <ProfileInfoList>
-        <ProfileInfoTitle>주소 :</ProfileInfoTitle>
-        <ProfileInfoContent></ProfileInfoContent>
-        <ProfileInfoContentEditor {...register("Address")} />
+        <ProfileInfoTitle onClick={editAdHandler}>주소 :</ProfileInfoTitle>
+        {!isAdEdit && <ProfileInfoContent></ProfileInfoContent>}
+        {isAdEdit && (
+          <>
+            <ProfileInfoContentEditor
+              {...register("Address", AddressValidation)}
+            />
+            <FiEdit3
+              onClick={submitHandler}
+              name="address_edit"
+              className="edit_btn"
+            />
+          </>
+        )}
       </ProfileInfoList>
     </ProfileInfoFrame>
   );
