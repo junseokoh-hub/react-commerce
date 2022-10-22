@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authUserAtom } from "../../../store/authAtom";
 import { FiEdit3 } from "react-icons/fi";
+import { useFireStore } from "../../../hooks/useFirestore";
+import { useCollection } from "../../../hooks/useCollection";
+import { useMemo } from "react";
 
 const ProfileInfoFrame = styled.ul`
   margin-top: 20px;
@@ -35,10 +38,13 @@ const MyProfileInfo = () => {
   const authUser = useRecoilValue(authUserAtom);
   const [isPhoneEdit, setIsPhoneEdit] = useState(false);
   const [isAdEdit, setIsAdEdit] = useState(false);
+  const { setDocument } = useFireStore("user_info");
+  const { documents: userInfo, error } = useCollection("user_info");
+
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -61,8 +67,28 @@ const MyProfileInfo = () => {
   };
 
   const submitHandler = handleSubmit((data) => {
-    console.log(data);
+    const { uid, displayName, email } = authUser.user;
+    const { phoneNumber, address } = data;
+    setDocument(uid, {
+      displayName,
+      email,
+      phoneNumber,
+      address,
+    });
+    setIsPhoneEdit(false);
+    setIsAdEdit(false);
+    reset();
   });
+
+  const myInfo = useMemo(() => {
+    return (
+      !error &&
+      userInfo &&
+      userInfo.filter((who) => who.id === authUser.user.uid)[0]
+    );
+  }, [userInfo]);
+
+  console.log(myInfo);
 
   return (
     <ProfileInfoFrame>
@@ -85,38 +111,33 @@ const MyProfileInfo = () => {
           전화번호 :
         </ProfileInfoTitle>
         {!isPhoneEdit && (
-          <ProfileInfoContent>{authUser.user.phoneNumber}</ProfileInfoContent>
+          <ProfileInfoContent>{myInfo?.phoneNumber}</ProfileInfoContent>
         )}
         {isPhoneEdit && (
           <>
             <ProfileInfoContentEditor
               {...register("phoneNumber", phoneNumberValidation)}
             />
-            <FiEdit3
-              onClick={submitHandler}
-              name="phoneNumber_edit"
-              className="edit_btn"
-            />
+            <FiEdit3 name="phoneNumber_edit" className="edit_btn" />
           </>
         )}
         <p>{errors.phoneNumber?.message}</p>
       </ProfileInfoList>
       <ProfileInfoList>
         <ProfileInfoTitle onClick={editAdHandler}>주소 :</ProfileInfoTitle>
-        {!isAdEdit && <ProfileInfoContent></ProfileInfoContent>}
+        {!isAdEdit && (
+          <ProfileInfoContent>{myInfo?.address}</ProfileInfoContent>
+        )}
         {isAdEdit && (
           <>
             <ProfileInfoContentEditor
-              {...register("Address", AddressValidation)}
+              {...register("address", AddressValidation)}
             />
-            <FiEdit3
-              onClick={submitHandler}
-              name="address_edit"
-              className="edit_btn"
-            />
+            <FiEdit3 name="address_edit" className="edit_btn" />
           </>
         )}
       </ProfileInfoList>
+      <button onClick={submitHandler}>저장</button>
     </ProfileInfoFrame>
   );
 };
