@@ -7,15 +7,26 @@ import { BiLogOut } from "react-icons/bi";
 
 const MyPageWrapper = styled.section`
   display: flex;
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
 `;
 
 const MyPageSideNav = styled.nav`
   min-width: 200px;
   height: 300px;
   border-top: 5px solid ${(props) => props.theme.orange.lighter};
+  @media screen and (max-width: 480px) {
+    height: 70px;
+    border: none;
+  }
 `;
 
-const MyPageNavList = styled.ul``;
+const MyPageNavList = styled.ul`
+  @media screen and (max-width: 480px) {
+    display: flex;
+  }
+`;
 
 const MyPageNavLinks = styled.li`
   margin: 15px 0;
@@ -34,6 +45,13 @@ const MyPageNavLinks = styled.li`
     color: ${(props) => props.theme.orange.normal};
     &.clicked {
       color: ${(props) => props.theme.brown.normal};
+    }
+  }
+  @media screen and (max-width: 480px) {
+    &:nth-of-type(3) {
+      .logout_btn {
+        left: 10px;
+      }
     }
   }
 `;

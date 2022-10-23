@@ -10,8 +10,18 @@ const MyReviewLists = styled.li`
   border: 1px solid black;
 `;
 
+const MyReviewTitle = styled.h4`
+  font-weight: 600;
+  @media screen and (max-width: 480px) {
+    font-size: 13px;
+  }
+`;
+
 const MyReviewTime = styled.span`
   font-size: 13px;
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const MyReviewList = ({ data }) => {
@@ -21,7 +31,7 @@ const MyReviewList = ({ data }) => {
 
   return (
     <MyReviewLists key={data.createdTime}>
-      <h4>{data.title}</h4>
+      <MyReviewTitle>{data.title}</MyReviewTitle>
       <MyReviewTime>{createdDate}</MyReviewTime>
     </MyReviewLists>
   );

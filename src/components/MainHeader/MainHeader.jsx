@@ -63,7 +63,8 @@ const LinkContainer = styled.nav`
     font-weight: bold;
     a {
       &:nth-of-type(5),
-      &:nth-of-type(6) {
+      &:nth-of-type(6),
+      &:nth-of-type(7) {
         display: none;
       }
     }
@@ -111,7 +112,8 @@ const LinkContainer = styled.nav`
         display: flex;
         align-items: center;
         &:nth-of-type(5),
-        &:nth-of-type(6) {
+        &:nth-of-type(6),
+        &:nth-of-type(7) {
           display: block;
         }
       }
@@ -210,7 +212,8 @@ const MainHeader = ({ view }) => {
           <Link to="/products">Products</Link>
           <Link to="/community/review">Community</Link>
           <Link to="/about">About</Link>
-          {!authUser.user && <Link to="/myCart">My Cart</Link>}
+          {authUser.user && <Link to="/myCart">My Cart</Link>}
+          {authUser.user && <Link to="/myPage/myProfile">My Page</Link>}
           {!authUser.user ? (
             <Link to="/login">Log In</Link>
           ) : (

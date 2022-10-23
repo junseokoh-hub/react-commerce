@@ -46,8 +46,6 @@ const MyCartPage = () => {
       ? carts.map((cart) => cart.price).reduce((a, c) => a + c)
       : 0;
 
-  console.log(carts);
-
   return (
     <>
       <Helmet>

@@ -87,7 +87,6 @@ const MyCartBtnContainer = styled.span`
 const MyCartList = ({ cart }) => {
   const { updateDocument, deleteDocument } = useFireStore("myCarts");
 
-  console.log("rendering");
   return (
     <MyCartItem>
       <img src={cart.image} alt={cart.title} />
