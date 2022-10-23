@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { authUserAtom } from "../../../store/authAtom";
 import { FiEdit3 } from "react-icons/fi";
 import { useFireStore } from "../../../hooks/useFirestore";
 import { useCollection } from "../../../hooks/useCollection";
-import { useMemo } from "react";
 
 const ProfileInfoFrame = styled.ul`
   margin-top: 20px;
@@ -80,15 +79,10 @@ const MyProfileInfo = () => {
     reset();
   });
 
-  const myInfo = useMemo(() => {
-    return (
-      !error &&
-      userInfo &&
-      userInfo.filter((who) => who.id === authUser.user.uid)[0]
-    );
-  }, [userInfo]);
-
-  console.log(myInfo);
+  const myInfo =
+    !error &&
+    userInfo &&
+    userInfo.filter((who) => who.id === authUser.user.uid)[0];
 
   return (
     <ProfileInfoFrame>
