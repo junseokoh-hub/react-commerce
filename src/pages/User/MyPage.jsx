@@ -16,6 +16,9 @@ const MyPageSideNav = styled.nav`
   min-width: 200px;
   height: 300px;
   border-top: 5px solid ${(props) => props.theme.orange.lighter};
+  @media screen and (max-width: 768px) {
+    min-width: 150px;
+  }
   @media screen and (max-width: 480px) {
     height: 70px;
     border: none;
@@ -45,6 +48,13 @@ const MyPageNavLinks = styled.li`
     color: ${(props) => props.theme.orange.normal};
     &.clicked {
       color: ${(props) => props.theme.brown.normal};
+    }
+  }
+  @media screen and (max-width: 768px) {
+    &:nth-of-type(3) {
+      .logout_btn {
+        left: 5px;
+      }
     }
   }
   @media screen and (max-width: 480px) {

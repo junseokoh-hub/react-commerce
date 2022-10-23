@@ -105,6 +105,7 @@ const LinkContainer = styled.nav`
       display: ${(props) => props.display};
       flex-direction: column;
       background-color: ${(props) => props.mobileBgColor};
+      box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.1);
       a {
         margin: 5px 0;
         padding: 5px 0;

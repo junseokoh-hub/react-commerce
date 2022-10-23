@@ -10,7 +10,12 @@ const MyEnrollmentLists = styled.li`
   border: 1px solid black;
 `;
 
-const MyEnrollmentTitle = styled.h4``;
+const MyEnrollmentTitle = styled.h4`
+  font-weight: bolder;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
 
 const MyEnrollmentResult = styled.span`
   width: 100px;

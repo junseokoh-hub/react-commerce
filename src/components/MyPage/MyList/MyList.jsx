@@ -9,6 +9,9 @@ import MyEnrollmentList from "./MyEnrollmentList";
 const ListWrapper = styled.section`
   padding-left: 20px;
   width: 70%;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const ListContainer = styled.article`

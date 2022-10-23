@@ -12,13 +12,16 @@ const MyReviewLists = styled.li`
 
 const MyReviewTitle = styled.h4`
   font-weight: 600;
-  @media screen and (max-width: 480px) {
-    font-size: 13px;
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
   }
 `;
 
 const MyReviewTime = styled.span`
   font-size: 13px;
+  @media screen and (max-width: 768px) {
+    font-size: 11px;
+  }
   @media screen and (max-width: 480px) {
     display: none;
   }
