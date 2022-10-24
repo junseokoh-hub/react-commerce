@@ -1,5 +1,7 @@
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import Modal from "../../../lib/Modal";
 
 const MyReviewLists = styled.li`
   padding: 10px 5px;
@@ -27,16 +29,39 @@ const MyReviewTime = styled.span`
   }
 `;
 
+const MyReviewModal = styled.div`
+  width: 50%;
+  height: 50%;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+`;
+
 const MyReviewList = ({ data }) => {
+  const [openReview, setOpenReview] = useState(false);
   const createdDate = new Date(
     data.createdTime.seconds * 1000,
   ).toLocaleString();
 
   return (
-    <MyReviewLists key={data.createdTime}>
-      <MyReviewTitle>{data.title}</MyReviewTitle>
-      <MyReviewTime>{createdDate}</MyReviewTime>
-    </MyReviewLists>
+    <>
+      {openReview && (
+        <Modal closeModal={() => setOpenReview(false)}>
+          <MyReviewModal>
+            <h3>{data.title}</h3>
+            <hr />
+            <p>{data.content}</p>
+          </MyReviewModal>
+        </Modal>
+      )}
+      <MyReviewLists onClick={() => setOpenReview(true)}>
+        <MyReviewTitle>{data.title}</MyReviewTitle>
+        <MyReviewTime>{createdDate}</MyReviewTime>
+      </MyReviewLists>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 
 const MyEnrollmentLists = styled.li`
@@ -35,10 +35,20 @@ const MyEnrollmentResult = styled.span`
 `;
 
 const MyEnrollmentList = ({ data }) => {
+  const today = new Date().getTime();
+
+  const btnCondition = useMemo(() => {
+    if (data.hold < today) {
+      return "신청완료";
+    } else if (data.hold >= today) {
+      return "종료";
+    }
+  }, []);
+
   return (
     <MyEnrollmentLists>
       <MyEnrollmentTitle>{data.event}</MyEnrollmentTitle>
-      <MyEnrollmentResult>신청완료</MyEnrollmentResult>
+      <MyEnrollmentResult>{btnCondition}</MyEnrollmentResult>
     </MyEnrollmentLists>
   );
 };

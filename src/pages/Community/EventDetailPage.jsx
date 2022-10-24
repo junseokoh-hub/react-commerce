@@ -8,7 +8,6 @@ import { authUserAtom } from "../../store/authAtom";
 import { useCallback } from "react";
 import { useFireStore } from "../../hooks/useFirestore";
 import { useCollection } from "../../hooks/useCollection";
-import { useEffect } from "react";
 
 const EventDetailWrapper = styled.div`
   position: relative;
@@ -134,6 +133,10 @@ const EventDetailPage = () => {
   const { setDocument } = useFireStore("participation");
   const { documents: enrollments } = useCollection("participation");
 
+  const date = description?.hold.split("-");
+  const newDate = new Date(date[0], date[1] + 1, date[2]);
+  const miliDate = Date.now(newDate);
+
   const enrollHandler = useCallback(() => {
     if (!authUser.user) {
       if (
@@ -149,6 +152,7 @@ const EventDetailPage = () => {
         setDocument(authUser.user.uid + id, {
           event: id,
           uid: authUser.user.uid,
+          hold: miliDate,
         });
         navigate("/community/notification/event");
       }
@@ -159,7 +163,6 @@ const EventDetailPage = () => {
     ?.filter((item) => item.uid === authUser.user.uid)
     ?.find((item) => item.id === authUser.user.uid + id);
 
-  console.log(eventConfirm);
   return (
     <EventDetailWrapper>
       <BsBoxArrowLeft className="backwards" onClick={() => navigate(-1)} />
@@ -171,6 +174,7 @@ const EventDetailPage = () => {
         <EventDetailDesc>
           <EventDetailContent>{description?.content}</EventDetailContent>
           <span>일자 : {description?.end?.date}</span>
+          <span>시행 : {description?.hold}</span>
           <span>대상 : {description?.end?.subjected}</span>
         </EventDetailDesc>
       </EventDetailContainer>
