@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -58,10 +58,14 @@ const ReviewList = ({ review }) => {
     .slice(0, 3)
     .padEnd(review?.author?.length, "*");
 
+  const moveToFullReview = useCallback(() => {
+    navigate(`/community/review/${review.createdTime.seconds}`);
+  }, []);
+
   return (
     <>
       <AllReviewList>
-        <p>
+        <p onClick={moveToFullReview}>
           {review && review?.title?.length > 10
             ? `${review?.title?.slice(0, 10)}...`
             : review?.title}

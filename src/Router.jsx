@@ -8,6 +8,9 @@ import LoadingSpinner from "./utils/LoadingSpinner";
 
 const ProductsPage = React.lazy(() => import("./pages/ProductsPage"));
 const ReviewPage = React.lazy(() => import("./pages/Community/ReviewPage"));
+const ReviewContentPage = React.lazy(() =>
+  import("./components/Review/ReviewContentPage"),
+);
 const CommunityPage = React.lazy(() =>
   import("./pages/Community/CommunityPage"),
 );
@@ -63,6 +66,7 @@ const Router = () => {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/community/*" element={<CommunityPage />}>
             <Route path="review/*" element={<ReviewPage />}>
+              <Route path=":id" element={<ReviewContentPage />} />
               <Route path="new" element={<ReviewNew />} />
               <Route path="edit/:id" element={<ReviewEditor />} />
             </Route>
