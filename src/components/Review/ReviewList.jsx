@@ -14,6 +14,7 @@ const AllReviewList = styled.li`
     padding-left: 10px;
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   span {
     padding-right: 10px;

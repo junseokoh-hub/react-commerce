@@ -22,6 +22,9 @@ const CommunityNav = styled.aside`
     color: rgba(0, 0, 0, 0.8);
     text-align: center;
   }
+  @media screen and (max-width: 768px) {
+    min-width: 150px;
+  }
   @media screen and (max-width: 480px) {
     height: 30px;
     border: none;

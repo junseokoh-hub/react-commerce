@@ -16,7 +16,7 @@ const ReviewFormContainer = styled.section`
   article {
     display: flex;
     flex-direction: column;
-    width: 500px;
+    width: 50%;
     input,
     textarea,
     button {
@@ -37,6 +37,11 @@ const ReviewFormContainer = styled.section`
       color: ${(props) => props.theme.whiteColor};
       font-size: 20px;
       font-weight: bolder;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    article {
+      width: 80%;
     }
   }
 `;
