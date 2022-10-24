@@ -24,7 +24,7 @@ export const EVENT_CONTENTS = [
         date: "2023년 1월 1일 ~ 2023년 1월 31일",
         subjected: "사이트 가입자 아무나",
       },
-      hold: "2022-02-10",
+      hold: "2023-02-10",
     },
   },
   {

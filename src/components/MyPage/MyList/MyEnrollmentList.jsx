@@ -39,9 +39,9 @@ const MyEnrollmentList = ({ data }) => {
 
   const btnCondition = useMemo(() => {
     if (data.hold < today) {
-      return "신청완료";
-    } else if (data.hold >= today) {
       return "종료";
+    } else if (data.hold >= today) {
+      return "신청완료";
     }
   }, []);
 

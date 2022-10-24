@@ -134,8 +134,7 @@ const EventDetailPage = () => {
   const { documents: enrollments } = useCollection("participation");
 
   const date = description?.hold.split("-");
-  const newDate = new Date(date[0], date[1] + 1, date[2]);
-  const miliDate = Date.now(newDate);
+  const newDate = new Date(date[0], date[1] + 1, date[2]).getTime();
 
   const enrollHandler = useCallback(() => {
     if (!authUser.user) {
@@ -152,7 +151,7 @@ const EventDetailPage = () => {
         setDocument(authUser.user.uid + id, {
           event: id,
           uid: authUser.user.uid,
-          hold: miliDate,
+          hold: newDate,
         });
         navigate("/community/notification/event");
       }
