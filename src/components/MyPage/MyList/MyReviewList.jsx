@@ -30,14 +30,24 @@ const MyReviewTime = styled.span`
 `;
 
 const MyReviewModal = styled.div`
-  width: 50%;
+  padding: 10px;
+  width: 30%;
   height: 50%;
+  text-align: center;
+  border-radius: 10px;
   background-color: white;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000;
+  overflow-y: auto;
+  @media screen and (max-width: 768px) {
+    width: 45%;
+  }
+  @media screen and (max-width: 480px) {
+    width: 65%;
+  }
 `;
 
 const MyReviewList = ({ data }) => {
@@ -51,8 +61,6 @@ const MyReviewList = ({ data }) => {
       {openReview && (
         <Modal closeModal={() => setOpenReview(false)}>
           <MyReviewModal>
-            <h3>{data.title}</h3>
-            <hr />
             <p>{data.content}</p>
           </MyReviewModal>
         </Modal>
