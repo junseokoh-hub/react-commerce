@@ -31,13 +31,20 @@ const IndivProductArticle = styled.div`
     font-size: 30px;
     cursor: pointer;
   }
+  @media screen and (max-width: 550px) {
+    .add_cart {
+      bottom: 15px;
+    }
+  }
+
   @media screen and (max-width: 480px) {
     img {
       width: 150px;
       height: 150px;
     }
     .add_cart {
-      bottom: 30px;
+      right: 5px;
+      bottom: 20px;
     }
   }
 `;
@@ -65,7 +72,7 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
   const navigate = useNavigate();
   const searchMatch = useMatch("/search/*");
   const authUser = useRecoilValue(authUserAtom);
-  const { documents: myCarts, error } = useCollection(
+  const { documents: myCarts } = useCollection(
     "myCarts",
     authUser.user && ["uid", "==", authUser.user.uid],
   );
@@ -119,7 +126,6 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
         </button>
       </BtnContainer>
       <BsCart4 className="add_cart" onClick={addToCart} />
-      <strong>{error}</strong>
     </IndivProductArticle>
   );
 };

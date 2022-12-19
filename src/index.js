@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { staleTime: 50000, refetchOnWindowFocus: false },
+    queries: { staleTime: Infinity, refetchOnWindowFocus: false },
   },
 });
 

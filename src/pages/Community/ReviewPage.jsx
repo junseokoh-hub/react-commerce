@@ -68,6 +68,11 @@ const ReviewPage = () => {
     navigate("new");
   }, [authUser.user]);
 
+  const orderedReviews =
+    reviews &&
+    reviews.sort((a, b) => b.createdTime.seconds - a.createdTime.seconds);
+  // console.log(reviews)
+
   return (
     <OutletLayout>
       <Helmet>
@@ -78,12 +83,12 @@ const ReviewPage = () => {
         <>
           <ReviewSection>
             <article>
-              {reviews?.length === 0 ? (
+              {orderedReviews?.length === 0 ? (
                 "No Reviews..."
               ) : (
                 <ul>
-                  {reviews &&
-                    reviews.map((review) => (
+                  {orderedReviews &&
+                    orderedReviews.map((review) => (
                       <ReviewList key={review.id} review={review} />
                     ))}
                 </ul>

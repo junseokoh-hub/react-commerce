@@ -15,7 +15,8 @@ function App() {
       setAuthUser((prev) => ({ ...prev, user, isAuthReady: true }));
     });
     return unsubscribe;
-  }, []);
+  }, [setAuthUser]);
+
   return (
     <>
       {authUser.isAuthReady ? (

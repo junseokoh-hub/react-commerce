@@ -56,6 +56,7 @@ const Posts = ({ posts }) => {
       } else if (order === "desc") {
         return b.title.charCodeAt(0) - a.title.charCodeAt(0);
       }
+      return null;
     })
     ?.slice(offset, offset + limit);
 
@@ -74,13 +75,13 @@ const Posts = ({ posts }) => {
         />
       </PageSelectContainer>
       <ProductsContainer>
-        {filteredPosts.map(({ id, title, image, thumbnail, isbn, price }) => (
+        {filteredPosts.map((item) => (
           <ProductsList
-            key={id || isbn}
-            title={title}
-            image={image}
-            thumbnail={thumbnail}
-            price={price}
+            key={item.id || item.isbn}
+            title={item.title}
+            image={item.image}
+            thumbnail={item.thumbnail}
+            price={item.price}
           />
         ))}
       </ProductsContainer>

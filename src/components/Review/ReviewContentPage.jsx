@@ -15,7 +15,10 @@ const ReviewContentContainer = styled.article`
     margin: 10px 0;
   }
   @media screen and (max-width: 768px) {
-    width: 80%;
+    width: 90%;
+  }
+  @media screen and (max-width: 480px) {
+    width: 100%;
   }
 `;
 
@@ -55,8 +58,8 @@ const ReviewContentPage = () => {
 
   return (
     <ReviewContentContainer>
-      <ReviewContentTitle>{singleReview.title}</ReviewContentTitle>
-      <ReviewContent>{singleReview.content}</ReviewContent>
+      <ReviewContentTitle>제목 : {singleReview.title}</ReviewContentTitle>
+      <ReviewContent>내용 : {singleReview.content}</ReviewContent>
       <ReviewContentBtn onClick={() => navigate(-1)}>뒤로가기</ReviewContentBtn>
     </ReviewContentContainer>
   );

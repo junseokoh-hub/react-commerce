@@ -30,11 +30,10 @@ const TotalContainer = styled.div`
 
 const MyCartPage = () => {
   const authUser = useRecoilValue(authUserAtom);
-  const { documents: carts, error } = useCollection("myCarts", [
-    "uid",
-    "==",
-    authUser.user.uid,
-  ]);
+  const { documents: carts, error } = useCollection(
+    "myCarts",
+    authUser.user && ["uid", "==", authUser.user.uid],
+  );
 
   const totalQuantity =
     carts?.length > 0
@@ -56,7 +55,7 @@ const MyCartPage = () => {
           {!error &&
             carts &&
             carts.map((cart) => <MyCartList key={cart.id} cart={cart} />)}
-          {carts?.length === 0 && <div>Nothing in yoru cart...</div>}
+          {carts?.length === 0 && <div>Nothing in your cart...</div>}
         </ul>
         <hr />
         <TotalContainer>

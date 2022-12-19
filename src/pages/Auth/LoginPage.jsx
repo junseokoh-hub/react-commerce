@@ -59,6 +59,9 @@ const LoginFieldset = styled.fieldset`
 const ErrorMessage = styled.span`
   text-align: center;
   color: ${(props) => props.theme.red};
+  :nth-of-type(3) {
+    padding-top: 10px;
+  }
 `;
 
 const LoginPage = () => {
@@ -125,12 +128,12 @@ const LoginPage = () => {
               <Link to="/signup" style={{ textAlign: "center" }}>
                 Create Account
               </Link>
+              {error && <ErrorMessage>잘못된 정보입니다.</ErrorMessage>}
             </LoginFieldset>
           </form>
         ) : (
           <LoadingSpinner />
         )}
-        {error && <h4>{error}</h4>}
       </LoginPageContainer>
     </>
   );

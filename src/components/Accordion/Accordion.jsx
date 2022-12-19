@@ -25,6 +25,9 @@ const AccordionHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: ${(props) => props.border};
+  @media screen and (max-width: 600px) {
+    height: 60px;
+  }
 `;
 
 const AccordionTitle = styled.p`
