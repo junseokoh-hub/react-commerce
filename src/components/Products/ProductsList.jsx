@@ -110,7 +110,10 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
     <IndivProductArticle>
       <img src={image || thumbnail} alt={title} onError={handleImgError} />
       <h3>{title}</h3>
-      <span>${price}</span>
+      <span>
+        {searchMatch ? "￦" : "$"}
+        {price}
+      </span>
       <BtnContainer>
         <button
           disabled={quantity === 1}
