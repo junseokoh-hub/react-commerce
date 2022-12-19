@@ -43,11 +43,11 @@ const MyEnrollmentList = ({ data }) => {
     } else if (data.hold >= today) {
       return "신청완료";
     }
-  }, []);
+  }, [today]);
 
   return (
     <MyEnrollmentLists>
-      <MyEnrollmentTitle>{data.event}</MyEnrollmentTitle>
+      <MyEnrollmentTitle>(이벤트) {data.event}</MyEnrollmentTitle>
       <MyEnrollmentResult>{btnCondition}</MyEnrollmentResult>
     </MyEnrollmentLists>
   );

@@ -124,30 +124,34 @@ const PartnershipInquiry = () => {
         <InquiryContainer>
           <InquiryTable>
             <caption>파트너 문의</caption>
-            <tr>
-              <th>작성자</th>
-              <td>
-                <input {...register("inquiryAuthor")} />
-              </td>
-            </tr>
-            <tr>
-              <th>비밀번호</th>
-              <td>
-                <input {...register("inquiryPassword")} />
-              </td>
-            </tr>
-            <tr>
-              <th>제목</th>
-              <td>
-                <input {...register("inquiryTitle")} />
-              </td>
-            </tr>
-            <tr>
-              <th>본문</th>
-              <td id="text_table">
-                <textarea {...register("inquiryContent")} />
-              </td>
-            </tr>
+            <thead>
+              <tr>
+                <th>작성자</th>
+                <td>
+                  <input {...register("inquiryAuthor")} />
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>비밀번호</th>
+                <td>
+                  <input {...register("inquiryPassword")} />
+                </td>
+              </tr>
+              <tr>
+                <th>제목</th>
+                <td>
+                  <input {...register("inquiryTitle")} />
+                </td>
+              </tr>
+              <tr>
+                <th>본문</th>
+                <td id="text_table">
+                  <textarea {...register("inquiryContent")} />
+                </td>
+              </tr>
+            </tbody>
           </InquiryTable>
           <BtnContainer>
             <button onClick={() => navigate(-1)}>이전</button>

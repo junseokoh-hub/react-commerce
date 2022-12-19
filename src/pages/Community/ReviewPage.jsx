@@ -71,7 +71,6 @@ const ReviewPage = () => {
   const orderedReviews =
     reviews &&
     reviews.sort((a, b) => b.createdTime.seconds - a.createdTime.seconds);
-  // console.log(reviews)
 
   return (
     <OutletLayout>

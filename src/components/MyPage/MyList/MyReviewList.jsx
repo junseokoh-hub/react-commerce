@@ -33,12 +33,12 @@ const MyReviewModal = styled.div`
   padding: 10px;
   width: 30%;
   height: 50%;
-  text-align: center;
   border-radius: 10px;
   background-color: white;
   position: fixed;
   top: 50%;
   left: 50%;
+  line-height: 28px;
   transform: translate(-50%, -50%);
   z-index: 10000;
   overflow-y: auto;
