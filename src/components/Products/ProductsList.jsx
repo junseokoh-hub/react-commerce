@@ -87,8 +87,8 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
       const existingItem =
         myCarts &&
         myCarts.find((myCart) => myCart.id === title + authUser.user.uid);
-      if (!existingItem) {
-        if (window.confirm(`이 상품을 장바구니에 넣으시겠습니까?`)) {
+      if (window.confirm(`이 상품을 장바구니에 넣으시겠습니까?`)) {
+        if (!existingItem) {
           setDocument(title + authUser.user.uid, {
             title,
             image: image || thumbnail,
@@ -96,11 +96,11 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
             price: searchMatch ? price * 0.0007 * quantity : price * quantity,
             uid: authUser.user.uid,
           });
+        } else {
+          updateDocument(title + authUser.user.uid, {
+            quantity: increment(quantity),
+          });
         }
-      } else {
-        updateDocument(title + authUser.user.uid, {
-          quantity: increment(quantity),
-        });
       }
     }
     setQuantity(1);
@@ -110,6 +110,7 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
     <IndivProductArticle>
       <img src={image || thumbnail} alt={title} onError={handleImgError} />
       <h3>{title}</h3>
+      <span>${price}</span>
       <BtnContainer>
         <button
           disabled={quantity === 1}

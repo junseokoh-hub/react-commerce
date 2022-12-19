@@ -42,8 +42,10 @@ const MyCartPage = () => {
 
   const totalPrice =
     !error && carts?.length > 0
-      ? carts.map((cart) => cart.price).reduce((a, c) => a + c)
+      ? carts.map((cart) => cart.price).reduce((a, c) => a + c, 0)
       : 0;
+
+  console.log(carts);
 
   return (
     <>
@@ -60,7 +62,7 @@ const MyCartPage = () => {
         <hr />
         <TotalContainer>
           <span>총 갯수 : {totalQuantity}</span>
-          <span>합계 : ${(totalPrice * totalQuantity).toFixed(2)}</span>
+          <span>합계 : ${totalPrice.toFixed(2)}</span>
         </TotalContainer>
       </MyCartListWrapper>
     </>
