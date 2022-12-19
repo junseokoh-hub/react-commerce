@@ -87,8 +87,6 @@ const MyCartBtnContainer = styled.span`
 const MyCartList = ({ cart }) => {
   const { updateDocument, deleteDocument } = useFireStore("myCarts");
 
-  console.log(cart);
-
   return (
     <MyCartItem>
       <img src={cart.image} alt={cart.title} />
@@ -117,7 +115,7 @@ const MyCartList = ({ cart }) => {
         </button>
       </MyCartBtnContainer>
       <span>
-        ${cart.price.toFixed(2)}
+        ${(cart.price * cart.quantity).toFixed(2)}
         <RiDeleteBin5Line
           className="delete-bin"
           onClick={() => deleteDocument(cart.title + cart.uid)}

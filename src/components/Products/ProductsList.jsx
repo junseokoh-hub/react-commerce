@@ -93,7 +93,7 @@ const ProductsList = ({ title, image, thumbnail, price }) => {
             title,
             image: image || thumbnail,
             quantity,
-            price: searchMatch ? price * 0.0007 * quantity : price * quantity,
+            price: searchMatch ? price * 0.0007 : price,
             uid: authUser.user.uid,
           });
         } else {

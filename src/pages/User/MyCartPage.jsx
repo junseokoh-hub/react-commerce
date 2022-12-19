@@ -42,10 +42,10 @@ const MyCartPage = () => {
 
   const totalPrice =
     !error && carts?.length > 0
-      ? carts.map((cart) => cart.price).reduce((a, c) => a + c, 0)
+      ? carts
+          ?.map((cart) => cart.price * cart.quantity)
+          .reduce((a, c) => a + c, 0)
       : 0;
-
-  console.log(carts);
 
   return (
     <>
