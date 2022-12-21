@@ -8,6 +8,7 @@ import perfume2 from "../images/perfume/perfume2.jpg";
 import perfume3 from "../images/perfume/perfume3.jpg";
 import { fetchProducts } from "../lib/api";
 import ImageSection from "../components/ImageSection/ImageSection";
+import LoadingSpinner from "../utils/LoadingSpinner";
 
 const DUMMY_DATA = [
   {
@@ -30,6 +31,9 @@ const MainImgContainer = styled.div`
   background: url(${(props) => props.bgphoto});
   background-position: center center;
   background-size: cover;
+  @media screen and (max-width: 480px) {
+    height: 80vh;
+  }
 `;
 
 const LiningImgContainer = styled.div`
@@ -61,6 +65,7 @@ const LiningImgContainer = styled.div`
   }
 
   @media screen and (max-width: 480px) {
+    height: 40vh;
     strong {
       right: 10px;
       bottom: 50px;
@@ -89,7 +94,7 @@ const Home = () => {
         ))}
       </StyledSlider>
       <StyledSlider>
-        {isLoading && <div>Loading...</div>}
+        {isLoading && <LoadingSpinner />}
         {isError && <div>{error.message}</div>}
         {!isLoading &&
           menClothesData &&
