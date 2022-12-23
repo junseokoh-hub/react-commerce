@@ -1,6 +1,7 @@
 # Oddend
 
 ## Intro
+잡다한 상품들을 판매하는 offline 상점의 웹사이트로 웹사이트에 대한 리뷰를 남겨 의견을 나눌 수 있으며 원하는 상품을 카트에 담을 수 있다.
 
 ## 실행 방법
 [https://oddend.web.app](https://oddend.web.app)
