@@ -8,6 +8,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useQuery } from "react-query";
 import { useForm } from "react-hook-form";
 import { fetchProducts } from "../../lib/api";
+import { useCallback } from "react";
 
 const SearchBarContainer = styled.header`
   width: 100%;
@@ -112,6 +113,7 @@ const PopularImgContainer = styled.li`
     width: ${(props) => props.width};
     height: ${(props) => props.height};
     border-radius: 50%;
+    cursor: pointer;
   }
   @media screen and (max-width: 1000px) {
     img {
@@ -148,6 +150,11 @@ const NavSearchContainer = () => {
     }
   });
 
+  const navigateToProductsHandler = useCallback(() => {
+    navigate("/products");
+    setIsSearchBar(false);
+  }, []);
+
   return (
     <SearchBarContainer>
       <ul>
@@ -164,7 +171,10 @@ const NavSearchContainer = () => {
             {!isLoading &&
               popularData &&
               popularData.map((item) => (
-                <PopularKeyword key={item.id}>
+                <PopularKeyword
+                  key={item.id}
+                  onClick={navigateToProductsHandler}
+                >
                   {item.title.split(" ").slice(0, 2).join(" ")}
                 </PopularKeyword>
               ))}
@@ -180,6 +190,7 @@ const NavSearchContainer = () => {
                 alt={description}
                 width={homeMatch ? "100px" : "50px"}
                 height={homeMatch ? "100px" : "50px"}
+                onClick={navigateToProductsHandler}
               />
             ))}
         </PopularImgContainer>

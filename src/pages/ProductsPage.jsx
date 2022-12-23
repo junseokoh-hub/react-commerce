@@ -9,9 +9,6 @@ const ProductsPage = () => {
   const { isLoading, data, isError, error } = useQuery(
     ["productsPage", "products"],
     fetchProducts,
-    {
-      keepPreviousData: true,
-    },
   );
 
   if (isLoading) return <LoadingSpinner />;

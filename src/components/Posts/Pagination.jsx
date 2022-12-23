@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 const Nav = styled.nav`
@@ -43,6 +43,10 @@ const Button = styled.button`
 function Pagination({ total, limit, page, setPage }) {
   const numPages = Math.ceil(total / limit);
 
+  useEffect(() => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+  }, [page]);
+
   return (
     <>
       <Nav>
@@ -51,13 +55,13 @@ function Pagination({ total, limit, page, setPage }) {
         </Button>
         {Array(numPages)
           .fill()
-          .map((_, i) => (
+          .map((_, index) => (
             <Button
-              key={i + 1}
-              onClick={() => setPage(i + 1)}
-              aria-current={page === i + 1 ? "page" : null}
+              key={index + 1}
+              onClick={() => setPage(index + 1)}
+              aria-current={page === index + 1 ? "page" : null}
             >
-              {i + 1}
+              {index + 1}
             </Button>
           ))}
         <Button onClick={() => setPage(page + 1)} disabled={page === numPages}>

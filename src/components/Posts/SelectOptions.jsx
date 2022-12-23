@@ -15,8 +15,16 @@ const Select = styled.select`
 `;
 
 const SelectOptions = ({ value, setValue, options }) => {
+  const changeOptionHandler = (e) => {
+    if (typeof value === "string") {
+      setValue(e.target.value);
+    } else if (typeof value === "number") {
+      setValue(Number(e.target.value));
+    }
+  };
+
   return (
-    <Select value={value} onChange={(e) => setValue(e.target.value)}>
+    <Select value={value} onChange={changeOptionHandler}>
       {options.map((option, index) => (
         <option key={index} value={option.value}>
           {option.content}

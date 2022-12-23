@@ -66,9 +66,22 @@ const Router = () => {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/community/*" element={<CommunityPage />}>
             <Route path="review/*" element={<ReviewPage />}>
-              <Route path=":id" element={<ReviewContentPage />} />
-              <Route path="new" element={<ReviewNew />} />
-              <Route path="edit/:id" element={<ReviewEditor />} />
+              {authUser.user && (
+                <Route path=":id" element={<ReviewContentPage />} />
+              )}
+              {!authUser.user && (
+                <Route path=":id" element={<Navigate to="/login" />} />
+              )}
+              {authUser.user && <Route path="new" element={<ReviewNew />} />}
+              {!authUser.user && (
+                <Route path="new" element={<Navigate to="/login" />} />
+              )}
+              {authUser.user && (
+                <Route path="edit/:id" element={<ReviewEditor />} />
+              )}
+              {!authUser.user && (
+                <Route path="edit/:id" element={<Navigate to="/login" />} />
+              )}
             </Route>
             <Route path="notification/*" element={<NotificationPage />}>
               <Route path="notice" element={<NoticePage />} />

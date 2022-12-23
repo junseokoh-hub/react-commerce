@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import Pagination from "./Pagination";
 import ProductsList from "../Products/ProductsList";
 import SelectOptions from "./SelectOptions";
+import LoadingSpinner from "../../utils/LoadingSpinner";
+import { useEffect } from "react";
 
 const ProductsWrapper = styled.section`
   margin: 0 auto;
@@ -59,6 +61,10 @@ const Posts = ({ posts }) => {
       return null;
     })
     ?.slice(offset, offset + limit);
+
+  useEffect(() => {
+    setPage(1);
+  }, [limit]);
 
   return (
     <ProductsWrapper>

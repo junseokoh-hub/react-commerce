@@ -64,8 +64,9 @@ const ReviewPage = () => {
       if (window.confirm(`로그인 하시겠습니까?`)) {
         navigate("/login");
       }
+    } else {
+      navigate("new");
     }
-    navigate("new");
   }, [authUser.user]);
 
   const orderedReviews =
